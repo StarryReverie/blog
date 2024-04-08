@@ -1,0 +1,40 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Clone Destination Repo
+        run: git clone https://github.com/oo-infty/site-output dest
+
+      - name: Update
+        run: cp -rf ./public/* ./dest/
+      
+      - name: Deploy
+        uses: tech-thinker/push-to-repo@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.SITE_OUTPUT_PUSH_ACCESS_TOKEN }}
+        with:
+          source-directory: 'dest'
+          destination-github-username: 'oo-infty'
+          destination-repository-name: 'site-output'
+          target-branch: master
