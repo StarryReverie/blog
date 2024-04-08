@@ -1,4 +1,4 @@
-baseURL = "https://example.org/"
+baseURL = "https://oo-infty.netlify.app"
 languageCode = "zh-cn"
 title = "oo-infty's site"
 
@@ -7,9 +7,8 @@ theme = "paper"
 [params]
   color = "linen"
 
-  avatar = ""
+  avatar = "https://cravatar.cn/avatar/f14933f57df2a9ffb229419fa19ce98f?s=512"
   name = "oo-infty"
-  bio = "YOUR_BIO"
 
   disableHLJS = true
   disablePostNavigation = true
