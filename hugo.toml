@@ -1,0 +1,17 @@
+baseURL = "https://example.org/"
+languageCode = "zh-cn"
+title = "oo-infty's site"
+
+theme = "paper"
+
+[params]
+  color = "linen"
+
+  avatar = ""
+  name = "oo-infty"
+  bio = "YOUR_BIO"
+
+  disableHLJS = true
+  disablePostNavigation = true
+  monoDarkIcon = true
+  math = true
