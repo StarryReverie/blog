@@ -37,8 +37,6 @@ menu:
     - name: About
       url: ./about/
       weight: 4
-    - name: Management
-      url: ./management/
 
 params:
   env: production
@@ -76,6 +74,11 @@ params:
     - name: RSS
       title: Subscribe to RSS
       url: ./index.xml
+
+  editPost:
+    URL: https://github.com/oosquare/oosquare.github.io/tree/master/content
+    Text: Edit
+    appendFilePath: true
 
   assets:
     disableHLJS: true
