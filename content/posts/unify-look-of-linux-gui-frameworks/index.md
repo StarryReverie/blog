@@ -1,8 +1,13 @@
-+++
-title = '统一 Linux GUI 框架主题和外观'
-date = 2024-07-31T23:21:07+08:00
-draft = false
-+++
+---
+title: 统一 Linux GUI 框架主题和外观
+date: 2024-07-31T23:21:07+08:00
+draft: false
+categories: Tech
+tags:
+  - Linux
+  - Desktop Environment
+  - NixOS
+---
 
 在 Linux 下，GUI 外观配置一直是一个复杂的话题。本文试图梳理 Qt 和 GTK 两种 GUI 框架的相关概念，并给出不同情况下的配置方案，实现外观的统一。
 

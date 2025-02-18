@@ -1,0 +1,81 @@
+baseURL: https://oosquare.github.io/
+title: OOSQUARE'S WORLD
+copyright: "Copyright (C) [Justin Chen (oosquare)](https://github.com/oosquare/), 2025 · Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)"
+languageCode: zh-cn
+theme: PaperMod
+
+taxonomies:
+  category: categories
+  tag: tags
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+menu:
+  main:
+    - name: Archive
+      url: ./archives/
+      weight: 1
+    - name: Categories
+      url: ./categories/
+      weight: 2
+    - name: Tags
+      url: ./tags/
+      weight: 3
+    - name: About
+      url: ./about/
+      weight: 4
+    - name: Management
+      url: ./management/
+
+params:
+  env: production
+
+  title: OOSQUARE'S WORLD
+  description: oosquare's personal blog
+  author: oosquare
+  defaultTheme: light
+
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: false
+  ShowCodeCopyButtons: true
+  ShowWordCount: false
+  ShowRssButtonInSectionTermList: true
+
+  homeInfoParams:
+    Title: Welcome to oosquare's personal blog
+    Content: A world where insightful ideas spark.
+
+  profileMode:
+    enabled: false
+
+  socialIcons:
+    - name: github
+      title: GitHub Profile
+      url: https://github.com/oosquare
+    - name: telegram
+      title: Telegram Account
+      url: https://t.me/oosquare
+    - name: email
+      title: Email
+      url: mailto://oosquare@outlook.com
+    - name: RSS
+      title: Subscribe to RSS
+      url: ./index.xml
+
+  assets:
+    disableHLJS: true

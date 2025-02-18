@@ -1,8 +1,12 @@
-+++
-title = '用 NixOS 部署 Minecraft 服务器'
-date = 2024-07-05T15:42:09+08:00
-draft = false
-+++
+---
+title: 用 NixOS 部署 Minecraft 服务器
+date: 2024-07-05T15:42:09+08:00
+draft: false
+categories: Tech
+tags:
+  - NixOS
+  - Minecraft
+---
 
 紧张的考试周过后，终于有时间和朋友玩 Minecraft 了。为了方便进行多人游戏，我和 [@whitepaperdog](https://github.com/whitepaperdog) 决定购买一台云主机作为服务器。鉴于 NixOS 强大的 reproducibility 以及我这半年使用 NixOS 的优秀体验，我决定将服务器的系统更换为 NixOS，并在其之上部署 Minecraft 服务。
 

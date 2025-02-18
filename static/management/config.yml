@@ -1,8 +1,8 @@
-site_url: https://oo-infty.netlify.app
+site_url: https://oosquare.github.io/
 
 backend:
   name: github
-  repo: oo-infty/blog
+  repo: oosquare/oosquare.github.io
   branch: master
   commit_messages:
     create: 'feat(content): create {{collection}} "{{slug}}"'
@@ -30,6 +30,6 @@ collections:
       - { name: "title", label: "Title", widget: "string" }
       - { name: "date", label: "Date", widget: "datetime" }
       - { name: "draft", label: "Draft", widget: "boolean", default: true }
-      - { name: "categories", label: "Categories", widget: "list", default: [] }
+      - { name: "categories", label: "Categories", widget: "string", default: "Uncategorized" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
       - { name: "body", label: "Body", widget: "markdown" }
