@@ -38,6 +38,17 @@ menu:
       url: ./about/
       weight: 4
 
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+            - [$$, $$]
+          inline:
+            - [$, $]
+        enable: true
+
 params:
   env: production
 
