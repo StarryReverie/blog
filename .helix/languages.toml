@@ -3,6 +3,10 @@ name = "markdown"
 indent = { tab-width = 2, unit = "  " }
 
 [[language]]
+name = "yaml"
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
 name = "toml"
 indent = { tab-width = 2, unit = "  " }
 
