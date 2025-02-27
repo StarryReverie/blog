@@ -81,7 +81,7 @@ params:
       url: https://t.me/oosquare
     - name: email
       title: Email
-      url: mailto://oosquare@outlook.com
+      url: mailto:oosquare@outlook.com
     - name: RSS
       title: Subscribe to RSS
       url: ./index.xml
