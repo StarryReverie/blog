@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'Cascadia Mono Custom';
+  src:
+    local('Cascadia Mono'),
+    local('CascadiaMono'),
+    url('https://cdn.jsdelivr.net/npm/cascadia-code@2111.01/dist/CascadiaCode.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/npm/cascadia-code@2111.01/dist/CascadiaCode.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+code {
+  font-family: 'Cascadia Mono Custom', monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
