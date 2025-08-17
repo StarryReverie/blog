@@ -39,15 +39,19 @@ $$
 对于每个发射的光子，不断找其与场景的交点，在交点处继续反弹。在合适的交点处，将交点信息继续储存。
 
 假设一个光子到达交点 $x$，方向为 $\omega_o$，则我们需要继续按照 BSDF 采样其下一个方向 $\omega_i$。假设当前的通量为 $\Phi$，则反弹后的通量为
+
 $$
 \Phi' = \dfrac{f_s^*(x, \omega_o \to \omega_i) (n_x \cdot \omega_i)}{p(\omega_i)} \Phi
 $$
+
 在这里，使用的是伴随 BSDF $f_s^*(x, \omega_o \to \omega_i)$，余弦项是法向量 $n_x$ 与下一个方向 $\omega_i$ 的夹角余弦。在 Path Tracing 中，$\omega_i$ 是真正的入射方向，而在 PM 中，$\omega_i$ 却是光线的出射方向，这在一开始看上去很奇怪，原因在于上式中的这个比例系数是重要性的吞吐量，与 Path Tracing 中的辐射亮度的吞吐量不同。重要性是与辐射亮度具有类似性质的量，传播方向上是相反的。关于重要性，相关内容在下文阐述。总之，对于这个式子，通俗的理解就是光子在撞击表面后发生散射就会发生能量上的变化，正如散射后的光线与散射前的光线之间的关系一样。
 
 光子撞击表面后，除了散射到其他方向，也有可能被表面吸收。使用 $\delta$ 表示吸收的概率，使用 Russia Roulette 来决定光子是被吸收还是继续散射，因此上面的公式要进一步修改为
+
 $$
 \Phi' = \dfrac{1}{1 - \delta} \dfrac{f_s^*(x, \omega_o \to \omega_i) (n_x \cdot \omega_i)}{p(\omega_i)} \Phi
 $$
+
 关于 $\delta$ 的选择，可以选择一个常数，也可以按照当前通量 $\Phi=(\Phi_r, \Phi_g, \Phi_b)$ 中的最大分量决定（不能大于 $1$），甚至可以结合 BSDF 等系数确定，以使散射后的通量尽量不变。前面提到过平衡的通量的效果更好，所以后两种方法是更好的选择，可以避免多次散射后的通量太小。
 
 在光子追踪阶段，还需要记录下光子与表面的交互信息，为后续的光子映射阶段提供辐射亮度估计的基础。交互信息包括入射位置、方向以及当前的通量大小，相当于预先计算出来的 Path Tracing 过程中后半段光线路径的相关信息。
@@ -59,69 +63,127 @@ $$
 #### 光子映射阶段
 
 光子映射就是用储存的光子信息来估计辐射亮度，避免了递归求解。回顾 Rendering Equation
+
 $$
 L_o(x, \omega_o) = L_e(x, \omega_o) + \int_{\Omega} f_s(x, \omega_i \to \omega_o) L_i(x, \omega_i) (n_x \cdot \omega_i) \mathrm d\omega_i
 $$
+
 Path Tracing 通过递归追踪 $\omega_i$ 方向的光线来求解 $L_i(x, \omega_i)$。PM 则不一样，因为已经有储存的光子信息，由光子的通量和方向以及当前位置的信息，可以轻松算出辐射亮度 $L_i$，所以效率可以大幅提高。但当前位置 $x$ 不一定有光子曾经到达过，PM 选择使用 $x$ 附近的一部分光子来做近似。我们考虑 $x$ 所在的面积微元 $\mathrm dA$，用到达位置在 $\mathrm dA$ 内的光子 $(x_p, \omega_i, \Phi(x_p, \omega_i))$ 的辐射亮度来近似 $L_i(x, \omega_i)$：
+
 $$
 L_i(x, \omega_i) = \dfrac{\mathrm d^2 \Phi(x, \omega_i)}{\mathrm d\omega_i \mathrm dA (n_x \cdot \omega_i)} \approx \dfrac{\mathrm d^2 \Phi(x_p, \omega_i)}{\mathrm d\omega_i \mathrm dA (n_x \cdot \omega_i)}
 $$
+
 代入到 Rendering Equation 后，得到
+
 $$
 \begin{aligned}
     L_o(x, \omega_o) & = L_e(x, \omega_o) + \int_{\Omega} f_s(x, \omega_i \to \omega_o) L_i(x, \omega_i) (n_x \cdot \omega_i) \mathrm d\omega_i \\
     & = L_e(x, \omega_o) + \int_{\Omega} f_s(x, \omega_i \to \omega_o) \dfrac{\mathrm d^2 \Phi(x, \omega_i)}{\mathrm d\omega_i \mathrm dA (n_x \cdot \omega_i)} (n_x \cdot \omega_i) \mathrm d\omega_i \\
     & = L_e(x, \omega_o) + \int_{\Omega} f_s(x, \omega_i \to \omega_o) \dfrac{\mathrm d^2 \Phi(x, \omega_i)}{\mathrm dA} \\
-    & \approx L_e(x, \omega_o) + \sum_{i = 1}^k f_s(x, \omega_i \to \omega_o) \dfrac{\Delta^2 \Phi(x_p, \omega_i)}{\Delta A}
+    & \approx L_e(x, \omega_o) + \sum_{i = 1}^k f_s(x, \omega_i \to \omega_o) \dfrac{\Delta^2 \Phi(p, \omega_i)}{\Delta A} \\
+    & = L_e(x, \omega_o) + \dfrac{1}{\pi r_m^2} \sum_{i = 1}^k f_s(x, \omega_i \to \omega_o) \Delta^2 \Phi(p, \omega_i)
 \end{aligned}
 $$
-由此我们得到了辐射亮度估计的公式，完全可以利用储存的光子信息来计算。在这里，$k$ 和 $\Delta A$ 都可以用于控制选择 $x$ 附近的哪些光子用于估计，两者只要确定其一，就可以推出另外一个，由此得到两种方案。
 
-第一种是给定 $k$，即 $k$-NN 方法，选择 $x$ 附近的 $k$ 个位置最近的光子进行估计，$\Delta A$ 就是包围这 $k$ 个位置的最小圆，即 $\Delta A = \pi r_m^2$，其中 $r_m = \min\{\|x - x_p\|\}$。要实现 $k$-NN，只要用 KD-Tree 和大根堆就可以完成，时间复杂度为 $O(N^{2/3}\log_2 k)$。这一种方案的好处是 $\Delta A$ 的范围是自适应调节的，如果一个地方光子很密集，则无需使用太大的范围进行估计，反之则可以自动扩大估计范围。
+由此我们得到了辐射亮度估计的公式，完全可以利用储存的光子信息来计算。在这里，$k$ 和 $\Delta A = \pi r_m^2$ 都可以用于控制选择 $x$ 附近的哪些光子用于估计，两者只要确定其一，就可以推出另外一个，由此得到两种方案。
+
+第一种是给定 $k$，即 $k$-NN 方法，选择 $x$ 附近的 $k$ 个位置最近的光子进行估计，$\Delta A$ 就是包围这 $k$ 个位置的最小圆，$r_m = \min\{\|x - x_p\|\}$。要实现 $k$-NN，只要用 KD-Tree 和大根堆就可以完成，时间复杂度为 $O(N^{2/3}\log_2 k)$。这一种方案的好处是 $\Delta A$ 的范围是自适应调节的，如果一个地方光子很密集，则无需使用太大的范围进行估计，反之则可以自动扩大估计范围。
 
 第二种是给定 $\Delta A$，或者说是给定最大搜索半径 $r_m$，选择在 $x$ 为中心的球内进行估计，$k$ 就是在范围内的光子数。算法上的实现比 $k$-NN 更简单，时间复杂度为 $O(N^{2/3})$。这一种方案的好处是性能比 $k$-NN 更高，且因为搜索半径可调，更适合 PPM、SPPM。
 
 #### Measurement Equation 与辐射亮度估计
 
 从实现角度来说，以上内容以及完全足够，但从根本原理上来看，这些内容仅仅是一种较形象化的表述。PM 的本质，应该从 Measurement Equation 来介绍。Measurement Equation 描述了测量的方法，各种量都可以表示为 Measurement Equation 的一种具体形式
+
 $$
-I = \int_{S} \mathrm dA \int_{\Omega} W(p, \omega_i) L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i
+I = \int_{S} \mathrm dA \int_{\Omega} W_e(p, \omega_i) L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i
 $$
+
 $I$ 可以是任意的一种量，比如通量、辐射亮度、像素的值等，具体是什么则由 $W$ 确定。$S$ 是一个带有（假想或真实的）传感器的表面，$I$ 就是由这些传感器测量得到。$W(p, \omega_i)$ 则表示 $p$ 位置的传感器对 $\omega_i$ 方向的入射辐射亮度的响应程度，决定了 $L_i(p, \omega_i)$ 对 $I$ 的贡献。
 
 以通量为例，假设有一个表面区域 $D$，我们要求其一侧的接受的通量 $\Phi$
+
 $$
 \begin{aligned}
     \Phi & = \int_D \mathrm dA \int_{\Omega^+} L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i \\
     & = \int_S \mathrm dA \int_{\Omega^+} I_{D}(p) L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i \\
 \end{aligned}
 $$
+
 在这里，示性函数 $I_D(p)$ 在 $p \in D$ 时取 $1$，其他情况取 $0$。比较可以得出 $W(p, \omega_i) = I_D(p)$。这里我们考虑 $S$ 为所有表面，也就是所有表面都放置了传感器。
 
 在辐射亮度估计这个背景下，我们考虑把 Rendering Equation 中的散射项写成 Measurement Equation 的形式，此时散射项就是被测量的量：
+
 $$
 \begin{aligned}
-	L_s(x, \omega_o) & = \int_{\Omega} f_s(x, \omega_i \to \omega_o) L_i(x, \omega_i) (n_x \cdot \omega_i) \mathrm d\omega_i \\
-	& = \int_S \delta(x - p) \mathrm dA \int_{\Omega} f_s(p, \omega_i \to \omega_o) L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i \\
-	& = \int_{S} \mathrm dA \int_{\Omega} W(p, \omega_i) L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i \\
-	& \text{where } W(p, \omega_i) = \delta(x - p) f_s(p, \omega_i \to \omega_o)
+    L_s(x, \omega_o) & = \int_{\Omega} f_s(x, \omega_i \to \omega_o) L_i(x, \omega_i) (n_x \cdot \omega_i) \mathrm d\omega_i \\
+    & = \int_S \delta(x - p) \mathrm dA \int_{\Omega} f_s(p, \omega_i \to \omega_o) L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i \\
+    & = \int_{S} \mathrm dA \int_{\Omega} W_e(p, \omega_i) L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i \\
+    & \text{where } W_e(p, \omega_i) = \delta(x - p) f_s(p, \omega_i \to \omega_o)
 \end{aligned}
 $$
-散射项的 $W(p, \omega_i)$ 可以有更一般的形式 $h(x - p) f_s(p, \omega_i \to \omega_o)$，其中 $h(p)$ 是一个滤波器。因此，理论上所有的滤波器 $h(p)$ 都可以用在散射项的测量上，最理想的就是 $\delta(x)$，没有任何的偏差。如果换做其他的滤波器，则以上公式的计算结果就不再是准确的散射项，正如我们使用的是一个圆形的滤波器，距离圆心大于 $r_m$ 的结果都是 $0$。
+
+散射项的 $W_e(p, \omega_i)$ 可以有更一般的形式 $h(x - p) f_s(p, \omega_i \to \omega_o)$，其中 $h(p)$ 是一个滤波器。因此，理论上所有的滤波器 $h(p)$ 都可以用在散射项的测量上，最理想的就是 $\delta(x)$，没有任何的偏差。如果换做其他的滤波器，则以上公式的计算结果就不再是准确的散射项。在上一节中，我们使用的是圆盘平均滤波器，距离圆心大于 $r_m$ 的结果都是 $0$。
 
 从采样的角度来说，$h(p)$ 则有一个更具体的名称叫做重建滤波器（Reconstruction Filter），光子追踪就是一个采样的过程，储存的光子信息就是对连续的光线空间采样得到的离散样本，光子映射的计算就是重建的过程，把离散样本通过重建滤波器得到连续的量，就是辐射亮度的散射部分。
 
-除了圆形滤波器，还有其他两种比较常用的滤波器可以选择，分别是锥型滤波器（Cone Filter）
+除了圆盘平均滤波器，还有其他两种比较常用的滤波器可以选择，分别是锥型滤波器（Cone Filter）
+
 $$
-h(r) = \dfrac{3}{\pi R^2}\max\left\{1 - \dfrac{r}{R}, 0\right\}
+h(r) = \dfrac{1}{\pi r_m^2}\left(1 - \dfrac{2}{3k}\right)\max\left\{1 - \dfrac{r}{k r_m}, 0\right\}
 $$
-和高斯滤波器（Gaussian Filter）
+
+和（局部）高斯滤波器（Gaussian Filter，$\alpha = 0.918, \beta = 1.953$ 是较推荐的参数取值）
 $$
-h(r) = \dfrac{1}{2 \pi \sigma} \exp\left(-\dfrac{r^2}{2 \sigma^2}\right)
+h(r) = \alpha \left(1 - \dfrac{1 - \exp(-\beta \frac{r^2}{2 r_m^2})}{1 - \exp(-\beta)}\right)
 $$
-它们的效果相比圆形滤波器更好，比较明显的一点是在渲染焦散效果时，焦散光斑会更加锐利。
+
+它们的效果相比圆盘平均滤波器更好，比较明显的一点是在渲染焦散效果时，焦散光斑会更加锐利。
+
+从 Measurement Equation 形式继续推导，就可以得到类似上一节中的结果：
+
+$$
+\begin{aligned}
+    L_s(x, \omega_o) & = \int_S h(x - p) \mathrm dA \int_{\Omega} f_s(p, \omega_i \to \omega_o) L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i \\
+    & = \int_S h(x - p) \mathrm dA \int_{\Omega} f_s(p, \omega_i \to \omega_o) \dfrac{\mathrm d^2 \Phi(p, \omega_i)}{\mathrm d\omega_i \mathrm dA (n_p \cdot \omega_i)} (n_p \cdot \omega_i) \mathrm d\omega_i \\
+    & = \int_S h(x - p) \int_{\Omega} f_s(p, \omega_i \to \omega_o) \mathrm d^2 \Phi(p, \omega_i)\\
+\end{aligned}
+$$
+
+如果选择圆盘平均滤波器，则有
+
+$$
+\begin{aligned}
+    L_s(x, \omega_o) & = \int_S h(x - p) \int_{\Omega} f_s(p, \omega_i \to \omega_o) \mathrm d^2 \Phi(p, \omega_i) \\
+    & \approx \int_S \dfrac{1}{\pi r_m^2} I_{U(x, r_m)}(p) \int_{\Omega} f_s(p, \omega_i \to \omega_o) \mathrm d^2 \Phi(p, \omega_i) \\
+    & = \dfrac{1}{\pi r_m^2} \int_{U(x, r_m)} \int_{\Omega} f_s(p, \omega_i \to \omega_o) \mathrm d^2 \Phi(p, \omega_i) \\
+    & \approx \dfrac{1}{\pi r_m^2} \sum_{i = 1}^k f_s(p, \omega_i \to \omega_o) \Delta^2 \Phi(p, \omega_i) \\
+    & \approx \dfrac{1}{\pi r_m^2} \sum_{i = 1}^k f_s(x, \omega_i \to \omega_o) \Delta^2 \Phi(p, \omega_i) \\
+\end{aligned}
+$$
+
+这得到了上一节中完全一样的结果。在某种意义上，之前的结果只是一个巧合，因为只有确定了使用圆盘平均滤波器，才会有 $\Delta A = \pi r_m^2$。对于高斯滤波器来说，最终的结果完全没有 $\Delta A$：
+
+$$
+L_s(x, \omega_o) = \sum_{i = 1}^k h(\|x - p\|) f_s(x, \omega_i \to \omega_o) \Delta^2 \Phi(p, \omega_i)
+$$
 
 #### Measurement Equation 与重要性
+
+从 Measurement Equation 中可以看出，对于一个量 $I$，不同传感器的不同方向的 $L_i$ 对于 $I$ 都有不同的贡献，权重用 $W_e$ 衡量，这里的 $W_e$ 是传感器发出的。那么 $W_e$ 可以传播吗？事实上是可以的。类比辐射亮度的传播，辐射亮度随着光线的发射和散射，覆盖整个场景，形成了照明。 $W$ 也是一样的，我们称之为重要性，可以想传感器发射了某种探测射线，重要性随着探测射线的发射和散射覆盖整个场景，于是整个场景的辐射亮度对 $I$ 的贡献都可以求解了。
+
+从形式上，重要性与辐射亮度是非常相似的，同一套方程可以同时描述重要性与辐射亮度的传播：
+$$
+W_o(p, x, \omega_o) = W_e(p, x, \omega_o) + \int_\Omega f_s^*(x, \omega_i \to \omega_o) W_i(p, x, \omega_i) (n_x \cdot \omega_i) \mathrm d\omega_i
+$$
+$W$ 的下标的含义与 $L$ 的下标类似。注意到对于不同位置的传感器来说，场景中同一个 $(x, \omega_o)$ 的重要性是不一样的，所以我们用 $W$ 的第一个变量表示关联的传感器的位置。因为 $W$ 可以传播，我们除了可以在传感器的半球空间求值，还可以在场景内的所有光源的半球空间求值：
+$$
+\int_{\Omega} W_e(p, \omega_i) L_i(p, \omega_i) (n_p \cdot \omega_i) \mathrm d\omega_i = \int_M \mathrm dA \int_{\Omega} W_i(p, x, \omega_o) L_e(x, \omega_o) (n_x \cdot \omega_o) \mathrm d\omega_o
+$$
+后一种求解方式就是对于所有光源上的点，其接受来自各个方向的传感器的重要性，并按照重要性对测量的量产生一定贡献。
+
+回到光子追踪，我们给每次散射后的通量乘上的比例系数实际上就是重要性传播时的比例系数。在 Path Tracing 中，我们通过乘上 BSDF 等系数来计算辐射亮度的吞吐量，而在光子追踪中，整个过程相反，我们通过乘上 BSDF 等系数来计算重要性的吞吐量。在辐射亮度估计中，需要估计点附近的 $\Delta^2 \Phi$，$\Delta^2 \Phi$ 实际上是用 $L_i$ 表示的，而 $L_i$ 的最终来源是光源处的 $L_e$，我们结合以上两个公式，将在估计点附近的对 $W_e L_i$ 的积分转换为所有光源附近的对 $W_i L_e$ 的积分，$W_i$ 按照传播方程，在追踪过程中累乘 BSDF、余弦项等系数完成计算。
 
 ### 渐进式光子映射
 
