@@ -187,10 +187,284 @@ $$
 
 ### 渐进式光子映射
 
+传统光子映射的效果取决于发射光子的总数，光子越多，密度估计半径就可以越小，模糊效果就越小，精度越高。然而光子的总数受限于机器的内存大小，如果内存不够，渲染时间再长，光子映射的效果也不会提升，模糊没有办法减少。因此渐进式光子映射（Progressive Photon Mapping, PPM）应运而生。
+
+### 分批次渐进式渲染
+
+如果不能够一次储存下所有的光子，那么就分批发射，然后累计最后的结果。因此 PPM 在总体流程上与 PM 不同，PPM 需要先进行 Path Tracing，这个过程采样得到的路径会被保存，具体来说，按照原来 PM 的 Path Tracing 阶段来采样，生成得到的路径会对场景中的不同地方进行辐射亮度估计，我们把这些地方称为观察点。对于每条路径，记录下直接光照的计算结果、观察点到相机的吞吐量，这样这一条路径就可以重复利用。在获得观察点后，开始多个批次的光子追踪和贡献过程，不同批次的光子都可以给附近一定范围内的观察点提供贡献（可以用 $k$-NN 或球搜索），观察点只需要不断累加通量，再除以累计发射光子数，就可以得到累计到当前批次的估计。
+
+### 半径缩减
+
+以上的方法基本解决了内存不够的问题，但是渲染结果依旧是模糊的，这是因为贯穿每个批次的估计半径都是不变的。如果光子给附近 $k$ 近邻的观察点提供贡献，显然观察点不会改变，因此观察点的范围还是没有办法减小。如果光子给附近一定距离的观察点提供贡献，这个距离不变，观察点的范围也不会减小。要减小模糊，必须有办法缩减贡献半径。
+
+由于观察点不会增多，所以 $k$-NN 得到的观察点与光子的距离的上界无法减小， $k$-NN 必定不能作为我们的搜索方法。我们考虑使用球搜索，并按照一定的方法不断减小球搜索半径，这意味着观察点能够接受贡献的光子的范围也会越来越小。
+
+接下来，我们只考虑一个观察点，用 $N_i(x)$ 表示到第 $i$ 批次为止观察点 $x$ 的估计范围内接受的所有光子，$R_i(x)$ 表示第 $i$ 批次使用后缩减的估计半径，同时也是第 $i + 1$ 批次使用的估计半径，所以可以定义光子数密度为
+
+$$
+d_i(x) = \dfrac{N_i(x)}{\pi R_i^2(x)}
+$$
+
+在以下推导中，都假设同一个观察点内光子的分布是均匀的。
+
+首个批次我们不考虑半径缩减，只进行与 PM 类似的过程，使用 $k$-NN 统计观察点附近的光子进行估计，则 $N_1(x) = k$，半径 $R_1(x) = \max\{\|x - p\|\}$。从第 2 轮开始，就要持续地缩减半径。在第 $i$ 轮，使用 $R_{i - 1}(x)$ 进行搜索，搜索得到 $M_i(x)$ 个光子。因此光子数密度增加：
+$$
+d_i(x) = \dfrac{N_{i - 1}(x) + M_i(x)}{\pi R_{i - 1}^2(x)}
+$$
+
+接下来缩减半径，同时要保证光子数密度与缩减前相同。定义一个系数 $\alpha$，用于表示缩减的比例（一般取 $0.75$ 或 $2 / 3$），用光子数密度列等式：
+
+$$
+\dfrac{N_i(x)}{\pi R_i^2(x)} = \dfrac{N_{i - 1}(x) + \alpha M_i(x)}{\pi R_i^2(x)} = \dfrac{N_{i - 1}(x) + M_i(x)}{\pi R_{i - 1}^2(x)}
+$$
+
+解这个方程可以得到
+$$
+R_i(x) = \sqrt{\dfrac{N_{i - 1}(x) + \alpha M_i(x)}{N_{i - 1}(x) + M_i(x)}} R_{i - 1}(x)
+$$
+注意到 $\alpha$ 乘在当前批次新搜索得到的光子上，这意味这如果没有搜索到光子，半径是不会缩减的，这避免了不受控的无限缩减，导致半径提前缩小太多导致根本搜索不到光子。半径的缩减是按需的，只有在当前半径可以接受到足够的光子，才会收缩对应的程度。
+
+### 通量缩减
+
+由于 PPM 中发射光子数持续增加，我们修改光子的 $L_i$、$\Delta^2 \Phi$ 的定义为未缩放过的量，即没有除以发射光子数 $N_{e, i}$。
+
+回顾 Measurement Equation 一节推导的 $L_s$ 的估计
+$$
+L_s(x, \omega_o) \approx \dfrac{1}{N_{e, i} \pi r_m^2} \sum_{i = 1}^k f_s(x, \omega_i \to \omega_o) \Delta^2 \Phi(p, \omega_i)
+$$
+$r_m$ 已经被分离出来了，可以直接用 $R_i(x)$ 代入。但是由于半径的缩减，一部分光子已经被我们排除在外了，所以它们的通量也要被排除。问题在于我们使用的分批次算法，以前所有批次的光子早已丢弃，一个个统计是不可行的。因此我们再次假设光子的通量分布也是均匀的，与估计面积成比例。
+
+假设第 $i$ 批次的累积的所有通量为 $\phi_i(x, \omega_o)$，第 $i$ 批次新增 $\tau_i(x, \omega_o)$ 即
+$$
+\tau_i(x, \omega) = \sum_{k = 1}^{M_i(x)} f_s(x, \omega_i \to \omega_o) \Delta^2 \Phi(p, \omega_i)
+$$
+按照与面积同比例缩减，得到等式
+$$
+\phi_i(x, \omega_o) = \dfrac{N_{i - 1}(x) + \alpha M_i(x)}{N_{i - 1}(x) + M_i(x)} (\phi_{i - 1}(x, \omega_o) + \tau_i(x, \omega_o))
+$$
+最终的 $L_s$ 为
+$$
+L_s(x, \omega_o) = \dfrac{\phi_i(x, \omega_o)}{N_{e, i} \pi R_i^2(x)}
+$$
+
 ### 随机渐进式光子映射
+
+随机渐进式光子映射（Stochastic Progressive Photon Mapping, SPPM）是对 PPM 的修改。PPM 的第一个阶段发射多条光线来获得多个采样点，但固定的采样点则有着一些问题。采样点不变，则估计的范围也是固定在几个局部，而传统 Path Tracing 则可以采样不同越来越多的路径。所以 SPPM 不再使用固定的观察点，而是在每个批次重新使用 Path Tracing 来获得新的观察点。尽管观察点不同，但同一个像素对应的一系列观察点可以使用同一套 $N_i(x), R_i(x)$，相当于把观察点从场景中转移到了像素上。
+
+按照这个方法，我们考虑像素 $j$，则可以得到修改的公式
+$$
+R_i(j) = \sqrt{\dfrac{N_{i - 1}(j) + \alpha M_i(x)}{N_{i - 1}(j) + M_i(x)}} R_{i - 1}(j)
+$$
+定义吞吐量为 $\beta(x, \omega_o)$，则我们可以把观察点的通量转换为对像素的通量贡献：
+$$
+\phi_i(j) = \dfrac{N_{i - 1}(j) + \alpha M_i(x)}{N_{i - 1}(j) + M_i(x)} (\phi_{i - 1}(j) + \beta(x, \omega_o) \tau_i(x, \omega_o))
+$$
+最终的 $L_s$ 为
+$$
+L_{s,i}(j) = \dfrac{\phi_i(j)}{N_{e, i} \pi R_i^2(j)}
+$$
+由于每个批次都同时进行 Photon Tracing 和 Path Tracing，所以两者的顺序不再重要，完全可以先进行 Photon Tracing 再 Path Tracing，这样就省去了储存观察点的过程。
 
 ## 双向方法的 Path Tracing
 
 ### Path Tracing 与 PM 结合
 
+传统 Path Tracing 最难以处理的是焦散，焦散是指光从光源出发经过镜面反射或镜面折射最后到达漫反射表面形成的照明，其效果明显，但光路在 Path Tracing 中难以采样，从摄像机出发的单向方法因此非常低效。PM 从光源出发，则对于焦散的处理非常高效，与  Path Tracing 形成互补。
+
+同时漫反射表面使用辐射亮度估计时，光子利用率高，效果好，所以也可以用 PM 来处理漫反射表面。
+
+分别对 BSDF 和 光路进行分解，然后分情况讨论。BSDF 可以分解为 $f_s = f_{s, d} + f_{s, s}$，分别表示非镜面 BSDF 和镜面 BSDF。光路可以分解为 $LD$、$LS^+D$ 和剩下的，分别代表直接光照、焦散光照、间接光照，这三种光路的 $L_i$ 分别记作 $L_{i, d}$、$L_{i, c}$、$L_{i, i}$。将 BSDF 和光路两两组合，可以按照不同的策略进行处理。
+
+- $f_{s, d} L_{i, d}$：非镜面材料接受直接光照，这种情况下使用 NEE + MIS 方法即可。
+- $f_{s, d} L_{i, c}$：非镜面材料的焦散光照，把焦散光路的光子存进一个单独的焦散光子图，单独用焦散光子图估计焦散光路。
+- $f_{s, d} L_{i, i}$：非镜面材料的其他间接光照，我们一般从当前点再散射一次光线，从下一个非镜面点使用一个全局的光子图进行估计，如果散射的光线到达了镜面点，则继续递归，直到非镜面点。
+- $f_{s, s} L_i$：镜面材料的 BSDF 是奇异的，使用 Path Tracing 明显好于 PM。
+
+尽管本文最终实现的是 SPPM，但还是有必要从 PM 开始介绍结合的思路，后续的 SPPM 也基于此进行实现。
+
 ### Path Tracing 与 SPPM 结合
+
+首先是如何做光子追踪，以下是在漫反射材料的散射代码：
+
+```rust
+impl Diffuse {
+    fn receive(
+        &self,
+        context: &mut PmContext<'_>,
+        state: PmState,
+        photon: PhotonRay,
+        intersection: RayIntersection,
+    ) {
+        match state.policy() {
+            StoragePolicy::Global => {
+                self.store_photon(context, &photon, &intersection);
+                self.maybe_bounce_next_photon(context, state, photon, intersection);
+            }
+            StoragePolicy::Caustic => {
+                if state.has_specular() {
+                    self.store_photon(context, &photon, &intersection);
+                }
+            }
+        }
+    }
+    
+    // ...
+}
+
+pub trait BsdfMaterialExt: BsdfMaterial {
+    fn maybe_bounce_next_photon(
+        &self,
+        context: &mut PmContext<'_>,
+        state_next: PmState,
+        photon: PhotonRay,
+        intersection: RayIntersection,
+    ) {
+        let renderer = context.renderer();
+        let mut throughput = photon.throughput();
+
+        let continue_prob = (throughput.red())
+            .max(throughput.green())
+            .max(throughput.blue())
+            .clamp(Val(0.0), Val(1.0));
+        if Val(context.rng().random()) < continue_prob {
+            throughput /= continue_prob;
+        } else {
+            return;
+        }
+
+        let sample = self.sample_bsdf(photon.ray(), &intersection, *context.rng());
+        let throughput_next = sample.coefficient() * throughput;
+        let photon_next = PhotonRay::new(sample.into_ray_next(), throughput_next);
+        renderer.emit(context, state_next, photon_next, DisRange::positive());
+    }
+    
+    // ...
+}
+```
+
+我们继续考虑如何实现通量估计，可以参考以下代码：
+
+```rust
+#[derive(Debug, Clone, PartialEq, Eq, CopyGetters)]
+pub struct FluxEstimation {
+    #[getset(get_copy = "pub")]
+    flux: Spectrum,
+    #[getset(get_copy = "pub")]
+    num: Val,
+    #[getset(get_copy = "pub")]
+    radius: Val,
+}
+
+pub trait BsdfMaterialExt: BsdfMateril {
+    fn estimate_flux(
+        &self,
+        ray: &Ray,
+        intersection: &RayIntersection,
+        photon_info: &PhotonInfo,
+    ) -> FluxEstimation {
+        let (pm, policy) = (photon_info.photons(), photon_info.policy());
+        let center = intersection.position();
+        let photons = pm.search(center, policy);
+
+        let mut flux = Spectrum::zero();
+        for photon in &photons {
+            let bsdf = self.bsdf(-ray.direction(), intersection, photon.direction());
+            flux += bsdf * photon.throughput();
+        }
+
+        let radius = if let SearchPolicy::Radius(radius) = policy {
+            radius
+        } else {
+            (photons.iter())
+                .map(|photon| (center - photon.position()).norm_squared())
+                .max()
+                .map_or(Val::INFINITY, |r2| r2.sqrt())
+        };
+
+        FluxEstimation::new(flux, photons.len().into(), radius)
+    }
+
+    // ...
+}
+```
+
+由于我们需要在像素储存累积的通量，Path Tracing 不再直接计算所有的光照，而必须按照上文的方法进行分类，把各个类别的光照分开储存分开返回，比如下面这样：
+
+```rust
+#[derive(Debug, Clone, PartialEq)]
+pub enum Contribution {
+    Light(Spectrum),
+    All(Box<ContributionInner>),
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct ContributionInner {
+    light: Spectrum,
+    global: FluxEstimation,
+    caustic: FluxEstimation,
+}
+```
+
+接下来就可以实现每个材料的计算光照的代码，以漫反射材料为例，其他材料按情况处理：
+
+```rust
+impl Diffuse {
+	fn shade(
+        &self,
+        context: &mut RtContext<'_>,
+        state: RtState,
+        ray: Ray,
+        intersection: RayIntersection,
+    ) -> Contribution {
+        if state.visible() {
+            let light = self.shade_light(context, &ray, &intersection);
+            let caustic = self.estimate_flux(&ray, &intersection, context.photon_casutic());
+            let mut res = self.shade_scattering(
+                context,
+                state.mark_invisible().with_skip_emissive(true),
+                &ray,
+                &intersection,
+            );
+            res.add_light(light.light());
+            res.set_caustic(caustic);
+            res
+        } else {
+            let global = self.estimate_flux(&ray, &intersection, context.photon_global());
+            let mut res = Contribution::new();
+            res.set_global(global);
+            res
+        }
+    }
+}
+```
+
+最后可以用以下代码来计算其中一种光路的累积通量，以及计算最终的辐射亮度：
+
+```rust
+#[derive(Debug, Clone, PartialEq)]
+struct Observation {
+    flux: Spectrum,
+    num: usize,
+    radius: Val,
+}
+
+impl Observation {
+    const NUM_ATTENUATION: Val = Val(0.75);
+
+    fn accumulate(&mut self, flux: &FluxEstimation) {
+        let total = self.num + usize::from(flux.num() * Self::NUM_ATTENUATION);
+        let fraction = Val::from(total) / (Val::from(self.num) + flux.num());
+        self.flux = (self.flux + flux.flux()) * fraction;
+        self.num = total;
+        self.radius *= fraction.sqrt();
+    }
+
+    fn radiance(&self, num_emitted: usize) -> Spectrum {
+        let area = Val::PI * self.radius.powi(2);
+        self.flux / (area * Val::from(num_emitted))
+    }
+    
+    // ...
+}
+```
+
