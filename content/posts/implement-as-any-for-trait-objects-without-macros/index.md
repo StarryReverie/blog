@@ -14,7 +14,7 @@ math: false
 
 然而问题也出在 `dyn Any` 的 `downcast_*()` 方法。这些方法是 `dyn Any` 的方法，而不是 `Any` trait 中的方法，所以其他任何 `dyn Trait` 都不会拥有这些方法，即使有 `Trait: Any`。另一方面，由于 trait upcasting 直到最近才成为稳定特性，且还没进入 stable 版本，所以依赖语言支持的 trait upcasting 来转换为 `dyn Any` 对于较早版本的项目并不合适。
 
-因此，本文则通过纯 Rust 语法来扩展 trait object，以实现 `Any` 的所有功能。这些实现都可以在 [`better-as-any`](https://github.com/oosquare/better-as-any) 找到。
+因此，本文则通过纯 Rust 语法来扩展 trait object，以实现 `Any` 的所有功能。这些实现都可以在 [`better-as-any`](https://github.com/StarryReverie/better-as-any) 找到。
 
 ## 现有解决方案
 

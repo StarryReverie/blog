@@ -9,7 +9,7 @@ tags:
   - Compiler
 ---
 
-项目地址：<https://github.com/oosquare/brainfuck-interpreter>
+项目地址：<https://github.com/StarryReverie/brainfuck-interpreter>
 
 Brainfuck 是什么就不具体介绍了，可以看[这里](https://esolangs.org/wiki/brainfuck)。以下简称 bf。
 
@@ -27,12 +27,12 @@ Brainfuck 是什么就不具体介绍了，可以看[这里](https://esolangs.or
 
 ## 使用方法
 
-具体说明在项目 [README](https://github.com/oosquare/brainfuck-interpreter#readme).
+具体说明在项目 [README](https://github.com/StarryReverie/brainfuck-interpreter#readme).
 
 编译、安装、执行全过程：
 
 ```bash
-$ git clone https://github.com/oosquare/brainfuck-interpreter.git
+$ git clone https://github.com/StarryReverie/brainfuck-interpreter.git
 $ cd brainfuck-interpreter
 $ cargo install --path ./crates/bf-exec # The program will be installed to ~/.cargo/bin
 $ bf-exec ./examples/helloworld.bf
@@ -444,7 +444,7 @@ pub trait EofStrategy {
 // ...
 ```
 
-具体实现见 [GitHub](https://github.com/oosquare/brainfuck-interpreter/blob/master/crates/common/src/execution/memory/strategy/mod.rs)。
+具体实现见 [GitHub](https://github.com/StarryReverie/brainfuck-interpreter/blob/master/crates/common/src/execution/memory/strategy/mod.rs)。
 
 然后就可以实现内存的操作了：
 

@@ -10,7 +10,7 @@ tags:
 math: false
 ---
 
-在[对 Rust 错误处理的思考和 anyerr](/posts/thoughts-on-error-handling-in-rust-and-anyerr/)一文中，我介绍了 [`anyerr`](https://github.com/oosquare/anyerr) 这一个错误处理库，其可以携带上下文信息，且储存上下文的数据结构是可定制的。本文则聚焦 `anyerr` 是如何实现这样的特性的。
+在[对 Rust 错误处理的思考和 anyerr](/posts/thoughts-on-error-handling-in-rust-and-anyerr/)一文中，我介绍了 [`anyerr`](https://github.com/StarryReverie/anyerr) 这一个错误处理库，其可以携带上下文信息，且储存上下文的数据结构是可定制的。本文则聚焦 `anyerr` 是如何实现这样的特性的。
 
 ## 上下文的核心特性
 

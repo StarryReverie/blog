@@ -299,7 +299,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-完整代码见 [GitHub](https://github.com/oosquare/syzoj-crawler)。
+完整代码见 [GitHub](https://github.com/StarryReverie/syzoj-crawler)。
 
 ## 测试
 使用同学的帐号进行测试，爬取 `465` 道题目仅需 `27` 秒：

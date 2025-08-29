@@ -1,8 +1,8 @@
 ## Overview
 
-This is the repository of the source code of [Justin Chen](https://github.com/oosquare)'s personal blog.
+This is the repository of the source code of [Justin Chen](https://github.com/StarryReverie)'s personal blog.
 
-Please navigate to the corresponding [website](https://oosquare.github.io) for more information.
+Please navigate to the corresponding [website](https://starryreverie.github.io) for more information.
 
 ## License
 

@@ -9,7 +9,7 @@ tags:
 math: false
 ---
 
-错误处理是 Rust 中核心的一部分，从标准库中的 `Result<T, E>` 和 `Error` 到社区的 `anyhow`、`thiserror`、`color-eyre`、`snafu` 等 crates，可见其重要地位。但是在我看来，这些仅仅是错误处理机制的基础，而不是一个十分完备的框架，同时某些 crate 的设计，要么不能符合实际需要，要么使用起来很麻烦。本文将阐述我对 Rust 错误处理的理解和自己的实践 [`anyerr`](https://github.com/oosquare/anyerr)。
+错误处理是 Rust 中核心的一部分，从标准库中的 `Result<T, E>` 和 `Error` 到社区的 `anyhow`、`thiserror`、`color-eyre`、`snafu` 等 crates，可见其重要地位。但是在我看来，这些仅仅是错误处理机制的基础，而不是一个十分完备的框架，同时某些 crate 的设计，要么不能符合实际需要，要么使用起来很麻烦。本文将阐述我对 Rust 错误处理的理解和自己的实践 [`anyerr`](https://github.com/StarryReverie/anyerr)。
 
 ## `std` 中的基础设施
 
@@ -214,7 +214,7 @@ pub struct Whatever {
 
 ### `anyerr` 的基本介绍
 
-[`anyerr`](https://github.com/oosquare/anyerr) 是我对应用程序中的错误处理的思考的实践成果。`anyerr` 中的核心 `AnyError<C, K>` 是对 `anyhow::Error` 的拓展，除了基本的错误包装、调用堆栈、错误信息报告等功能，还有原生的错误类别、上下文存储支持，并且这些功能都可以定制。
+[`anyerr`](https://github.com/StarryReverie/anyerr) 是我对应用程序中的错误处理的思考的实践成果。`anyerr` 中的核心 `AnyError<C, K>` 是对 `anyhow::Error` 的拓展，除了基本的错误包装、调用堆栈、错误信息报告等功能，还有原生的错误类别、上下文存储支持，并且这些功能都可以定制。
 
 `AnyError<C, K>` 中的 `C` 和 `K` 分别代表上下文的数据结构和错误类别，只要实现了相关的 trait，那么就可以随意替换进去，定义自己的错误类型。
 

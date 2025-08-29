@@ -11,7 +11,7 @@ tags:
 
 ## 概述
 
-> `MultiGenerator` 作为早年我的试验项目，已不再适合于实际使用。如果想要生成数据，请使用性能更高且更简单的 Rust 实现：[`data-gen-rs`](https://github.com/oosquare/data-gen-rs)。
+> `MultiGenerator` 作为早年我的试验项目，已不再适合于实际使用。如果想要生成数据，请使用性能更高且更简单的 Rust 实现：[`data-gen-rs`](https://github.com/StarryReverie/data-gen-rs)。
 
 `MultiGenerator` 是一个为 `OI` 而生的多线程并行数据生成库，基于 `C++ 17`，使用面向对象和泛型等 `Morden C++` 高级特性，只需要添加最少的额外代码，就可以获得最高的性能。以下是一个能够指定数据范围的 `A + B Problem` 数据生成器的示例代码：
 
@@ -120,26 +120,26 @@ echo "source /opt/rh/devtoolset-11/enable" >> /etc/profile
 
 ### 安装 MultiGenerator
 
-`MultiGenerator` 是一个 `header-only` 库，所以无需任何编译即可使用，只需要复制 `https://github.com/oosquare/MultiGenerator/tree/master/src` 下的所有文件到 `include` 路径即可。
+`MultiGenerator` 是一个 `header-only` 库，所以无需任何编译即可使用，只需要复制 `https://github.com/StarryReverie/MultiGenerator/tree/master/src` 下的所有文件到 `include` 路径即可。
 
 #### Linux
 
 ```sh
-$ git clone https://github.com/oosquare/MultiGenerator.git
+$ git clone https://github.com/StarryReverie/MultiGenerator.git
 $ sudo cp -r src/* /usr/local/include
 ```
 
 如果你有 `xmake`，也可以按照如下方式安装：
 
 ```sh
-$ git clone https://github.com/oosquare/MultiGenerator.git
+$ git clone https://github.com/StarryReverie/MultiGenerator.git
 $ cd MultiGenerator
 $ sudo xmake install --root MultiGenerator
 ```
 
 #### Windows/macOS
 
-复制 `https://github.com/oosquare/MultiGenerator/tree/master/src` 下的所有文件到编译器提供的 `include` 路径下，具体请在编译器安装路径下搜索或查看相关文档。一个简单的办法是找到 `iostream` 的位置，然后粘贴到相同的目录下即可。
+复制 `https://github.com/StarryReverie/MultiGenerator/tree/master/src` 下的所有文件到编译器提供的 `include` 路径下，具体请在编译器安装路径下搜索或查看相关文档。一个简单的办法是找到 `iostream` 的位置，然后粘贴到相同的目录下即可。
 
 ## 快速入门
 
