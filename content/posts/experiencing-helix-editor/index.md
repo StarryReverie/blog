@@ -310,7 +310,7 @@ LSP 配置很容易，只要按照[这里](https://docs.helix-editor.com/languag
 以 Rust 为例，首先安装 rust-analyzer 等组件：
 
 ```bash
-$ rustup component add rust-analyzer rustfmt clippy
+rustup component add rust-analyzer rustfmt clippy
 ```
 
 然后新建 `~/.config/helix/languages.toml`，输入以下内容：

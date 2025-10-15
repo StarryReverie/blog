@@ -13,7 +13,9 @@ math: true
 拉格朗日插值是众多插值算法中的一种，插值是通过一些点来求出过这些点的多项式函数的过程。
 
 ## 算法思想
+
 ### 构造函数
+
 给出 $n + 1$ 个点 $(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n),(x_{n+1},y_{n+1})$，要求出过这些点的 $n$ 次多项式函数（也称该函数的度为 $n$），先考虑对每个点构造一个函数，第 $i$ 个点的函数为 $f_i(x)$，满足：
 
 $$
@@ -46,10 +48,11 @@ $$
 求单个函数值的时间复杂度是 $\Theta(n^2)$。
 
 ### 前后缀积优化
+
 在一些题目中，插值所需的 $x$ 是连续的，当 $x\in \mathrm{N^*}$ 时，我们可以把公式写成这样：
 
 $$
-f(x) = \sum_{i=1}^{n + 1} y_i \prod_{i\ne j} \frac{x-j}{i-j} 
+f(x) = \sum_{i=1}^{n + 1} y_i \prod_{i\ne j} \frac{x-j}{i-j}
 = \sum_{i=1}^{n + 1} y_i \frac{pre[i - 1]suf[i+1]}{(i-1)!(n-i+1)!(-1)^{n-i+1}}\\\\
 pre[i]=\prod_{j=1}^{i} (k-j) = (k-i)pre[i-1]\\\\
 suf[i]=\prod_{j=i}^{n+1} (k-j)= (k-i)suf[i+1]\\\\
@@ -61,6 +64,7 @@ $$
 当然，前后缀积优化还适用于 $x_i-x_{i-1}=d\ (d\ne 0,x>1)$ 的情况，即 $x_i$ 是一个公差不为 $0$ 的等差数列。
 
 ### 重心拉格朗日插值
+
 如果题面要求动态地加入插值点升高次数，上述方法不够优秀，从公式中可以发现，我们重复计算了许多东西，考虑把它们提取出来：
 
 $$
@@ -88,7 +92,9 @@ $$
 具体地，对于 $\forall i\in [1,n+1]$，$w(i)$ 都除以 $x_i-x_{n+2}$，而 $w(n+2)$ 只需扫一遍即可。
 
 ## 代码实现
+
 ### 普通拉格朗日插值
+
 ```cpp
 int interpolation(int deg, int k, int x[], int y[]) {
     int res = 0;
@@ -112,6 +118,7 @@ int interpolation(int deg, int k, int x[], int y[]) {
 ```
 
 ### 前后缀积优化
+
 ```cpp
 inline int sgnInv(int n) {
     static int inv[2] = {power(1, MOD - 2), power(MOD - 1, MOD - 2)};
@@ -151,6 +158,7 @@ int interpolation(int deg, int k, int y[]) {
 ```
 
 ### 重心拉格朗日插值
+
 ```cpp
 int interpolationAdd(int nx, int ny) {
     ++deg;
@@ -178,7 +186,9 @@ int interpolationAdd(int nx, int ny) {
 ```
 
 ## 例题
+
 ### Luogu P4593 教科书般的亵渎
+>
 > 给出一个单调递增的长度为 $n$ 的数列，每次操作可以使数列的值全部减少 $x$，满足 $x$ 恰好是操作开始前数列开头的值域连续段全部被减为小于等于 $0$，操作结束后，将该连续段删除，并获得 $1+2^k+\cdots +x^k$ 的分数。题面给出数列中没有出现的数，共 $m$ 个。
 >
 > $1\le n \le 10^{13}$，$1\le m \le 10$。
@@ -190,6 +200,7 @@ int interpolationAdd(int nx, int ny) {
 所以考虑先求出 $\forall i\in [1,k+2]$ 的 $f(i)$，插值得到 $k+1$ 次的 $f(x)$。
 
 至于题目中的减操作，$\Theta(m^2)$ 模拟每一段即可。若使用前后缀积优化，则时间复杂度为 $\Theta(m^2k)$。
+
 ```cpp
 #include <iostream>
 #include <algorithm>
@@ -311,8 +322,9 @@ int main() {
 ```
 
 ### Luogu P3270 成绩比较
+>
 > G 系共有 $N$ 位同学，$M$ 门必修课。这 $N$ 位同学的编号为 $0$ 到 $N-1$ 的整数，其中 B 神的编号为 $0$ 号。这 $M$ 门必修课编号为 $0$ 到 $M-1$ 的整数。一位同学在必修课上可以获得的分数是 $1$ 到 $U_i$ 中的一个整数。
-> 
+>
 > 如果在每门课上 A 获得的成绩均小于等于 B 获得的成绩，则称 A 被 B 碾压。在 B 神的说法中，G 系共有 $K$ 位同学被他碾压（不包括他自己），而其他 $N-K-1$ 位同学则没有被他碾压。D 神查到了 B 神每门必修课的排名。
 >
 > 这里的排名是指：如果 B 神某门课的排名为 $R$，则表示有且仅有 $R-1$ 位同学这门课的分数大于 B 神的分数，有且仅有 $N-R$ 位同学这门课的分数小于等于 B 神（不包括他自己）。
@@ -446,7 +458,9 @@ int main() {
 ```
 
 ### Luogu P4463 calc
+>
 > 定义一个长度为 $n$ 的正整数数列 $a_n$ 的权值为 $\prod_{i=1}a_i$，现在要求你求出所有满足以下条件的数列的权值并对质数 $p$ 取模：
+>
 > 1. $\forall i,j \in [1,n]\wedge i\ne j$，$a_i\ne a_j$。
 > 2. $\forall i \in [1,n]$，$a_i\in [1,k]$。
 >
@@ -462,6 +476,7 @@ $$
 最后答案为 $f[n][k]$。可以想到需要插值，现在重点是要知道 $f[n][x]$ 的次数。
 
 设 $d[i][j]$ 为 $f[i][j]$ 的次数.
+
 - 首先可以知道 $d[0][j]=0$。
 - 对于 $i=1$，仅考虑 $f[1][j]\longleftarrow j\cdot f[0][j-1]$，则 $d[1][j] = 1$，而考虑 $f[1][j]\longleftarrow f[1][j-1]$，相当于做前缀和，则 $d[1][j] = 2$。
 - 对于 $i=2$，仅考虑 $f[2][j]\longleftarrow j\cdot f[1][j-1]$，则 $d[2][j] = 3$，而考虑 $f[2][j]\longleftarrow f[2][j-1]$，相当于做前缀和，则 $d[2][j] = 4$。
@@ -482,12 +497,12 @@ int n, k, p, f[MAXN][MAXN * 2];
 int x[MAXN * 2], y[MAXN * 2];
 
 void DP() {
-	for (int i = 0; i <= 2 * n; ++i)
-		f[0][i] = 1;
+    for (int i = 0; i <= 2 * n; ++i)
+        f[0][i] = 1;
 
-	for (int i = 1; i <= n; ++i)
-		for (int j = 1; j <= 2 * n; ++j)
-			f[i][j] = (f[i][j - 1] + 1ll * j * f[i - 1][j - 1]) % p;
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= 2 * n; ++j)
+            f[i][j] = (f[i][j - 1] + 1ll * j * f[i - 1][j - 1]) % p;
 }
 
 int power(int x, int y) {
@@ -528,15 +543,15 @@ int main() {
     cin >> k >> n >> p;
     DP();
 
-	for (int i = 1; i <= 2 * n + 1; ++i) {
-		x[i] = i;
-		y[i] = f[n][i];
-	}
+    for (int i = 1; i <= 2 * n + 1; ++i) {
+        x[i] = i;
+        y[i] = f[n][i];
+    }
 
     int ans = interpolation(2 * n, k % p, x, y);
     
     for (int i = 1; i <= n; ++i)
-    	ans = 1ll * ans * i % p;
+        ans = 1ll * ans * i % p;
     
     cout << ans << endl;
     return 0;

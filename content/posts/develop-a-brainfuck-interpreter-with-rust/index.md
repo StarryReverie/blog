@@ -16,10 +16,10 @@ Brainfuck 是什么就不具体介绍了，可以看[这里](https://esolangs.or
 这个解释器实现总体上是比较简单的，但是相比其他的大多数解释器还是有比较多的不同之处，具体如下：
 
 - 更多的配置选项
-  - 内存的长度与地址范围：可配置为负数
-  - 单个内存单元的数据类型
-  - 数据溢出处理机制：wrap 或错误
-  - 读到 `EOF` 的处理机制：返回 `0`、`EOF` 本身或不改变
+    - 内存的长度与地址范围：可配置为负数
+    - 单个内存单元的数据类型
+    - 数据溢出处理机制：wrap 或错误
+    - 读到 `EOF` 的处理机制：返回 `0`、`EOF` 本身或不改变
 - 优化指令
 - 采用类似编译为字节码的机制
 
@@ -52,19 +52,19 @@ Hello World!
 `common` 的模块树如下：
 
 - `complier`：解析代码并转换为 `IR (Intermediate Representation，中间表示)`
-  - `lexer`：词法分析
-  - `parser`：语法分析并优化，生成 AST `SyntaxTree`
-    - `syntax`：AST 生成
-    - `optimizer`：AST 优化
-  - `instruction`：根据 AST 生成 `IR`，同时也是最终执行的指令
+    - `lexer`：词法分析
+    - `parser`：语法分析并优化，生成 AST `SyntaxTree`
+        - `syntax`：AST 生成
+        - `optimizer`：AST 优化
+    - `instruction`：根据 AST 生成 `IR`，同时也是最终执行的指令
 - `execution`：`IR` 的执行与相关环境
-  - `memory`：按照 bf 的内存模型实现的可配置内存
-    - `strategy`：基于策略模式实现的可配置组件
-    - `config`：构建 `Memory` 的配置
-  - `stream`：bf 的 IO 实现
-    - `config`：构建 `InStream`、`OutStream` 的配置
-  - `context`：`Memory` 与 `InStream`、`OutStream` 的组合
-  - `processor`：运行指令，并调用 `Context`
+    - `memory`：按照 bf 的内存模型实现的可配置内存
+        - `strategy`：基于策略模式实现的可配置组件
+        - `config`：构建 `Memory` 的配置
+    - `stream`：bf 的 IO 实现
+        - `config`：构建 `InStream`、`OutStream` 的配置
+    - `context`：`Memory` 与 `InStream`、`OutStream` 的组合
+    - `processor`：运行指令，并调用 `Context`
 
 ## 实现细节
 

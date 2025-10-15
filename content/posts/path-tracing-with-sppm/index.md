@@ -409,7 +409,7 @@ pub struct ContributionInner {
 
 ```rust
 impl Diffuse {
-	fn shade(
+    fn shade(
         &self,
         context: &mut RtContext<'_>,
         state: RtState,
@@ -467,4 +467,3 @@ impl Observation {
     // ...
 }
 ```
-

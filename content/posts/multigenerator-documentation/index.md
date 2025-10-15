@@ -92,21 +92,24 @@ int main() {
 绝大多数的 `Linux` 发行版预装的 `GCC` 版本都比较低，仅能支持 `C++ 11`，建议使用包管理器进行安装更新版本的 `GCC`，至少为 `GCC 8`，建议 `GCC 11`，这里仅列举部分安装方法，具体请查阅发行版的包管理器文档。
 
 **Debian/Ubuntu/Deepin**
+
 ```sh
-$ sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-$ sudo apt-get update
-$ sudo apt install gcc g++
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+sudo apt install gcc g++
 ```
 
 **Arch Linux/Manjaro**
+
 ```sh
-$ sudo pacman -S gcc
+sudo pacman -S gcc
 ```
 
 **CentOS/RHEL**
+
 ```sh
-$ sudo yum -y install centos-release-scl
-$ yum -y install devtoolset-11-gcc devtoolset-11-gcc-c++ devtoolset-11-binutils
+sudo yum -y install centos-release-scl
+yum -y install devtoolset-11-gcc devtoolset-11-gcc-c++ devtoolset-11-binutils
 echo "source /opt/rh/devtoolset-11/enable" >> /etc/profile
 ```
 
@@ -125,16 +128,16 @@ echo "source /opt/rh/devtoolset-11/enable" >> /etc/profile
 #### Linux
 
 ```sh
-$ git clone https://github.com/StarryReverie/MultiGenerator.git
-$ sudo cp -r src/* /usr/local/include
+git clone https://github.com/StarryReverie/MultiGenerator.git
+sudo cp -r src/* /usr/local/include
 ```
 
 如果你有 `xmake`，也可以按照如下方式安装：
 
 ```sh
-$ git clone https://github.com/StarryReverie/MultiGenerator.git
-$ cd MultiGenerator
-$ sudo xmake install --root MultiGenerator
+git clone https://github.com/StarryReverie/MultiGenerator.git
+cd MultiGenerator
+sudo xmake install --root MultiGenerator
 ```
 
 #### Windows/macOS

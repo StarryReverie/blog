@@ -12,6 +12,7 @@ tags:
 写本文之前，我共有两百多道题目在校内 `OJ` 上通过，由于某些原因，想要保存这些代码，于是想到使用 `Python` 实现自动爬取代码。同时考虑到效率问题，决定使用 `aiohttp` 编写一个高性能异步爬虫。
 
 ## 实现目标分析
+
 这个爬虫需要能够爬取所有的已通过题目的列表，并继续爬取这些已通过题目的代码，随后保存到文件中。
 
 校内 `OJ` 基于 `SYZOJ` 搭建，该 `OJ` 的项目地址为 <https://github.com/syzoj/syzoj>，故接下来的代码都是基于其实现的。
@@ -19,6 +20,7 @@ tags:
 由于这个 `OJ` 的外网域名的带宽很小，一个网页最坏情况下需要花费 `2～3` 秒的时间，所以必须采用异步实现。这里就使用 `aiohttp` 了。
 
 ## 获取 Cookie
+
 由于直接从浏览器里获取的 `Cookie` 无法正常使用，传给服务器无法识别，猜测是编码问题，所以使用在爬虫运行时即时获取 `Cookie` 的办法。
 
 分析 `SYZOJ` 的登陆[页面源码](https://github.com/syzoj/syzoj/blob/master/views/login.ejs)，找到如下代码片段：
@@ -104,6 +106,7 @@ async def main():
 ```
 
 ## 获取通过题目列表
+
 这里通过抓取题目页面来获取题目列表，如果一道题目已经通过，题目前面就会有一个绿色的勾，指向 `AC` 记录。
 
 ![题目列表](./problem-page.png)
@@ -212,6 +215,7 @@ async def get_problems(
 ```
 
 ## 获取通过代码
+
 有了提交记录 `URL`，就可以爬取代码了。
 
 但是代码并不是直接放在 `HTML` 里传回来的，而是放在 `Javascript` 中再由浏览器处理得到的，具体可以查看网页源代码，发现以下两行：
@@ -223,7 +227,7 @@ const formattedCode = "\u003Cspan class=\"pl-cp\"\u003E#include\u003C...";
 
 因为我的代码已经格式化过了，而且 `OJ` 默认的格式化风格和我不一样，所以我就抓取 `unformattedCode` 里的就可以了：
 
-```python 
+```python
 async def get_submission_content(session: aiohttp.ClientSession, url: str) -> str:
     async with session.get(url) as response:
         return await response.text()
@@ -270,6 +274,7 @@ async def scrape_code(session: aiohttp.ClientSession, problem: str, url: str) ->
 ```
 
 ## 完善主程序
+
 ```python
 async def main() -> None:
     with open("passwd.txt") as f:
@@ -302,6 +307,7 @@ if __name__ == "__main__":
 完整代码见 [GitHub](https://github.com/StarryReverie/syzoj-crawler)。
 
 ## 测试
+
 使用同学的帐号进行测试，爬取 `465` 道题目仅需 `27` 秒：
 
 ![爬虫输出结果](./crawler-output.png)
@@ -309,4 +315,5 @@ if __name__ == "__main__":
 如果使用同步爬虫，则需要 `1` 分 `18` 秒，效率提升还是很明显的。
 
 ## 性能提升
+
 如果网络延迟较低，字符串相关的处理可能会成为性能瓶颈，可以考虑使用多线程/多进程进行优化。具体也没有我也尝试过，因为大多数情况下网络延迟还是比较严重的，所以在其他方面做优化不一定有用。大家可以自己实现。
