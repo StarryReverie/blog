@@ -21,9 +21,27 @@ defaults:
     shell: bash
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Check Markdown Style
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          config: .markdownlint.json
+          globs: |
+            archetypes/**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,workbook}
+            content/**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,workbook}
+            README.md
+
+  build:
+    runs-on: ubuntu-latest
+    needs: lint
 
     steps:
       - name: Checkout Repository

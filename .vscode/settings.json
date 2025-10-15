@@ -1,0 +1,8 @@
+{
+    "markdownlint.configFile": ".markdownlint.json",
+    "markdownlint.lintWorkspaceGlobs": [
+        "archetypes/**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,workbook}",
+        "content/**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,workbook}",
+        "README.md",
+    ],
+}
