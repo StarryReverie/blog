@@ -1,5 +1,5 @@
-baseURL: https://starryreverie.github.io/
-title: 星梦萦空
+baseURL: https://blog.starryreverie.cc/
+title: StarryReverie 繁星筑梦 星缀夜空
 copyright: "Copyright (C) 2025 [Justin Chen](https://github.com/starryreverie/) · Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)"
 languageCode: zh-cn
 theme: PaperMod
@@ -52,7 +52,7 @@ markup:
 params:
   env: production
 
-  title: 星梦萦空
+  title: StarryReverie 繁星筑梦 星缀夜空
   description: Justin Chen's personal blog
   author: Justin Chen
   defaultTheme: light
@@ -78,7 +78,7 @@ params:
       url: https://github.com/starryreverie
     - name: telegram
       title: Telegram Account
-      url: https://t.me/oosquare
+      url: https://t.me/starryreverie0
     - name: email
       title: Email
       url: mailto:starryreverie@proton.me
@@ -87,7 +87,7 @@ params:
       url: ./index.xml
 
   editPost:
-    URL: https://github.com/StarryReverie/starryreverie.github.io/tree/master/content
+    URL: https://github.com/StarryReverie/blog/tree/master/content
     Text: Edit
     appendFilePath: true
 
