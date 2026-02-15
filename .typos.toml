@@ -1,0 +1,17 @@
+[files]
+extend-exclude = [
+  "*.svg",
+  "themes/**/*",
+]
+
+[default]
+extend-ignore-re = [
+  # Disable spell checker for one line
+  "(?Rm)^.*(#|//)\\s*spellchecker:disable-line$", # `# spellchecker:disable-line`
+  "(?Rm)^.*<!--\\s*spellchecker:disable-line\\s*-->$", # `<!-- spellchecker:disable-line -->`
+  # Disable spell checker for one block
+  "(?s)(#|//)\\s*spellchecker:disable-begin.*?\\n\\s*(#|//)\\s*spellchecker:disable-end", # `# spellchecker:disable-begin`, `# spellchecker:disable-end`
+  "(?s)<!--\\s*spellchecker:disable-begin\\s*-->.*?\\n\\s*<!--\\s*spellchecker:disable-end\\s*-->", # `<!-- spellchecker:disable-begin -->`, `<!-- spellchecker:disable-end -->`
+  # Custom Vacabulary
+  "MIS", # Multiple Importance Sampling
+]

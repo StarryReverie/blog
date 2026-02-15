@@ -288,6 +288,8 @@ $$
 
 因为 $\gcd(a,m)=1$，则 $a^k$ 对 $m$ 的逆元一定存在。所以我们可以把 $a^x$ 写成 $a^{ps-q}$ 并直接将 $a^{-q}$ 提取出来，即：
 
+<!-- spellchecker:disable-begin -->
+
 $$
 a^{ps} \equiv ba^q \pmod{m}
 $$
@@ -295,6 +297,8 @@ $$
 考虑暴力的思路，可以枚举两边的 $p,q$，如果有同余的两个 $a^{ps},ba^q$，就更新答案。
 
 考虑到枚举会计算许多重复的东西，可以用某种数据结构维护映射表，存下每个 $(ba^q,q)$，再枚举左边找相应的同余的项。我们先假设 $x=ps-q \in [0,m)$，则当 $s=\lceil\sqrt{m}\rceil$ 时，时间复杂度最优，为 $\Theta(\sqrt{m})$ 或 $\Theta(\sqrt{m}\log_2 \sqrt{m})$，具体为哪种复杂度，取决于是用哈希表还是平衡树实现。
+
+<!-- spellchecker:disable-end -->
 
 ### 可解性证明
 
