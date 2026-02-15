@@ -205,7 +205,7 @@ pub trait Context: AbstractContext {
     where
         Q: Into<Self::Key>,
         C: Converter,
-        R: Convertable<C, Self::Value>,
+        R: Convertible<C, Self::Value>,
     {
         self.insert(key, value.to());
     }
@@ -245,23 +245,23 @@ impl Converter for BoxConverter {}
 随后再定义 `Convertible` trait，其真正地实现了类型的转换：
 
 ```rust
-pub trait Convertable<C: Converter, T>: Sized {
+pub trait Convertible<C: Converter, T>: Sized {
     fn to(self) -> T;
 }
 
-impl<S: Debug, T: From<String>> Convertable<DebugConverter, T> for S {
+impl<S: Debug, T: From<String>> Convertible<DebugConverter, T> for S {
     fn to(self) -> T {
         format!("{self:?}").into()
     }
 }
 
-impl<S: Into<T>, T> Convertable<IntoConverter, T> for S {
+impl<S: Into<T>, T> Convertible<IntoConverter, T> for S {
     fn to(self) -> T {
         self.into()
     }
 }
 
-impl<S, T> Convertable<BoxConverter, T> for S
+impl<S, T> Convertible<BoxConverter, T> for S
 where
     S: AnyValue,
     T: From<Box<dyn AnyValue + Send + Sync + 'static>>,
@@ -273,16 +273,16 @@ where
 }
 ```
 
-`C: Converter` 作为一个 tag，区分从 `Self` 到 `T` 的转换方式，`Convertable::to()` 则实现转换。
+`C: Converter` 作为一个 tag，区分从 `Self` 到 `T` 的转换方式，`Convertible::to()` 则实现转换。
 
 这样就实现了以下的多种转换：
 
 ```rust
-assert_eq!(<_ as Convertable<DebugConverter, String>>::to("str"), "\"str\"");
-assert_eq!(<_ as Convertable<IntoConverter, String>>::to("str"), String::from("str"));
+assert_eq!(<_ as Convertible<DebugConverter, String>>::to("str"), "\"str\"");
+assert_eq!(<_ as Convertible<IntoConverter, String>>::to("str"), String::from("str"));
 ```
 
-通过 `Convertiable`，就可以把 `Context::insert_with()` 中 `value` 的类型选择推迟到其实现阶段，由实现提供的 `Converter` 和 `AbstractContext::Value` 决定。
+通过 `Convertible`，就可以把 `Context::insert_with()` 中 `value` 的类型选择推迟到其实现阶段，由实现提供的 `Converter` 和 `AbstractContext::Value` 决定。
 
 `Context` trait 中还有 `Converter` 关联类型，要求实现 `Converter` trait，其指定了 `Context` 的默认转换方式。
 

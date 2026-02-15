@@ -355,7 +355,7 @@ pub struct FluxEstimation {
     radius: Val,
 }
 
-pub trait BsdfMaterialExt: BsdfMateril {
+pub trait BsdfMaterialExt: BsdfMaterial {
     fn estimate_flux(
         &self,
         ray: &Ray,
