@@ -51,7 +51,7 @@ Hello World!
 
 `common` 的模块树如下：
 
-- `complier`：解析代码并转换为 `IR (Intermediate Representation，中间表示)`
+- `compiler`：解析代码并转换为 `IR (Intermediate Representation，中间表示)`
     - `lexer`：词法分析
     - `parser`：语法分析并优化，生成 AST `SyntaxTree`
         - `syntax`：AST 生成
@@ -514,6 +514,6 @@ impl Memory {
 // ...
 ```
 
-注意，这里 `Memory` 中的 `cur` 存储的是抽象层次上的指针，最终访问底层数据结构时是需要用 `AddrStragety::calc` 来换算的。
+注意，这里 `Memory` 中的 `cur` 存储的是抽象层次上的指针，最终访问底层数据结构时是需要用 `AddrStrategy::calc` 来换算的。
 
 其他的实现都比较简单，本文就不再赘述了。

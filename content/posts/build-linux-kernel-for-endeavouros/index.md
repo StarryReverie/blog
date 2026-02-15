@@ -10,7 +10,7 @@ math: false
 
 简单记录一下在 EndeavourOS 上手动编译 Linux 内核的过程。
 
-### 环境准备
+## 环境准备
 
 整个过程在虚拟机上完成，具体配置参数如下：
 
@@ -29,7 +29,7 @@ math: false
 ssh starryreverie@192.168.255.11
 ```
 
-### 获取内核源码
+## 获取内核源码
 
 内核源码可以从 [kernel.org](https://www.kernel.org/) 下载。选择 `linux-6.17.1.tar.xz` 源码包，并使用以下命令下载：
 
@@ -51,7 +51,7 @@ cd build/linux-6.17.1
 ls -alh
 ```
 
-### 配置编译环境
+## 配置编译环境
 
 在编译内核前，需要安装必要的工具和依赖包。使用以下命令安装：
 
@@ -60,7 +60,7 @@ sudo pacman -Syu
 sudo pacman -S base-devel ncurses bc kmod cpio flex bison libelf-dev openssl
 ```
 
-### 编译内核
+## 编译内核
 
 在配置前，清理内核源代码目录，运行以下命令：
 
@@ -91,7 +91,7 @@ make -j8 modules
 
 内核的构建产物位于 `./arch/x86/boot/bzImage`。
 
-### 安装
+## 安装
 
 先安装内核模块：
 

@@ -146,7 +146,7 @@ $$
 ## 例题
 
 ### Luogu P2522 Problem b
->
+
 > 对于给出的 $n$ 个询问，每次求有多少个数对 $(x,y)$，满足 $a \le x \le b$，$c \le y \le d$，且 $\gcd(x,y) = k$。
 >
 > $1\le n,k\le 5\times 10^4$，$1\le a\le b\le 5\times 10^4$，$1\le c\le d\le 5\times 10^4$。
@@ -247,7 +247,7 @@ int main() {
 ```
 
 ### Luogu P2257 YY 的 GCD
->
+
 > 给出 $n,m$，求满足 $1\le x\le n,1\le y\le m$ 且 $\gcd(x,y)$ 为质数的有序数对 $(x,y)$ 个数。
 >
 > 有 $t$ 组数据，$1\le t\le 10^4$，$1\le n,m\le 10^7$。
@@ -340,7 +340,7 @@ int main() {
 ```
 
 ### Luogu P3704 数字表格
->
+
 > 设 $f_i$ 为斐波那契数列的第 $i$ 项，求:
 > $$
 > \prod_{i=1}^{n} \prod_{j=1}^{m} f_{\gcd(i,j)} \bmod (10^9+7)
@@ -514,7 +514,7 @@ int main() {
 ```
 
 ### SPOJ GCDMAT GCD OF MATRIX
->
+
 > 给出 $n,m$，并给出 $t$ 组询问，每组询问给出 $i_1,j_1,i_2,j_2$，求：
 > $$
 > \sum_{i=i_1}^{i_2} \sum_{j=j_1}^{j_2} \gcd(i,j)
@@ -621,7 +621,7 @@ int main() {
 ```
 
 ### Luogu P6156 简单题
->
+
 > 给出 $n, k$，求：
 > $$
 > \sum_{i=1}^{n} \sum_{j=1}^{n} (i+j)^k f(\gcd(i,j)) \gcd(i,j)\\\\
