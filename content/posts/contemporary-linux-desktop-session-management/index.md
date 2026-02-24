@@ -103,3 +103,164 @@ dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XAUTHORITY 
 systemd 中 `service` 的默认类型是 `simple`，这种服务的主进程一旦被创建且没有出错退出，服务则被认为启动成功。但是显示服务器总需要时间初始化，进程启动后的一小段时间内还不可以正常服务。如果不在这段时间后才被判定完成启动，`graphical-session.target` 极可能提早启动，依赖图形环境的程序则大概率会失败。
 
 解决的方案是把服务修改为 `notify` 类型，只有服务进程通知 systemd 后，systemd 才会把它标记为启动成功，确保依赖关系实际正确。自带 systemd 支持的 Window Manager 可以用 C 函数 `sd_notify()` 完成通知。其他的则需要使用 `systemd-notify --ready` 通知。
+
+## NixOS 下的实践
+
+在上文中，我已经以 Wayfire 为例子介绍了一部分基本内容。接下来的内容则是基于 NixOS 的更详细的讲解。
+
+### Unit 配置
+
+首先创建一个用户服务 `wayfire.service`，用于启动 Wayfire 主进程：
+
+```nix
+{
+  config,
+  lib,
+  pkgs,
+}:
+let
+  customCfg = config.custom.system.desktop.wayfire-environment;
+in
+{
+  config = lib.mkIf customCfg.enable {
+    systemd.user.services."wayfire" = {
+      description = "A customizable, extendable and lightweight environment without sacrificing its appearance";
+      serviceConfig.ExecStart = "${pkgs.wayfire}/bin/wayfire";
+      serviceConfig.Type = "notify";
+      serviceConfig.NotifyAccess = "all";
+      serviceConfig.Slice = "session.slice";
+      environment = lib.mkForce { };
+      bindsTo = [
+        "graphical-session.target"
+        "wayfire-session.target"
+      ];
+      wants = [
+        "graphical-session-pre.target"
+      ];
+      after = [
+        "graphical-session-pre.target"
+      ];
+      before = [
+        "graphical-session.target"
+        "wayfire-session.target"
+      ];
+    };
+  };
+};
+```
+
+`wayfire.service` 需要 `wants` `graphical-session-pre.target`，进行准备工作。同时其 `bindsTo` `graphical-session.target` 和 `wayfire-session.target`，这比 `wants` 由更高的要求，如果这两个 `target`s 任意一个失败，则此 `service` 也算失败，同时也把这两个 `target`s 的生命周期绑定到 `wayfire.service` 上。
+
+`wayfire-session.target` 是一个给只属于 Wayfire 的服务使用的 `target`，定义如下：
+
+```nix
+{
+  config,
+  lib,
+  pkgs,
+}:
+let
+  customCfg = config.custom.system.desktop.wayfire-environment;
+in
+{
+  config = lib.mkIf customCfg.enable {
+    systemd.user.targets."wayfire-session" = {
+      description = "Current Wayfire graphical user session";
+      requires = [ "basic.target" ];
+      unitConfig.RefuseManualStart = true;
+      unitConfig.StopWhenUnneeded = true;
+    };
+  };
+}
+```
+
+同时还有一个 `wayfire-shutdown.target`：
+
+```nix
+{
+  config,
+  lib,
+  pkgs,
+}:
+let
+  customCfg = config.custom.system.desktop.wayfire-environment;
+in
+{
+  config = lib.mkIf customCfg.enable {
+    systemd.user.targets."wayfire-shutdown" = {
+      description = "Shutdown running Wayfire session";
+      after = [
+        "graphical-session-pre.target"
+        "graphical-session.target"
+        "wayfire-session.target"
+      ];
+      conflicts = [
+        "graphical-session-pre.target"
+        "graphical-session.target"
+        "wayfire-session.target"
+      ];
+      unitConfig.DefaultDependencies = false;
+      unitConfig.StopWhenUnneeded = true;
+    };
+  };
+}
+```
+
+### 启动脚本
+
+启动脚本命名为 `wayfire-session`，由此脚本负责调用 systemd 启动 Wayfire 服务。
+
+首先检查是否已经在一个用户服务中：
+
+```bash
+# If this script is run as a systemd user service, then start Wayfire directly
+if [ -n "${MANAGERPID:-}" ] && [ "${SYSTEMD_EXEC_PID:-}" = "$$" ]; then
+  case "$(ps -p "$MANAGERPID" -o cmd=)" in
+  *systemd*--user*)
+    exec wayfire
+    ;;
+  esac
+fi
+```
+
+做一些启动前的检查，包括防止重复启动、状态重置、把当前脚本中的环境变量导出到 systemd 和 DBus。Wayfire 默认的配置文件路径在 `~/.config/wayfire.ini`，我把它改动到了 `~/.config/wayfire/wayfire.ini`。
+
+```bash
+# Start Wayfire as a systemd user service
+if systemctl --user -q is-active wayfire.service; then
+  echo 'A Wayfire session is already running.'
+  exit 1
+fi
+systemctl --user reset-failed
+
+systemctl --user import-environment
+if hash dbus-update-activation-environment 2>/dev/null; then
+  dbus-update-activation-environment --all
+fi
+systemctl --user set-environment WAYFIRE_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/wayfire/wayfire.ini"
+```
+
+接下来正在启动服务，启动后需要阻塞在这里等待其退出。退出后则做一些清理工作，包括触发 `wayfire-shutdown.target`、清除图形会话相关环境变量。
+
+```bash
+systemctl --user --wait start wayfire.service
+
+systemctl --user start --job-mode=replace-irreversibly wayfire-shutdown.target
+systemctl --user unset-environment WAYLAND_DISPLAY DISPLAY XAUTHORITY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP WAYFIRE_CONFIG_FILE
+```
+
+把这个启动脚本写到 Desktop Item 的 `Exec` 中，即可被 Display Manager 识别。
+
+### Wayfire 内配置
+
+在 Wayfire 内部，需要我们使用 `autostart` 插件手动进行一些操作：
+
+```ini
+[autostart]
+00_environment = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
+01_systemd_notify = "sleep 0.5 && systemd-notify --ready"
+```
+
+因为 Wayfire 不会自己导出环境变量，需要手动导出。在上面我们配置了 `wayfire.service` 的类型为 `notify`，所以需要在内部使用 `systemd-notify --ready` 进行反馈。`autostart` 脚本应该是在 Wayfire 初始化后运行的。关于 `sleep`，理论上是不需要，但是我尝试过如果不 `sleep`，有可能出现反馈过早的问题。
+
+通过这些配置，我们得到了一个完全基于 systemd 的 Wayfire 桌面会话配置——一个真正现代的 Linux 桌面系统应有的模样。
