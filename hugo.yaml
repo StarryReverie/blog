@@ -1,5 +1,5 @@
 baseURL: https://blog.starryreverie.cc/
-title: StarryReverie 繁星筑梦 星缀夜空
+title: StarryReverie 星缀夜空
 copyright: "Copyright (C) 2025 [Justin Chen](https://github.com/starryreverie/) · Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)"
 languageCode: zh-cn
 theme: PaperMod
@@ -52,7 +52,7 @@ markup:
 params:
   env: production
 
-  title: StarryReverie 繁星筑梦 星缀夜空
+  title: StarryReverie 星缀夜空
   description: Justin Chen's personal blog
   author: Justin Chen
   defaultTheme: light
