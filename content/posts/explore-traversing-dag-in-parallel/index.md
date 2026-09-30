@@ -1,5 +1,5 @@
 ---
-title: 探索并发遍历 DAG
+title: 探索并行遍历 DAG
 date: 2026-09-23T21:16:00+08:00
 draft: false
 categories: Tech
@@ -11,7 +11,7 @@ tags:
 math: false
 ---
 
-探索如何编写一个更简洁和优雅的并发 DAG 遍历算法。
+探索如何编写一个更简洁和优雅的并行 DAG 遍历算法。
 
 <!-- more -->
 
@@ -19,7 +19,7 @@ math: false
 
 最近我有了新的 Idea，想要分析一个 Nix Derivation 的依赖图，并以树形结构打印。在这个图结构中，不是所有的 Derivation 或 Store Object 都会被打印，而是只有那些没有被构建或还没有从缓存服务器上同步的才会被显示。也就是说，分析出某 Store Object 的闭包中在本机上还不存在的部分。这个项目已经基本上完成，名为 [DrvGraph](https://github.com/StarryReverie/DrvGraph)。
 
-在 DrvGraph 中，最核心的部分自然是对于 Nix Store 进行遍历，分析其中的 Derivation 和 Store Object 的连接关系。由于需要查询某些 Store Object 是否存在与缓存上，网络 IO 成为了遍历过程中的瓶颈，所以我们需要一个并发的遍历实现。
+在 DrvGraph 中，最核心的部分自然是对于 Nix Store 进行遍历，分析其中的 Derivation 和 Store Object 的连接关系。由于需要查询某些 Store Object 是否存在与缓存上，网络 IO 成为了遍历过程中的瓶颈，所以我们需要一个并行的遍历实现。
 
 串行的有向无环图遍历算法非常简单，几乎是算法课的最基础部分。然而这样一种朴素的实现却难以迁移到并发环境下。本文则尝试探索更好的并发版本的 DAG 遍历。
 
