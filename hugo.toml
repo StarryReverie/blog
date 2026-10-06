@@ -9,6 +9,31 @@ buildDrafts = false
 buildFuture = false
 buildExpired = false
 
+[module]
+  [[module.mounts]]
+    source = "site/data"
+    target = "data"
+
+  [[module.mounts]]
+    source = "site/layouts"
+    target = "layouts"
+
+  [[module.mounts]]
+    source = "site/i18n"
+    target = "i18n"
+
+  [[module.mounts]]
+    source = "site/archetypes"
+    target = "archetypes"
+
+  [[module.mounts]]
+    source = "site/assets"
+    target = "assets"
+
+  [[module.mounts]]
+    source = "site/static"
+    target = "static"
+
 [taxonomies]
 category = "categories"
 tag = "tags"
