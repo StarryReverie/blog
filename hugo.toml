@@ -5,9 +5,10 @@ locale = "zh-cn"
 theme = "PaperMod"
 
 enableRobotsTXT = true
-buildDrafts = false
-buildFuture = false
-buildExpired = false
+hasCJKLanguage = true
+
+publishDir = ".hugo-publish"
+resourceDir = ".hugo-resources"
 
 [module]
   [[module.mounts]]
