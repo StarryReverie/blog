@@ -2,7 +2,6 @@ baseURL = "https://blog.starryreverie.cc/"
 title = "StarryReverie 星缀夜空"
 copyright = "Copyright (C) 2025 [Justin Chen](https://github.com/starryreverie/) · Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)"
 locale = "zh-cn"
-theme = "PaperMod"
 
 enableRobotsTXT = true
 hasCJKLanguage = true
