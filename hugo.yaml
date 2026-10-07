@@ -1,0 +1,97 @@
+baseURL: https://blog.starryreverie.cc/
+title: StarryReverie 星缀夜空
+copyright: Copyright (C) 2025 [Justin Chen](https://github.com/starryreverie/) · Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+locale: zh-cn
+
+enableRobotsTXT: true
+hasCJKLanguage: true
+
+publishDir: .hugo-publish
+resourceDir: .hugo-resources
+
+module:
+  mounts:
+    - source: site/data
+      target: data
+
+    - source: site/layouts
+      target: layouts
+
+    - source: site/i18n
+      target: i18n
+
+    - source: site/archetypes
+      target: archetypes
+
+    - source: site/assets
+      target: assets
+
+    - source: hugo_stats.json
+      target: assets/notwatching/hugo_stats.json
+      disableWatch: true
+
+    - source: site/static
+      target: static
+
+build:
+  buildStats:
+    enable: true
+
+  cachebusters:
+    - source: 'assets/notwatching/hugo_stats\.json'
+      target: css
+
+    - source: '(postcss|tailwind)\.config\.js'
+      target: css
+
+security:
+  exec:
+    target: static
+    allow:
+     - ^(dart-)?sass$
+     - ^go$
+     - ^git$
+     - ^node$
+     - ^postcss$
+     - ^tailwindcss$
+
+taxonomies:
+  category: categories
+  tag: tags
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+menu:
+  main:
+    - name: Archive
+      url: ./archives/
+      weight: 1
+
+    - name: Categories
+      url: ./categories/
+      weight: 2
+
+    - name: Tags
+      url: ./tags/
+      weight: 3
+
+    - name: About
+      url: ./about/
+      weight: 4
+
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block: [ [ "$$", "$$" ] ]
+          inline: [ [ "$", "$" ] ]
