@@ -18,7 +18,7 @@ ShowReadingTime: false
 - 最爱 Minecraft，喜欢 Architecture 和 Restone
 - 其他游戏有 Forza Horizon 4、Portal 2、Overwatch 2
 
-请通过 [QQ](https://wpa.qq.com/msgrd?v=3&uin=1246186412&site=qq&menu=yes)、[Email](mailto:starryreverie@proton.me) 或 [Telegram](https://t.me/oosquare) 联系我。
+请通过 [QQ](https://wpa.qq.com/msgrd?v=3&uin=1246186412&site=qq&menu=yes)、[Email](mailto:starryreverie@proton.me) 或 [Telegram](https://t.me/starryreverie_cc) 联系我。
 
 ---
 
