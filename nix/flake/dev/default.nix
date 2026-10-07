@@ -12,4 +12,3 @@
 
   flake.inputsDev = inputs;
 }
-

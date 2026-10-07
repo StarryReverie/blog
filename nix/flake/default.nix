@@ -10,4 +10,3 @@
 
   flake.inputs = inputs;
 }
-
