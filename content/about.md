@@ -22,4 +22,4 @@ ShowReadingTime: false
 
 ---
 
-Copyright (C) 2025 Justin Chen。本博客所有文章均以 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可证发布。
+Copyright (C) 2025 Justin Chen。本博客所有文章均以 [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) 许可证发布。
