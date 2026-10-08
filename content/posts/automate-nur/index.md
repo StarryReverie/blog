@@ -1,7 +1,7 @@
 ---
 title: 自动化 NUR
 date: 2026-10-08T09:46:45+08:00
-draft: true
+draft: false
 categories: Tech
 tags:
   - Scripting
@@ -19,7 +19,7 @@ math: false
 
 因此我决定把大部分的第三方包都放进 NUR 并由 NUR 维护一个独立的 Binary Cache，NixOS 配置依赖 NUR，这样就可以尽可能减少额外的 Flake 依赖了。
 
-为了使今后的使用更方便，自动化改造是非常必要的。本文记录了我的升级过程与自动化的方案。最终的 NUR 仓库位于 <https://github.com/StarryReverie/StarryNix-Derivations>。
+为了使今后的使用更方便，自动化改造是非常必要的。本文记录了我的升级过程与自动化的方案。最终的 NUR 仓库位于 [StarryNix-Derivations](https://github.com/StarryReverie/StarryNix-Derivations)。
 
 ## 总体架构
 
@@ -156,3 +156,317 @@ packageSetRecursive ./.
 ```
 
 ### 基于 GitHub Actions 构建
+
+本 NUR 用 GitHub Actions 来构建所有包并上传产物到 Cachix。这里用的方案尝试尽可能并行构建。
+
+在 `build.yaml` Workflow 中，`eval` Job 在各个平台上求值所有的 Derivation，使用 `nix-eval-jobs` 并行求值并批量输出相关信息：
+
+```yaml
+jobs:
+  eval:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - system: x86_64-linux
+            os: ubuntu-latest
+          - system: aarch64-linux
+            os: ubuntu-26.04-arm
+          - system: aarch64-darwin
+            os: macos-latest
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      # ...
+
+      - name: Evaluate Derivations
+        run: |
+          all_drvs="$(nix run nixpkgs#nix-eval-jobs -- --flake '.#ciMetadata.${{ matrix.system }}.buildJobPackages' --force-recurse --check-cache-status)"
+          unbuilt_drvs="$(echo "${all_drvs}" | jq --compact-output '
+            select (.cacheStatus == "notBuilt")
+            | {
+              attr,
+              attrPath,
+              outPaths: [.outputs[]],
+              system,
+              os: "${{ matrix.os }}",
+            }
+          ')"
+          echo "${unbuilt_drvs}" | jq
+          echo "${unbuilt_drvs}" > eval-${{ matrix.system }}
+
+      - name: Upload Evaluation Result
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: eval-${{ matrix.system }}
+          path: eval-${{ matrix.system }}
+```
+
+Flake Output `ciMetadata.<system>.buildJobPackages` 表示在 `<system>` 上需要构建的 Derivation 集合，不符合构建条件的 Derivation 会被过滤掉。具体实现参考 [`./repo-nix/ci/top-level.nix`](https://github.com/StarryReverie/StarryNix-Derivations/blob/898c31682e39660cc676e3b19a1d2a847b59b115/repo-nix/ci/top-level.nix) 和 [`./repo-nix/flake/ci-metadata.nix`](https://github.com/StarryReverie/StarryNix-Derivations/blob/898c31682e39660cc676e3b19a1d2a847b59b115/repo-nix/flake/ci-metadata.nix)。`nix-eval-jobs` 会并行求值整个 Package Set，每行对应一个 Derivation 的结果。我们用 `jq` 收集并提取有用的信息。`nix-eval-jobs` 还可以同时检查这个 Derivation 是否已经构建过，脚本按照 `.cacheStatus == "notBuilt"` 过滤需要构建的 Derivation。
+
+由于上一步的求值是在不同平台上完成的，不能直接创建 GHA Matrix，需要先用一个中间 Job `aggregate` 合并结果：
+
+```yaml
+jobs:
+  aggregate:
+    needs: eval
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.aggregate.outputs.matrix }}
+
+    steps:
+      - name: Download Per-System Evaluation Results
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          pattern: eval-*
+          merge-multiple: true
+          path: eval-results
+
+      - name: Aggregate Evaluation Results
+        id: aggregate
+        run: |
+          concat_drvs="$(cat eval-results/* | jq --slurp --compact-output)"
+          echo "${concat_drvs}" | jq
+
+          # GHA requires that at least one entry is presented in the matrix.
+          matrix="$(echo "${concat_drvs}" | jq --compact-output '
+            if length == 0 then
+              [{
+                attr: "__skip_build",
+                attrPath: ["__skip_build"],
+                outPaths: [],
+                system: "x86_64-linux",
+                os: "ubuntu-latest",
+                skip: true
+              }]
+            else
+              map(. + { skip: false })
+            end
+          ')"
+          echo "matrix=${matrix}" >> ${GITHUB_OUTPUT}
+```
+
+需要注意 GHA Matrix 必须至少有一个元素，否则会报错，所以这里对于没有任何需要构建的情况加了一个假的元素。
+
+最后是利用 GHA Matrix，对于每一个 Derivation 单独启动一个 Job 来构建并上传 Cachix：
+
+```yaml
+jobs:
+  build:
+    needs: aggregate
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.aggregate.outputs.matrix) }}
+    name: build (${{ matrix.attr }}, ${{ matrix.system }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      # ...
+
+      - name: Setup Cachix
+        if: ${{ !matrix.skip }}
+        uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
+        with:
+          name: starrynix-derivations
+          extraPullNames: nix-community
+          skipPush: true
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: Build Derivation ${{ matrix.attr }}
+        if: ${{ !matrix.skip }}
+        run: |
+          nix build '.#ciMetadata.${{ matrix.system }}.buildJobPackages.${{ matrix.attr }}' --print-build-logs
+          if [[ "$?" -eq 0 ]]; then
+            out_paths=$(echo '${{ toJson(matrix.outPaths) }}' | jq --raw-output '.[]')
+            echo "${out_paths}"
+            if [[ '${{ github.ref == 'refs/heads/main' }}' == 'true' ]]; then
+              echo "${out_paths}" | cachix push starrynix-derivations
+            fi
+          fi
+```
+
+我没有使用 Cachix CLI 的自动上传功能，避免上传中间产物。对于我这样的白嫖用户来说，5 GiB 空间是很珍贵的。只有构建成功后，选择性上传 Derivation 的 Output Path 的闭包。同时我打算在 PR 中也不触发上传，只有主分支上可以上传，这样 PR 就可以比较干净地测试构建。
+
+### 自动更新 Flake Inputs
+
+交给 Renovate 或 Dependabot 即可。我选择了 Renovate，一些是配置文件：
+
+```json
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["*"],
+      "commitMessagePrefix": "chore: ",
+      "commitMessageAction": "update"
+    },
+    {
+      "matchUpdateTypes": ["pin", "pinDigest"],
+      "commitMessageAction": "pin"
+    },
+    {
+      "matchUpdateTypes": ["rollback"],
+      "commitMessageAction": "roll back"
+    },
+    {
+      "matchUpdateTypes": ["replacement"],
+      "commitMessageAction": "replace"
+    },
+    {
+      "description": "Nix Flake inputs",
+      "matchManagers": ["nix"],
+      "commitMessageAction": "update",
+      "commitMessageTopic": "Nix Flake inputs"
+    }
+  ],
+  "nix": {
+    "enabled": true
+  }
+}
+```
+
+### 自动更新 Derivation
+
+Nix 社区中已经有很好的自动更新脚本了，比如 <https://Mic92/nix-update>（又是你 Mic92），对于大多数的包都可以轻松更新。但是 `nix-update` 只是一个 CLI 工具，我更想要实现 Nixpkgs 中那样通过 `passthru.updateScript` 关联一个脚本，并以更 Nix 的方式调用。可惜 Nixpkgs 的 `maintainers/scripts/update.nix` 不方便在 Nixpkgs 之外使用，所以我再次造了轮子。
+
+[`updateUtils`](https://github.com/StarryReverie/StarryNix-Derivations/tree/898c31682e39660cc676e3b19a1d2a847b59b115/pkgs/updateUtils) 是自动更新的一些 Wrapper，可以调用 `nix-update` 或者自己的脚本，并带有生成 Git Commit、运行格式化器等功能。
+
+比如 [`nclock-screensaver`](https://github.com/StarryReverie/StarryNix-Derivations/blob/898c31682e39660cc676e3b19a1d2a847b59b115/pkgs/nclock-screensaver/package.nix#L39-L49) 中的使用方法：
+
+```nix
+{
+  lib,
+  rustPlatform,
+  updateUtils,
+  # ...
+}:
+rustPlatform.buildRustPackage (finalAttrs: {
+  # ...
+
+  passthru.updateScript =
+    let
+      baseUpdater = updateUtils.updateAuto {
+        attrPath = [ "nclock-screensaver" ];
+        branch = "main";
+      };
+    in
+    lib.pipe baseUpdater [
+      updateUtils.withFormatter
+      updateUtils.withGitCommit
+    ];
+})
+```
+
+或者 [`drvgraph`](https://github.com/StarryReverie/StarryNix-Derivations/blob/898c31682e39660cc676e3b19a1d2a847b59b115/pkgs/drvgraph/package.nix#L35-L54) 中的使用方法：
+
+```nix
+{
+  cabal2nix,
+  curl,
+  fetchurl,
+  haskell,
+  haskellPackages,
+  hpack,
+  jq,
+  lib,
+  updateUtils,
+}:
+let
+  sources = builtins.fromJSON (builtins.readFile ./sources.json);
+
+  drv = haskellPackages.callPackage ./generated.nix {
+    src = fetchurl {
+      inherit (sources) hash;
+      url = "https://github.com/StarryReverie/DrvGraph/archive/${sources.rev}.tar.gz";
+    };
+  };
+in
+haskell.lib.justStaticExecutables (
+  drv.overrideAttrs (old: {
+    # ...
+
+    passthru = (old.passthru or { }) // {
+      updateScript =
+        let
+          baseUpdater = updateUtils.updateCustom {
+            attrPath = [ "drvgraph" ];
+            scriptFile = ./update.sh;
+            extraRuntimeInputs = [
+              cabal2nix
+              hpack
+              jq
+              curl
+            ];
+          };
+        in
+        lib.pipe baseUpdater [
+          updateUtils.withFormatter
+          updateUtils.withGitCommit
+        ];
+    };
+  })
+)
+```
+
+导出 `passthru.updateScript` 后，所有的更新都可以通过 `nix run .#legacyPackages.<system>.<package>.updateScript` 来进行。
+
+然后就是集成 GHA 来定时执行这些脚本，在有新 Git Commit 产生时创建 PR。这就是 [`update.yaml`](https://github.com/StarryReverie/StarryNix-Derivations/blob/898c31682e39660cc676e3b19a1d2a847b59b115/.github/workflows/update.yaml) Workflow。
+
+这个 Workflow 中，第一个 `dispatch` Job 求值 `ciMetadata.x86_64-linux.updateScripts`，每个 Update Script 分配一个 Matrix Job 执行，实现和 `build.yaml` 类似。
+
+接下来是 `update` Job：
+
+```yaml
+jobs:
+  # ...
+
+  update:
+    needs: dispatch
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.dispatch.outputs.matrix) }}
+    name: update (${{ matrix.attr }}, ${{ matrix.system }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      # ...
+
+      - name: Run Update Script
+        if: ${{ !matrix.skip }}
+        id: update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          current_rev="$(git rev-parse HEAD)"
+          nix --extra-experimental-features 'nix-command flakes' \
+            run '.#legacyPackages.${{ matrix.system }}.${{ matrix.attr }}.updateScript'
+          new_rev="$(git rev-parse HEAD)"
+
+          if [[ "${current_rev}" != "${new_rev}" ]]; then
+            echo 'changed=true' >> ${GITHUB_OUTPUT}
+            echo "title=$(git log -1 --pretty=%s)" >> ${GITHUB_OUTPUT}
+          else
+            echo 'changed=false' >> ${GITHUB_OUTPUT}
+          fi
+
+      - name: Create Update PR
+        if: ${{ !matrix.skip && steps.update.outputs.changed == 'true' }}
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          token: ${{ secrets.UPDATE_WORKFLOW_TOKEN }}
+          base: main
+          branch: update-${{ matrix.attr }}
+          title: ${{ steps.update.outputs.title }}
+```
+
+创建 PR 这一个部分，最好使用 PAT 或 GitHub App。如果是默认的 `GITHUB_TOKEN`，创建的 PR 是不会自动触发后续的 Workflow 的。
+
+## 总结
+
+这就是我升级重构 NUR 的具体方案。我对于现在的自动化程度还是比较满意的，并行构建和自动更新等功能节省了很多时间，StarryNix-Derivations 再也不会像以前那样荒废了。
