@@ -159,7 +159,7 @@ packageSetRecursive ./.
 
 本 NUR 用 GitHub Actions 来构建所有包并上传产物到 Cachix。这里用的方案尝试尽可能并行构建。
 
-在 `build.yaml` Workflow 中，`eval` Job 在各个平台上求值所有的 Derivation，使用 `nix-eval-jobs` 并行求值并批量输出相关信息：
+在 [`build.yaml`](https://github.com/StarryReverie/StarryNix-Derivations/blob/898c31682e39660cc676e3b19a1d2a847b59b115/.github/workflows/build.yaml) Workflow 中，`eval` Job 在各个平台上求值所有的 Derivation，使用 `nix-eval-jobs` 并行求值并批量输出相关信息：
 
 ```yaml
 jobs:
@@ -331,7 +331,7 @@ jobs:
 
 ### 自动更新 Derivation
 
-Nix 社区中已经有很好的自动更新脚本了，比如 <https://Mic92/nix-update>（又是你 Mic92），对于大多数的包都可以轻松更新。但是 `nix-update` 只是一个 CLI 工具，我更想要实现 Nixpkgs 中那样通过 `passthru.updateScript` 关联一个脚本，并以更 Nix 的方式调用。可惜 Nixpkgs 的 `maintainers/scripts/update.nix` 不方便在 Nixpkgs 之外使用，所以我再次造了轮子。
+Nix 社区中已经有很好的自动更新脚本了，比如 [Mic92/nix-update](https://github.com/Mic92/nix-update)（又是你 Mic92），对于大多数的包都可以轻松更新。但是 `nix-update` 只是一个 CLI 工具，我更想要实现 Nixpkgs 中那样通过 `passthru.updateScript` 关联一个脚本，并以更 Nix 的方式调用。可惜 Nixpkgs 的 `maintainers/scripts/update.nix` 不方便在 Nixpkgs 之外使用，所以我再次造了轮子。
 
 [`updateUtils`](https://github.com/StarryReverie/StarryNix-Derivations/tree/898c31682e39660cc676e3b19a1d2a847b59b115/pkgs/updateUtils) 是自动更新的一些 Wrapper，可以调用 `nix-update` 或者自己的脚本，并带有生成 Git Commit、运行格式化器等功能。
 
