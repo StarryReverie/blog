@@ -88,6 +88,10 @@ menu:
       weight: 4
 
 markup:
+  highlight:
+    noClasses: false
+    style: rose-pine-dawn
+
   goldmark:
     extensions:
       passthrough:
