@@ -15,9 +15,9 @@
     {{ partial "head-resources.html" "emptyContext" }}
   </head>
 
-  <body class="bg-background">
+  <body class="space-y-section bg-background py-page">
     <header></header>
     {{ block "main" . }}<main></main>{{ end }}
-    <footer></footer>
+    <footer>{{ partialCached "footer.html" . }}</footer>
   </body>
 </html>
