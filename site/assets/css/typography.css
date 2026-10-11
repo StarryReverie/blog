@@ -95,7 +95,7 @@
   --space-page: var(--fluid-space-lg);
   --space-inset: var(--fluid-space-base);
   --space-component: var(--static-space-sm);
-  --space-control: var(--static-space-xs);
+  --space-control: var(--static-space-2xs);
 
   --space-section: var(--fluid-space-xl);
   --space-gutter: var(--fluid-space-base);
