@@ -59,6 +59,7 @@
   --line-height-4xl: 1.1;
 
   --line-height-prose: 1.75;
+  --line-height-code: 1.45;
 
   /* Semantic aliases */
   --static-type-body: var(--static-type-base);
@@ -90,6 +91,17 @@
   --line-height-h4: var(--line-height-lg);
   --line-height-h5: var(--line-height-base);
   --line-height-h6: var(--line-height-sm);
+
+  --space-page: var(--fluid-space-lg);
+  --space-inset: var(--fluid-space-base);
+  --space-component: var(--static-space-sm);
+  --space-control: var(--static-space-xs);
+
+  --space-section: var(--fluid-space-xl);
+  --space-gutter: var(--fluid-space-base);
+  --space-stack: var(--fluid-space-sm);
+  --space-line: var(--fluid-space-2xs);
+  --space-inline: var(--static-space-xs);
 }
 
 @theme inline {
@@ -200,13 +212,16 @@
   --text-fl-h6: var(--fluid-type-h6);
   --text-fl-h6--line-height: var(--line-height-h6);
 
-  --spacing-section: var(--fluid-space-xl);
-  --spacing-stack: var(--fluid-space-sm);
-  --spacing-gutter: var(--fluid-space-sm-lg);
-  --spacing-span: var(--fluid-space-xs);
+  --spacing-page: var(--space-page);
+  --spacing-inset: var(--space-inset);
+  --spacing-component: var(--space-component);
+  --spacing-control: var(--space-control);
 
-  --spacing-page: var(--fluid-space-lg);
-  --spacing-component: var(--fluid-space-sm);
+  --spacing-section: var(--space-section);
+  --spacing-gutter: var(--space-gutter);
+  --spacing-stack: var(--space-stack);
+  --spacing-line: var(--space-line);
+  --spacing-inline: var(--space-inline);
 }
 
 .prose {
@@ -250,6 +265,10 @@
   font-weight: 600;
 }
 
+.prose pre {
+  line-height: var(--line-height-code);
+}
+
 .prose code::before,
 .prose code::after {
   content: none;
@@ -258,5 +277,5 @@
 .prose :not(pre) > code {
   background-color: var(--muted);
   border-radius: 0.25rem;
-  padding: 0.125rem 0.375rem;
+  padding: 0.15em 0.4em;
 }
