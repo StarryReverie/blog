@@ -1,10 +1,10 @@
-{{- $u := urls.Parse .Destination -}}
+{{- $u := urls.Parse $.Destination -}}
 <a
-  href="{{ .Destination | safeURL }}"
-  {{ with .Title }}title="{{ . }}"{{ end }}
+  href="{{ $.Destination | safeURL }}"
+  {{ with $.Title }}title="{{ . }}"{{ end }}
   {{ if $u.IsAbs }}rel="external"{{ end }}
   class="link"
 >
-  {{- with .Text }}{{ . }}{{ end -}}
+  {{- with $.Text }}{{ . }}{{ end -}}
 </a>
 {{- /* chomp trailing newline */ -}}

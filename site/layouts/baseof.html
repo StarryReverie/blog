@@ -16,8 +16,8 @@
   </head>
 
   <body class="space-y-section bg-background pb-page">
-    <header>{{ partial "header.html" . }}</header>
-    {{ block "main" . }}<main></main>{{ end }}
-    <footer>{{ partialCached "footer.html" . }}</footer>
+    <header>{{ partial "header.html" $ }}</header>
+    {{ block "main" $ }}<main></main>{{ end }}
+    <footer>{{ partialCached "footer.html" $ }}</footer>
   </body>
 </html>
