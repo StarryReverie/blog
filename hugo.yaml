@@ -72,19 +72,19 @@ outputs:
 menu:
   main:
     - name: Archive
-      url: ./archives/
+      pageRef: /archives
       weight: 1
 
     - name: Categories
-      url: ./categories/
+      pageRef: /categories
       weight: 2
 
     - name: Tags
-      url: ./tags/
+      pageRef: /tags
       weight: 3
 
     - name: About
-      url: ./about/
+      pageRef: /about
       weight: 4
 
 markup:

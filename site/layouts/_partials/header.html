@@ -1,0 +1,28 @@
+<div class="bg-card">
+  <div class="mx-auto flex max-w-4xl flex-col gap-y-line items-center justify-between px-page py-component md:flex-row">
+    <a
+      href="{{ site.Home.RelPermalink }}"
+      class="text-fl-emphasis font-bold text-primary transition-colors duration-400 hover:text-primary-active"
+      >{{ site.Title }}</a
+    >
+
+    {{- with index site.Menus "main" -}}
+      <nav aria-label="Main Menu">
+        <ul class="flex flex-wrap items-center">
+          {{- range . -}}
+            <li>
+              {{- $name := or (and .Identifier (T .Identifier)) .Name -}}
+              {{- $isActive := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) -}}
+              <a
+                href="{{ .URL }}"
+                {{ if $isActive }}aria-current="page"{{ end }}
+                class="rounded-sm px-control py-line text-fl-body leading-none font-bold transition-colors duration-400 hover:bg-background"
+                >{{ $name }}</a
+              >
+            </li>
+          {{- end -}}
+        </ul>
+      </nav>
+    {{- end -}}
+  </div>
+</div>
