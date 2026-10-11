@@ -61,6 +61,9 @@
   --line-height-prose: 1.75;
 
   /* Semantic aliases */
+  --static-type-body: var(--static-type-base);
+  --static-type-note: var(--static-type-sm);
+  --static-type-emphasis: var(--static-type-lg);
   --static-type-h1: var(--static-type-3xl);
   --static-type-h2: var(--static-type-2xl);
   --static-type-h3: var(--static-type-xl);
@@ -68,6 +71,9 @@
   --static-type-h5: var(--static-type-base);
   --static-type-h6: var(--static-type-sm);
 
+  --fluid-type-body: var(--fluid-type-base);
+  --fluid-type-note: var(--fluid-type-sm);
+  --fluid-type-emphasis: var(--fluid-type-lg);
   --fluid-type-h1: var(--fluid-type-3xl);
   --fluid-type-h2: var(--fluid-type-2xl);
   --fluid-type-h3: var(--fluid-type-xl);
@@ -75,6 +81,9 @@
   --fluid-type-h5: var(--fluid-type-base);
   --fluid-type-h6: var(--fluid-type-sm);
 
+  --line-height-body: var(--line-height-base);
+  --line-height-note: var(--line-height-sm);
+  --line-height-emphasis: var(--line-height-lg);
   --line-height-h1: var(--line-height-3xl);
   --line-height-h2: var(--line-height-2xl);
   --line-height-h3: var(--line-height-xl);
@@ -153,6 +162,12 @@
   --spacing-fl-sm-lg: var(--fluid-space-sm-lg);
 
   /* Semantic aliases */
+  --text-st-body: var(--static-type-body);
+  --text-st-body--line-height: var(--line-height-body);
+  --text-st-note: var(--static-type-note);
+  --text-st-note--line-height: var(--line-height-note);
+  --text-st-emphasis: var(--static-type-emphasis);
+  --text-st-emphasis--line-height: var(--line-height-emphasis);
   --text-st-h1: var(--static-type-h1);
   --text-st-h1--line-height: var(--line-height-h1);
   --text-st-h2: var(--static-type-h2);
@@ -166,6 +181,12 @@
   --text-st-h6: var(--static-type-h6);
   --text-st-h6--line-height: var(--line-height-h6);
 
+  --text-fl-body: var(--fluid-type-body);
+  --text-fl-body--line-height: var(--line-height-body);
+  --text-fl-note: var(--fluid-type-note);
+  --text-fl-note--line-height: var(--line-height-note);
+  --text-fl-emphasis: var(--fluid-type-emphasis);
+  --text-fl-emphasis--line-height: var(--line-height-emphasis);
   --text-fl-h1: var(--fluid-type-h1);
   --text-fl-h1--line-height: var(--line-height-h1);
   --text-fl-h2: var(--fluid-type-h2);
