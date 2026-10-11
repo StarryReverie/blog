@@ -1,28 +1,67 @@
-<div class="bg-card">
-  <div class="mx-auto flex max-w-4xl flex-col gap-y-line items-center justify-between px-page py-component md:flex-row">
-    <a
-      href="{{ site.Home.RelPermalink }}"
-      class="text-fl-emphasis font-bold text-primary transition-colors duration-400 hover:text-primary-active"
-      >{{ site.Title }}</a
-    >
+<div x-data="{ open: false }" class="w-full bg-card">
+  <div class="mx-auto max-w-4xl px-page py-component">
+    <div class="flex items-center justify-between">
+      <a
+        href="{{ site.Home.RelPermalink }}"
+        class="text-fl-emphasis font-bold text-primary transition-colors duration-400 hover:text-primary-active"
+        >{{ site.Title }}</a
+      >
 
-    {{- with index site.Menus "main" -}}
-      <nav aria-label="Main Menu">
-        <ul class="flex flex-wrap items-center">
-          {{- range . -}}
-            <li>
-              {{- $name := or (and .Identifier (T .Identifier)) .Name -}}
-              {{- $isActive := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) -}}
-              <a
-                href="{{ .URL }}"
-                {{ if $isActive }}aria-current="page"{{ end }}
-                class="rounded-sm px-control py-line text-fl-body leading-none font-bold transition-colors duration-400 hover:bg-background"
-                >{{ $name }}</a
-              >
-            </li>
-          {{- end -}}
+      {{- with site.Menus.main -}}
+        <nav aria-label="Main Menu" class="hidden md:block">
+          <ul class="flex items-center">
+            {{- partial "inline/menu-item.html" (dict "page" $ "menu" .) -}}
+          </ul>
+        </nav>
+
+        <button
+          type="button"
+          class="rounded-sm p-control text-foreground transition-colors duration-400 hover:bg-background md:hidden"
+          @click="open = !open"
+          :aria-expanded="open"
+          aria-controls="menu-mobile"
+          aria-label="Main Menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-6"
+            aria-hidden="true"
+          >
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+        </button>
+      {{- end -}}
+    </div>
+
+    {{- with site.Menus.main -}}
+      <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
+        <ul class="flex flex-col">
+          {{- partial "inline/menu-item.html" (dict "page" $ "menu" .) -}}
         </ul>
       </nav>
     {{- end -}}
   </div>
 </div>
+
+{{- define "_partials/inline/menu-item.html" -}}
+  {{- range $.menu -}}
+    {{- $name := or (and .Identifier (T .Identifier)) .Name -}}
+    {{- $isActive := or ($.page.IsMenuCurrent "main" .) ($.page.HasMenuCurrent "main" .) -}}
+    <li>
+      <a
+        href="{{ .URL }}"
+        {{ if $isActive }}aria-current="page"{{ end }}
+        class="block rounded-sm px-control py-line text-fl-body leading-none font-bold transition-colors duration-400 hover:bg-background"
+        >{{ $name }}</a
+      >
+    </li>
+  {{- end -}}
+{{- end -}}

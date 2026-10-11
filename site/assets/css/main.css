@@ -8,6 +8,10 @@
 
 @source "hugo_stats.json";
 
+[x-cloak] {
+  display: none !important;
+}
+
 @utility link {
   @apply text-primary underline visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
 }
