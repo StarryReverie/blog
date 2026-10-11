@@ -1,111 +1,211 @@
 :root {
-  --size-step--2: clamp(0.6944rem, 0.684rem + 0.0465vw, 0.72rem);
-  --size-step--1: clamp(0.8333rem, 0.8061rem + 0.1212vw, 0.9rem);
-  --size-step-0: clamp(1rem, 0.9489rem + 0.2273vw, 1.125rem);
-  --size-step-1: clamp(1.2rem, 1.1156rem + 0.375vw, 1.4063rem);
-  --size-step-2: clamp(1.44rem, 1.31rem + 0.5778vw, 1.7578rem);
-  --size-step-3: clamp(1.728rem, 1.536rem + 0.8532vw, 2.1973rem);
-  --size-step-4: clamp(2.0736rem, 1.7983rem + 1.2236vw, 2.7466rem);
-  --size-step-5: clamp(2.4883rem, 2.1018rem + 1.718vw, 3.4332rem);
+  /* Primitives */
+  --static-type-xs: 0.6944rem;
+  --static-type-sm: 0.8333rem;
+  --static-type-base: 1rem;
+  --static-type-lg: 1.2rem;
+  --static-type-xl: 1.44rem;
+  --static-type-2xl: 1.728rem;
+  --static-type-3xl: 2.0736rem;
+  --static-type-4xl: 2.4883rem;
 
-  --space-3xs: clamp(0.25rem, 0.2244rem + 0.1136vw, 0.3125rem);
-  --space-2xs: clamp(0.5rem, 0.4744rem + 0.1136vw, 0.5625rem);
-  --space-xs: clamp(0.75rem, 0.6989rem + 0.2273vw, 0.875rem);
-  --space-sm: clamp(1rem, 0.9489rem + 0.2273vw, 1.125rem);
-  --space-md: clamp(1.5rem, 1.4233rem + 0.3409vw, 1.6875rem);
-  --space-lg: clamp(2rem, 1.8977rem + 0.4545vw, 2.25rem);
-  --space-xl: clamp(3rem, 2.8466rem + 0.6818vw, 3.375rem);
-  --space-2xl: clamp(4rem, 3.7955rem + 0.9091vw, 4.5rem);
-  --space-3xl: clamp(6rem, 5.6932rem + 1.3636vw, 6.75rem);
+  --fluid-type-xs: clamp(var(--static-type-xs), 0.684rem + 0.0465vw, 0.72rem);
+  --fluid-type-sm: clamp(var(--static-type-sm), 0.8061rem + 0.1212vw, 0.9rem);
+  --fluid-type-base: clamp(var(--static-type-base), 0.9489rem + 0.2273vw, 1.125rem);
+  --fluid-type-lg: clamp(var(--static-type-lg), 1.1156rem + 0.375vw, 1.4063rem);
+  --fluid-type-xl: clamp(var(--static-type-xl), 1.31rem + 0.5778vw, 1.7578rem);
+  --fluid-type-2xl: clamp(var(--static-type-2xl), 1.536rem + 0.8532vw, 2.1973rem);
+  --fluid-type-3xl: clamp(var(--static-type-3xl), 1.7983rem + 1.2236vw, 2.7466rem);
+  --fluid-type-4xl: clamp(var(--static-type-4xl), 2.1018rem + 1.718vw, 3.4332rem);
 
-  --space-3xs-2xs: clamp(0.25rem, 0.1222rem + 0.5682vw, 0.5625rem);
-  --space-2xs-xs: clamp(0.5rem, 0.3466rem + 0.6818vw, 0.875rem);
-  --space-xs-sm: clamp(0.75rem, 0.5966rem + 0.6818vw, 1.125rem);
-  --space-sm-md: clamp(1rem, 0.7188rem + 1.25vw, 1.6875rem);
-  --space-md-lg: clamp(1.5rem, 1.1932rem + 1.3636vw, 2.25rem);
-  --space-lg-xl: clamp(2rem, 1.4375rem + 2.5vw, 3.375rem);
-  --space-xl-2xl: clamp(3rem, 2.3864rem + 2.7273vw, 4.5rem);
-  --space-2xl-3xl: clamp(4rem, 2.875rem + 5vw, 6.75rem);
+  --static-space-3xs: 0.25rem;
+  --static-space-2xs: 0.5rem;
+  --static-space-xs: 0.75rem;
+  --static-space-sm: 1rem;
+  --static-space-base: 1.5rem;
+  --static-space-lg: 2rem;
+  --static-space-xl: 3rem;
+  --static-space-2xl: 4rem;
+  --static-space-3xl: 6rem;
 
-  --space-sm-lg: clamp(1rem, 0.4886rem + 2.2727vw, 2.25rem);
+  --fluid-space-3xs: clamp(var(--static-space-3xs), 0.2244rem + 0.1136vw, 0.3125rem);
+  --fluid-space-2xs: clamp(var(--static-space-2xs), 0.4744rem + 0.1136vw, 0.5625rem);
+  --fluid-space-xs: clamp(var(--static-space-xs), 0.6989rem + 0.2273vw, 0.875rem);
+  --fluid-space-sm: clamp(var(--static-space-sm), 0.9489rem + 0.2273vw, 1.125rem);
+  --fluid-space-base: clamp(var(--static-space-base), 1.4233rem + 0.3409vw, 1.6875rem);
+  --fluid-space-lg: clamp(var(--static-space-lg), 1.8977rem + 0.4545vw, 2.25rem);
+  --fluid-space-xl: clamp(var(--static-space-xl), 2.8466rem + 0.6818vw, 3.375rem);
+  --fluid-space-2xl: clamp(var(--static-space-2xl), 3.7955rem + 0.9091vw, 4.5rem);
+  --fluid-space-3xl: clamp(var(--static-space-3xl), 5.6932rem + 1.3636vw, 6.75rem);
 
-  --h1-size: var(--size-step-4);
-  --h2-size: var(--size-step-3);
-  --h3-size: var(--size-step-2);
-  --h4-size: var(--size-step-1);
-  --h5-size: var(--size-step-0);
-  --h6-size: var(--size-step--1);
+  --fluid-space-3xs-2xs: clamp(0.25rem, 0.1222rem + 0.5682vw, 0.5625rem);
+  --fluid-space-2xs-xs: clamp(0.5rem, 0.3466rem + 0.6818vw, 0.875rem);
+  --fluid-space-xs-sm: clamp(0.75rem, 0.5966rem + 0.6818vw, 1.125rem);
+  --fluid-space-sm-base: clamp(1rem, 0.7188rem + 1.25vw, 1.6875rem);
+  --fluid-space-base-lg: clamp(1.5rem, 1.1932rem + 1.3636vw, 2.25rem);
+  --fluid-space-lg-xl: clamp(2rem, 1.4375rem + 2.5vw, 3.375rem);
+  --fluid-space-xl-2xl: clamp(3rem, 2.3864rem + 2.7273vw, 4.5rem);
+  --fluid-space-2xl-3xl: clamp(4rem, 2.875rem + 5vw, 6.75rem);
 
-  --h1-leading: 1.15;
-  --h2-leading: 1.2;
-  --h3-leading: 1.25;
-  --h4-leading: 1.35;
-  --h5-leading: 1.4;
-  --h6-leading: 1.4;
+  --fluid-space-sm-lg: clamp(1rem, 0.4886rem + 2.2727vw, 2.25rem);
+
+  --line-height-xs: 1.6;
+  --line-height-sm: 1.55;
+  --line-height-base: 1.5;
+  --line-height-lg: 1.35;
+  --line-height-xl: 1.25;
+  --line-height-2xl: 1.2;
+  --line-height-3xl: 1.15;
+  --line-height-4xl: 1.1;
+
+  --line-height-prose: 1.75;
+
+  /* Semantic aliases */
+  --fluid-h1-size: var(--fluid-type-3xl);
+  --fluid-h2-size: var(--fluid-type-2xl);
+  --fluid-h3-size: var(--fluid-type-xl);
+  --fluid-h4-size: var(--fluid-type-lg);
+  --fluid-h5-size: var(--fluid-type-base);
+  --fluid-h6-size: var(--fluid-type-sm);
+
+  --h1-line-height: var(--line-height-3xl);
+  --h2-line-height: var(--line-height-2xl);
+  --h3-line-height: var(--line-height-xl);
+  --h4-line-height: var(--line-height-lg);
+  --h5-line-height: var(--line-height-base);
+  --h6-line-height: var(--line-height-sm);
 }
 
 @theme inline {
-  --spacing-section: var(--space-xl);
-  --spacing-stack: var(--space-sm);
-  --spacing-gutter: var(--space-sm-lg);
-  --spacing-span: var(--space-xs);
+  --text-*: initial;
 
-  --spacing-page: var(--space-lg);
-  --spacing-component: var(--space-sm);
+  /* Primitives */
+  --text-st-xs: var(--static-type-xs);
+  --text-st-xs--line-height: var(--line-height-xs);
+  --text-st-sm: var(--static-type-sm);
+  --text-st-sm--line-height: var(--line-height-sm);
+  --text-st-base: var(--static-type-base);
+  --text-st-base--line-height: var(--line-height-base);
+  --text-st-lg: var(--static-type-lg);
+  --text-st-lg--line-height: var(--line-height-lg);
+  --text-st-xl: var(--static-type-xl);
+  --text-st-xl--line-height: var(--line-height-xl);
+  --text-st-2xl: var(--static-type-2xl);
+  --text-st-2xl--line-height: var(--line-height-2xl);
+  --text-st-3xl: var(--static-type-3xl);
+  --text-st-3xl--line-height: var(--line-height-3xl);
+  --text-st-4xl: var(--static-type-4xl);
+  --text-st-4xl--line-height: var(--line-height-4xl);
 
-  --text-h1: var(--h1-size);
-  --text-h2: var(--h2-size);
-  --text-h3: var(--h3-size);
-  --text-h4: var(--h4-size);
-  --text-h5: var(--h5-size);
-  --text-h6: var(--h6-size);
+  --text-fl-xs: var(--fluid-type-xs);
+  --text-fl-xs--line-height: var(--line-height-xs);
+  --text-fl-sm: var(--fluid-type-sm);
+  --text-fl-sm--line-height: var(--line-height-sm);
+  --text-fl-base: var(--fluid-type-base);
+  --text-fl-base--line-height: var(--line-height-base);
+  --text-fl-lg: var(--fluid-type-lg);
+  --text-fl-lg--line-height: var(--line-height-lg);
+  --text-fl-xl: var(--fluid-type-xl);
+  --text-fl-xl--line-height: var(--line-height-xl);
+  --text-fl-2xl: var(--fluid-type-2xl);
+  --text-fl-2xl--line-height: var(--line-height-2xl);
+  --text-fl-3xl: var(--fluid-type-3xl);
+  --text-fl-3xl--line-height: var(--line-height-3xl);
+  --text-fl-4xl: var(--fluid-type-4xl);
+  --text-fl-4xl--line-height: var(--line-height-4xl);
 
-  --text-h1--line-height: var(--h1-leading);
-  --text-h2--line-height: var(--h2-leading);
-  --text-h3--line-height: var(--h3-leading);
-  --text-h4--line-height: var(--h4-leading);
-  --text-h5--line-height: var(--h5-leading);
-  --text-h6--line-height: var(--h6-leading);
+  --spacing-st-3xs: var(--static-space-3xs);
+  --spacing-st-2xs: var(--static-space-2xs);
+  --spacing-st-xs: var(--static-space-xs);
+  --spacing-st-sm: var(--static-space-sm);
+  --spacing-st-base: var(--static-space-base);
+  --spacing-st-lg: var(--static-space-lg);
+  --spacing-st-xl: var(--static-space-xl);
+  --spacing-st-2xl: var(--static-space-2xl);
+  --spacing-st-3xl: var(--static-space-3xl);
+
+  --spacing-fl-3xs: var(--fluid-space-3xs);
+  --spacing-fl-2xs: var(--fluid-space-2xs);
+  --spacing-fl-xs: var(--fluid-space-xs);
+  --spacing-fl-sm: var(--fluid-space-sm);
+  --spacing-fl-base: var(--fluid-space-base);
+  --spacing-fl-lg: var(--fluid-space-lg);
+  --spacing-fl-xl: var(--fluid-space-xl);
+  --spacing-fl-2xl: var(--fluid-space-2xl);
+  --spacing-fl-3xl: var(--fluid-space-3xl);
+
+  --spacing-fl-3xs-2xs: var(--fluid-space-3xs-2xs);
+  --spacing-fl-2xs-xs: var(--fluid-space-2xs-xs);
+  --spacing-fl-xs-sm: var(--fluid-space-xs-sm);
+  --spacing-fl-sm-base: var(--fluid-space-sm-base);
+  --spacing-fl-base-lg: var(--fluid-space-base-lg);
+  --spacing-fl-lg-xl: var(--fluid-space-lg-xl);
+  --spacing-fl-xl-2xl: var(--fluid-space-xl-2xl);
+  --spacing-fl-2xl-3xl: var(--fluid-space-2xl-3xl);
+
+  --spacing-fl-sm-lg: var(--fluid-space-sm-lg);
+
+  /* Semantic aliases */
+  --text-h1: var(--fluid-h1-size);
+  --text-h1--line-height: var(--h1-line-height);
+  --text-h2: var(--fluid-h2-size);
+  --text-h2--line-height: var(--h2-line-height);
+  --text-h3: var(--fluid-h3-size);
+  --text-h3--line-height: var(--h3-line-height);
+  --text-h4: var(--fluid-h4-size);
+  --text-h4--line-height: var(--h4-line-height);
+  --text-h5: var(--fluid-h5-size);
+  --text-h5--line-height: var(--h5-line-height);
+  --text-h6: var(--fluid-h6-size);
+  --text-h6--line-height: var(--h6-line-height);
+
+  --spacing-section: var(--fluid-space-xl);
+  --spacing-stack: var(--fluid-space-sm);
+  --spacing-gutter: var(--fluid-space-sm-lg);
+  --spacing-span: var(--fluid-space-xs);
+
+  --spacing-page: var(--fluid-space-lg);
+  --spacing-component: var(--fluid-space-sm);
 }
 
 .prose {
-  font-size: var(--size-step-0);
-  line-height: 1.75;
+  font-size: var(--fluid-type-base);
+  line-height: var(--line-height-prose);
 }
 
 .prose h1 {
-  font-size: var(--h1-size);
-  line-height: var(--h1-leading);
+  font-size: var(--fluid-h1-size);
+  line-height: var(--h1-line-height);
   font-weight: 700;
 }
 
 .prose h2 {
-  font-size: var(--h2-size);
-  line-height: var(--h2-leading);
+  font-size: var(--fluid-h2-size);
+  line-height: var(--h2-line-height);
   font-weight: 700;
 }
 
 .prose h3 {
-  font-size: var(--h3-size);
-  line-height: var(--h3-leading);
+  font-size: var(--fluid-h3-size);
+  line-height: var(--h3-line-height);
   font-weight: 600;
 }
 
 .prose h4 {
-  font-size: var(--h4-size);
-  line-height: var(--h4-leading);
+  font-size: var(--fluid-h4-size);
+  line-height: var(--h4-line-height);
   font-weight: 600;
 }
 
 .prose h5 {
-  font-size: var(--h5-size);
-  line-height: var(--h5-leading);
+  font-size: var(--fluid-h5-size);
+  line-height: var(--h5-line-height);
   font-weight: 600;
 }
 
 .prose h6 {
-  font-size: var(--h6-size);
-  line-height: var(--h6-leading);
+  font-size: var(--fluid-h6-size);
+  line-height: var(--h6-line-height);
   font-weight: 600;
 }
 
