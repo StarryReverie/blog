@@ -1,0 +1,100 @@
+@theme {
+  --font-sans:
+    "Lato", "Lato Fallback: Arial", "Lato Fallback: Open Sans", "Lato Fallback: Roboto", "Lato Fallback: Segoe UI",
+    "Lato Fallback: Helvetica", "Lato Fallback: Noto Sans", Arial, "Open Sans", Roboto, "Segoe UI", Helvetica,
+    "Noto Sans", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono:
+    "Cascadia Mono", "Cascadia Mono Fallback: Courier New", "Cascadia Mono Fallback: Maple Mono",
+    "Cascadia Mono Fallback: DejaVu Sans Mono", "Cascadia Mono Fallback: Roboto Mono",
+    "Cascadia Mono Fallback: Noto Sans Mono", "Courier New", "Maple Mono", "DejaVu Sans Mono", "Roboto Mono",
+    "Noto Sans Mono", ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Noto Sans Mono CJK SC", monospace;
+}
+
+@font-face {
+  font-family: "Lato Fallback: Arial";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans");
+  ascent-override: 101.0345%;
+  descent-override: 21.8038%;
+  line-gap-override: 0%;
+  size-adjust: 97.6894%;
+}
+
+@font-face {
+  font-family: "Lato Fallback: Open Sans";
+  src: local("Open Sans"), local("Open Sans Regular"), local("OpenSans-Regular");
+  ascent-override: 106.2356%;
+  descent-override: 22.9262%;
+  size-adjust: 92.9067%;
+}
+
+@font-face {
+  font-family: "Lato Fallback: Roboto";
+  src: local("Roboto"), local("Roboto Regular"), local("Roboto-Regular");
+  ascent-override: 100.8132%;
+  descent-override: 21.756%;
+  size-adjust: 97.9038%;
+}
+
+@font-face {
+  font-family: "Lato Fallback: Segoe UI";
+  src: local("Segoe UI"), local("SegoeUI");
+  ascent-override: 100.4812%;
+  descent-override: 21.6844%;
+  size-adjust: 98.2273%;
+}
+
+@font-face {
+  font-family: "Lato Fallback: Helvetica";
+  src: local("Helvetica"), local("TeX Gyre Heros"), local("TeXGyreHeros");
+  ascent-override: 101.0345%;
+  descent-override: 21.8038%;
+  size-adjust: 97.6894%;
+}
+
+@font-face {
+  font-family: "Lato Fallback: Noto Sans";
+  src: local("Noto Sans"), local("Noto Sans Regular"), local("NotoSans-Regular");
+  ascent-override: 107.4255%;
+  descent-override: 23.183%;
+  size-adjust: 91.8776%;
+}
+
+@font-face {
+  font-family: "Cascadia Mono Fallback: Courier New";
+  src: local("Courier New"), local("CourierNewPSMT"), local("Liberation Mono"), local("LiberationMono");
+  ascent-override: 95.0155%;
+  descent-override: 24.0039%;
+  size-adjust: 97.6404%;
+}
+
+@font-face {
+  font-family: "Cascadia Mono Fallback: Maple Mono";
+  src: local("Maple Mono NL NF CN"), local("Maple Mono");
+  ascent-override: 95%;
+  descent-override: 24%;
+  size-adjust: 97.6563%;
+}
+
+@font-face {
+  font-family: "Cascadia Mono Fallback: DejaVu Sans Mono";
+  src: local("DejaVu Sans Mono");
+  ascent-override: 95.3247%;
+  descent-override: 24.082%;
+  size-adjust: 97.3236%;
+}
+
+@font-face {
+  font-family: "Cascadia Mono Fallback: Roboto Mono";
+  src: local("Roboto Mono"), local("Roboto Mono Regular"), local("RobotoMono-Regular");
+  ascent-override: 95.0155%;
+  descent-override: 24.0039%;
+  size-adjust: 97.6404%;
+}
+
+@font-face {
+  font-family: "Cascadia Mono Fallback: Noto Sans Mono";
+  src: local("Noto Sans Mono"), local("Noto Sans Mono Regular"), local("NotoSansMono-Regular");
+  ascent-override: 95%;
+  descent-override: 24%;
+  size-adjust: 97.6563%;
+}

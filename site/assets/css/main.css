@@ -1,3 +1,9 @@
 @import "tailwindcss";
+
+@import "./colors.css";
+@import "./font-family.css";
+@import "./typography.css";
+
 @plugin "@tailwindcss/typography";
+
 @source "hugo_stats.json";
