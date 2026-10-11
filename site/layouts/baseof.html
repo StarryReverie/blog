@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale }}" dir="{{ or site.Language.Direction "ltr" }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>
+      {{- if page.IsHome -}}
+        {{ site.Title }}
+      {{- else -}}
+        {{ printf "%s | %s" site.Title page.Title }}
+      {{- end -}}
+    </title>
+
+    {{ partial "head-resources.html" "emptyContext" }}
+  </head>
+
+  <body class="bg-background">
+    <header></header>
+    {{ block "main" . }}<main></main>{{ end }}
+    <footer></footer>
+  </body>
+</html>

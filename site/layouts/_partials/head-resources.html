@@ -1,0 +1,5 @@
+{{ partialCached "fonts.html" "emptyContext" }}
+
+{{ with (templates.Defer (dict "key" "global")) }}
+  {{ partialCached "css.html" "emptyContext" }}
+{{ end }}
