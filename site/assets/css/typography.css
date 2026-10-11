@@ -61,19 +61,26 @@
   --line-height-prose: 1.75;
 
   /* Semantic aliases */
-  --fluid-h1-size: var(--fluid-type-3xl);
-  --fluid-h2-size: var(--fluid-type-2xl);
-  --fluid-h3-size: var(--fluid-type-xl);
-  --fluid-h4-size: var(--fluid-type-lg);
-  --fluid-h5-size: var(--fluid-type-base);
-  --fluid-h6-size: var(--fluid-type-sm);
+  --static-type-h1: var(--static-type-3xl);
+  --static-type-h2: var(--static-type-2xl);
+  --static-type-h3: var(--static-type-xl);
+  --static-type-h4: var(--static-type-lg);
+  --static-type-h5: var(--static-type-base);
+  --static-type-h6: var(--static-type-sm);
 
-  --h1-line-height: var(--line-height-3xl);
-  --h2-line-height: var(--line-height-2xl);
-  --h3-line-height: var(--line-height-xl);
-  --h4-line-height: var(--line-height-lg);
-  --h5-line-height: var(--line-height-base);
-  --h6-line-height: var(--line-height-sm);
+  --fluid-type-h1: var(--fluid-type-3xl);
+  --fluid-type-h2: var(--fluid-type-2xl);
+  --fluid-type-h3: var(--fluid-type-xl);
+  --fluid-type-h4: var(--fluid-type-lg);
+  --fluid-type-h5: var(--fluid-type-base);
+  --fluid-type-h6: var(--fluid-type-sm);
+
+  --line-height-h1: var(--line-height-3xl);
+  --line-height-h2: var(--line-height-2xl);
+  --line-height-h3: var(--line-height-xl);
+  --line-height-h4: var(--line-height-lg);
+  --line-height-h5: var(--line-height-base);
+  --line-height-h6: var(--line-height-sm);
 }
 
 @theme inline {
@@ -146,18 +153,31 @@
   --spacing-fl-sm-lg: var(--fluid-space-sm-lg);
 
   /* Semantic aliases */
-  --text-h1: var(--fluid-h1-size);
-  --text-h1--line-height: var(--h1-line-height);
-  --text-h2: var(--fluid-h2-size);
-  --text-h2--line-height: var(--h2-line-height);
-  --text-h3: var(--fluid-h3-size);
-  --text-h3--line-height: var(--h3-line-height);
-  --text-h4: var(--fluid-h4-size);
-  --text-h4--line-height: var(--h4-line-height);
-  --text-h5: var(--fluid-h5-size);
-  --text-h5--line-height: var(--h5-line-height);
-  --text-h6: var(--fluid-h6-size);
-  --text-h6--line-height: var(--h6-line-height);
+  --text-st-h1: var(--static-type-h1);
+  --text-st-h1--line-height: var(--line-height-h1);
+  --text-st-h2: var(--static-type-h2);
+  --text-st-h2--line-height: var(--line-height-h2);
+  --text-st-h3: var(--static-type-h3);
+  --text-st-h3--line-height: var(--line-height-h3);
+  --text-st-h4: var(--static-type-h4);
+  --text-st-h4--line-height: var(--line-height-h4);
+  --text-st-h5: var(--static-type-h5);
+  --text-st-h5--line-height: var(--line-height-h5);
+  --text-st-h6: var(--static-type-h6);
+  --text-st-h6--line-height: var(--line-height-h6);
+
+  --text-fl-h1: var(--fluid-type-h1);
+  --text-fl-h1--line-height: var(--line-height-h1);
+  --text-fl-h2: var(--fluid-type-h2);
+  --text-fl-h2--line-height: var(--line-height-h2);
+  --text-fl-h3: var(--fluid-type-h3);
+  --text-fl-h3--line-height: var(--line-height-h3);
+  --text-fl-h4: var(--fluid-type-h4);
+  --text-fl-h4--line-height: var(--line-height-h4);
+  --text-fl-h5: var(--fluid-type-h5);
+  --text-fl-h5--line-height: var(--line-height-h5);
+  --text-fl-h6: var(--fluid-type-h6);
+  --text-fl-h6--line-height: var(--line-height-h6);
 
   --spacing-section: var(--fluid-space-xl);
   --spacing-stack: var(--fluid-space-sm);
@@ -174,38 +194,38 @@
 }
 
 .prose h1 {
-  font-size: var(--fluid-h1-size);
-  line-height: var(--h1-line-height);
+  font-size: var(--fluid-type-h1);
+  line-height: var(--line-height-h1);
   font-weight: 700;
 }
 
 .prose h2 {
-  font-size: var(--fluid-h2-size);
-  line-height: var(--h2-line-height);
+  font-size: var(--fluid-type-h2);
+  line-height: var(--line-height-h2);
   font-weight: 700;
 }
 
 .prose h3 {
-  font-size: var(--fluid-h3-size);
-  line-height: var(--h3-line-height);
+  font-size: var(--fluid-type-h3);
+  line-height: var(--line-height-h3);
   font-weight: 600;
 }
 
 .prose h4 {
-  font-size: var(--fluid-h4-size);
-  line-height: var(--h4-line-height);
+  font-size: var(--fluid-type-h4);
+  line-height: var(--line-height-h4);
   font-weight: 600;
 }
 
 .prose h5 {
-  font-size: var(--fluid-h5-size);
-  line-height: var(--h5-line-height);
+  font-size: var(--fluid-type-h5);
+  line-height: var(--line-height-h5);
   font-weight: 600;
 }
 
 .prose h6 {
-  font-size: var(--fluid-h6-size);
-  line-height: var(--h6-line-height);
+  font-size: var(--fluid-type-h6);
+  line-height: var(--line-height-h6);
   font-weight: 600;
 }
 
