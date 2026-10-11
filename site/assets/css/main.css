@@ -7,3 +7,7 @@
 @plugin "@tailwindcss/typography";
 
 @source "hugo_stats.json";
+
+@utility link {
+  @apply text-primary underline visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
+}
