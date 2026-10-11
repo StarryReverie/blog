@@ -1,5 +1,7 @@
-{{ partialCached "fonts.html" "emptyContext" }}
+{{- partialCached "fonts.html" "emptyContext" -}}
 
-{{ with (templates.Defer (dict "key" "global")) }}
-  {{ partialCached "css.html" "emptyContext" }}
-{{ end }}
+{{- with (templates.Defer (dict "key" "global")) -}}
+  {{ partialCached "css.html" "emptyContext" -}}
+{{- end }}
+
+{{- partialCached "js.html" "emptyContext" -}}
