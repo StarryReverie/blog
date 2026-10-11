@@ -1,0 +1,36 @@
+{{ $lato := resources.Get "fonts/lato-400.woff2" }}
+{{ $latoBold := resources.Get "fonts/lato-700.woff2" }}
+{{ $latoItalic := resources.Get "fonts/lato-400-italic.woff2" }}
+{{ $mono := resources.Get "fonts/cascadia-mono-latin.woff2" }}
+<link rel="preload" href="{{ $lato.RelPermalink }}" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="{{ $mono.RelPermalink }}" as="font" type="font/woff2" crossorigin />
+<style>
+  @font-face {
+    font-family: "Lato";
+    src: url({{ $lato.RelPermalink }}) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Lato";
+    src: url({{ $latoBold.RelPermalink }}) format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Lato";
+    src: url({{ $latoItalic.RelPermalink }}) format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Cascadia Mono";
+    src: url({{ $mono.RelPermalink }}) format("woff2");
+    font-weight: 200 700;
+    font-style: normal;
+    font-display: swap;
+  }
+</style>
