@@ -1,0 +1,34 @@
+{{- define "main" -}}
+  <article class="mx-auto mt-section max-w-3xl space-y-section px-page">
+    <header class="space-y-line">
+      <h1 class="text-fl-h1 font-bold text-secondary">{{ $.Title }}</h1>
+
+      <p class="text-fl-body text-foreground">
+        {{- $dateTime := $.Date.Format "Monday, Feburary 1, 2006" -}}
+        {{- partial "icon.html" (dict "name" "calendar-up") }}
+        <time datetime="{{ $dateTime }}">{{ $dateTime }}</time>
+      </p>
+
+      <ul class="flex flex-wrap gap-line">
+        {{- range $taxonomyCfg := slice
+          (dict "type" "categories" "icon" "folder")
+          (dict "type" "tags" "icon" "tag")
+        -}}
+          {{- range $termPage := $.GetTerms $taxonomyCfg.type -}}
+            <li>
+              <a
+                href="{{ $termPage.RelPermalink }}"
+                class="text-fl-body text-subtle transition-colors duration-400 hover:text-foreground"
+              >
+                {{- partial "icon.html" (dict "name" $taxonomyCfg.icon) }}
+                {{ $termPage.LinkTitle }}
+              </a>
+            </li>
+          {{- end -}}
+        {{- end -}}
+      </ul>
+    </header>
+
+    <div class="-mx-inset prose max-w-none rounded-sm bg-card p-inset">{{ $.Content }}</div>
+  </article>
+{{- end -}}
