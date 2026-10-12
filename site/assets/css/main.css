@@ -13,12 +13,16 @@
 }
 
 @utility link {
-  @apply text-primary underline visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
+  @apply text-primary underline transition-colors duration-400 visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
 }
 
 @utility inline-icon {
+  width: 1em;
+  height: 1em;
   display: inline-flex;
-  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.125em;
   & > svg {
     width: 100%;
     height: 100%;

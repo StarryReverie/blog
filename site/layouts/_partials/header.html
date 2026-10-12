@@ -16,7 +16,7 @@
 
         <button
           type="button"
-          class="rounded-sm p-control text-foreground transition-colors duration-400 hover:bg-background md:hidden"
+          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background md:hidden"
           @click="open = !open"
           :aria-expanded="open"
           aria-controls="menu-mobile"
@@ -45,7 +45,7 @@
       <a
         href="{{ .URL }}"
         {{ if $isActive }}aria-current="page"{{ end }}
-        class="block rounded-sm px-control py-line text-fl-body leading-none font-bold transition-colors duration-400 hover:bg-background"
+        class="block rounded-sm px-control py-line text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
         >{{ $name }}</a
       >
     </li>
