@@ -19,9 +19,7 @@
             </h2>
 
             <p class="text-fl-note text-subtle">
-              {{- $dateTime := $entry.Date.Format "Monday, Feburary 1, 2006" -}}
-              {{- partial "icon.html" (dict "name" "calendar-up") }}
-              <time datetime="{{ $dateTime }}">{{ $dateTime }}</time>
+              {{- partial "components/content/date.html" $entry.Date -}}
             </p>
           </header>
 

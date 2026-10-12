@@ -10,7 +10,7 @@
       {{- with $menu := site.Menus.main -}}
         <nav aria-label="Main Menu" class="hidden md:block">
           <ul class="flex items-center">
-            {{- partial "inline/menu-item.html" (dict "page" $ "menu" $menu) -}}
+            {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
           </ul>
         </nav>
 
@@ -22,7 +22,7 @@
           aria-controls="menu-mobile"
           aria-label="Main Menu"
         >
-          {{ partial "icon.html" (dict "name" "menu-2") }}
+          {{- partial "components/content/icon.html" (dict "name" "menu-2") -}}
         </button>
       {{- end -}}
     </div>
@@ -30,14 +30,14 @@
     {{- with $menu := site.Menus.main -}}
       <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
         <ul class="flex flex-col">
-          {{- partial "inline/menu-item.html" (dict "page" $ "menu" $menu) -}}
+          {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
         </ul>
       </nav>
     {{- end -}}
   </div>
 </div>
 
-{{- define "_partials/inline/menu-item.html" -}}
+{{- define "_partials/components/header.html/menu-item.html" -}}
   {{- range $entry := $.menu -}}
     {{- $name := or (and .Identifier (T $entry.Identifier)) $entry.Name -}}
     {{- $isActive := or ($.page.IsMenuCurrent "main" $entry) ($.page.HasMenuCurrent "main" $entry) -}}

@@ -4,9 +4,7 @@
       <h1 class="text-fl-h1 font-bold text-secondary">{{ $.Title }}</h1>
 
       <p class="text-fl-body text-foreground">
-        {{- $dateTime := $.Date.Format "Monday, Feburary 1, 2006" -}}
-        {{- partial "icon.html" (dict "name" "calendar-up") }}
-        <time datetime="{{ $dateTime }}">{{ $dateTime }}</time>
+        {{- partial "components/content/date.html" $.Date -}}
       </p>
 
       <ul class="flex flex-wrap gap-line">
@@ -20,7 +18,7 @@
                 href="{{ $termPage.RelPermalink }}"
                 class="text-fl-body text-subtle transition-colors duration-400 hover:text-foreground"
               >
-                {{- partial "icon.html" (dict "name" $taxonomyCfg.icon) }}
+                {{- partial "components/content/icon.html" (dict "name" $taxonomyCfg.icon) }}
                 {{ $termPage.LinkTitle }}
               </a>
             </li>

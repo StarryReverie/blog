@@ -12,12 +12,14 @@
       {{- end -}}
     </title>
 
-    {{ partial "head-resources.html" "emptyContext" }}
+    {{- partialCached "resources/fonts.html" "emptyContext" -}}
+    {{- partial "resources/css.html" "emptyContext" -}}
+    {{- partialCached "resources/js.html" "emptyContext" -}}
   </head>
 
   <body class="space-y-section bg-background pb-page">
-    <header>{{ partial "header.html" $ }}</header>
-    {{ block "main" $ }}<main></main>{{ end }}
-    <footer>{{ partialCached "footer.html" $ }}</footer>
+    <header>{{- partial "components/header.html" $ -}}</header>
+    {{- block "main" $ -}}<main></main>{{- end -}}
+    <footer>{{- partialCached "components/footer.html" $ -}}</footer>
   </body>
 </html>
