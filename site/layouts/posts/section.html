@@ -1,0 +1,45 @@
+{{- define "main" -}}
+  <div class="mx-auto mt-section max-w-3xl space-y-section px-page">
+    <header>
+      <h1 class="text-fl-h1 font-bold text-secondary">All Posts</h1>
+
+      <div class="prose">{{ $.Content }}</div>
+    </header>
+
+    <div class="mt-line space-y-gutter">
+      {{- range $entry := where site.RegularPages "Section" "posts" -}}
+        <article class="-mx-inset space-y-stack rounded-sm bg-card p-inset">
+          <header class="space-y-line">
+            <h2>
+              <a
+                href="{{ $entry.RelPermalink }}"
+                class="text-fl-emphasis font-bold text-secondary transition-colors duration-400 hover:text-secondary-active"
+                >{{ $entry.Title }}</a
+              >
+            </h2>
+
+            <p class="text-fl-note text-subtle">
+              {{- $dateTime := $entry.Date.Format "Monday, Feburary 1, 2006" -}}
+              {{- partial "icon.html" (dict "name" "calendar-up") }}
+              <time datetime="{{ $dateTime }}">{{ $dateTime }}</time>
+            </p>
+          </header>
+
+          <p class="text-foreground">
+            {{ $entry.Content | transform.Plainify | strings.Truncate 120 }}
+          </p>
+
+          <div class="flex justify-end">
+            <a
+              href="{{ $entry.RelPermalink }}"
+              class="text-fl-note text-subtle transition-colors duration-400 hover:text-foreground"
+              >Read More ...</a
+            >
+          </div>
+        </article>
+      {{- else -}}
+        <p class="text-subtle">No article yet ...</p>
+      {{- end -}}
+    </div>
+  </div>
+{{- end -}}
