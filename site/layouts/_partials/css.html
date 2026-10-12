@@ -1,22 +1,32 @@
 {{- with (templates.Defer (dict "key" "global")) -}}
-  {{- with css.ChromaStyles (dict "targetPath" "css/chroma.css") -}}
+  {{- with $devCodeCssResource := css.ChromaStyles (dict "targetPath" "css/chroma.css") -}}
     {{- if hugo.IsDevelopment -}}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" />
+      <link rel="stylesheet" href="{{ $devCodeCssResource.RelPermalink }}" />
     {{- else -}}
-      {{- with . | fingerprint -}}
-        <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
+      {{- with $prodCodeCssResource := $devCodeCssResource | fingerprint -}}
+        <link
+          rel="stylesheet"
+          href="{{ $prodCodeCssResource.RelPermalink }}"
+          integrity="{{ $prodCodeCssResource.Data.Integrity }}"
+          crossorigin="anonymous"
+        />
       {{- end -}}
     {{- end -}}
   {{- end -}}
 
-  {{- with resources.Get "css/main.css" -}}
+  {{- with $rawMainCssResource := resources.Get "css/main.css" -}}
     {{- $opts := dict "minify" (not hugo.IsDevelopment) -}}
-    {{- with . | css.TailwindCSS $opts -}}
+    {{- with $devMainCssResource := $rawMainCssResource | css.TailwindCSS $opts -}}
       {{- if hugo.IsDevelopment -}}
-        <link rel="stylesheet" href="{{ .RelPermalink }}" />
+        <link rel="stylesheet" href="{{ $devMainCssResource.RelPermalink }}" />
       {{- else -}}
-        {{- with . | fingerprint -}}
-          <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
+        {{- with $prodMainCssResource := $devMainCssResource | fingerprint -}}
+          <link
+            rel="stylesheet"
+            href="{{ $prodMainCssResource.RelPermalink }}"
+            integrity="{{ $prodMainCssResource.Data.Integrity }}"
+            crossorigin="anonymous"
+          />
         {{- end -}}
       {{- end -}}
     {{- end -}}

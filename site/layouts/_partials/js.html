@@ -1,11 +1,16 @@
-{{- with resources.Get "js/main.js" -}}
+{{- with $rawJsResource := resources.Get "js/main.js" -}}
   {{- $opts := dict "minify" (not hugo.IsDevelopment) "format" "iife" "target" "es2018" -}}
-  {{- with . | js.Build $opts -}}
+  {{- with $jsResource := $rawJsResource | js.Build $opts -}}
     {{- if hugo.IsDevelopment -}}
-      <script src="{{ .RelPermalink }}" defer></script>
+      <script src="{{ $jsResource.RelPermalink }}" defer></script>
     {{- else -}}
-      {{- with . | fingerprint -}}
-        <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+      {{- with $prodJsResource := $jsResource | fingerprint -}}
+        <script
+          src="{{ $prodJsResource.RelPermalink }}"
+          integrity="{{ $prodJsResource.Data.Integrity }}"
+          crossorigin="anonymous"
+          defer
+        ></script>
       {{- end -}}
     {{- end -}}
   {{- end -}}

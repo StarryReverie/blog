@@ -7,10 +7,10 @@
         >{{ site.Title }}</a
       >
 
-      {{- with site.Menus.main -}}
+      {{- with $menu := site.Menus.main -}}
         <nav aria-label="Main Menu" class="hidden md:block">
           <ul class="flex items-center">
-            {{- partial "inline/menu-item.html" (dict "page" $ "menu" .) -}}
+            {{- partial "inline/menu-item.html" (dict "page" $ "menu" $menu) -}}
           </ul>
         </nav>
 
@@ -27,10 +27,10 @@
       {{- end -}}
     </div>
 
-    {{- with site.Menus.main -}}
+    {{- with $menu := site.Menus.main -}}
       <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
         <ul class="flex flex-col">
-          {{- partial "inline/menu-item.html" (dict "page" $ "menu" .) -}}
+          {{- partial "inline/menu-item.html" (dict "page" $ "menu" $menu) -}}
         </ul>
       </nav>
     {{- end -}}
@@ -38,12 +38,12 @@
 </div>
 
 {{- define "_partials/inline/menu-item.html" -}}
-  {{- range $.menu -}}
-    {{- $name := or (and .Identifier (T .Identifier)) .Name -}}
-    {{- $isActive := or ($.page.IsMenuCurrent "main" .) ($.page.HasMenuCurrent "main" .) -}}
+  {{- range $entry := $.menu -}}
+    {{- $name := or (and .Identifier (T $entry.Identifier)) $entry.Name -}}
+    {{- $isActive := or ($.page.IsMenuCurrent "main" $entry) ($.page.HasMenuCurrent "main" $entry) -}}
     <li>
       <a
-        href="{{ .URL }}"
+        href="{{ $entry.URL }}"
         {{ if $isActive }}aria-current="page"{{ end }}
         class="block rounded-sm px-control py-line text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
         >{{ $name }}</a
