@@ -2,7 +2,8 @@
 title: 体验 Helix 编辑器
 date: 2023-04-08T21:49:01+08:00
 draft: false
-categories: Tech
+categories:
+  - Tech
 tags:
   - Helix
   - Rust

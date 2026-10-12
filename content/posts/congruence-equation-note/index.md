@@ -2,7 +2,8 @@
 title: 同余方程学习笔记
 date: 2022-02-13T21:40:02+08:00
 draft: false
-categories: Algorithm Competition
+categories:
+  - Algorithm Competition
 tags:
   - C++
   - Algorithm

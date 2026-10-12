@@ -2,7 +2,8 @@
 title: 用 Rust 开发 Brainfuck 解释器
 date: 2023-01-26T22:26:51+08:00
 draft: false
-categories: Tech
+categories:
+  - Tech
 tags:
   - Rust
   - Brainfuck

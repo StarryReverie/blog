@@ -2,7 +2,8 @@
 title: 为 EndeavourOS 构建 Linux 内核
 date: 2025-10-15T22:59:02+08:00
 draft: false
-categories: Tech
+categories:
+  - Tech
 tags:
   - Linux
 math: false
