@@ -103,3 +103,6 @@ markup:
         delimiters:
           block: [ [ "$$", "$$" ] ]
           inline: [ [ "$", "$" ] ]
+
+    parser:
+      wrapStandAloneImageWithinParagraph: false
