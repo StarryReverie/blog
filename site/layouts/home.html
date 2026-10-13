@@ -29,7 +29,8 @@
               <a
                 href="{{ $entry.url }}"
                 title="{{ $entry.name }}"
-                rel="external"
+                rel="external noopener noreferrer"
+                target="_blank"
                 class="text-fl-xl text-subtle transition-colors duration-400 hover:text-foreground"
               >
                 {{- partial "components/content/icon.html" (dict "name" $entry.icon) -}}
