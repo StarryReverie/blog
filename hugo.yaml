@@ -1,6 +1,6 @@
 baseURL: https://blog.starryreverie.cc/
 title: StarryReverie 星缀夜空
-copyright: Copyright (C) 2025 [Justin Chen](https://github.com/starryreverie/) · Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+copyright: Copyright (C) 2025 [Justin Chen](https://github.com/StarryReverie/) · Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 locale: zh-cn
 
 enableRobotsTXT: true
@@ -77,6 +77,22 @@ outputs:
     - RSS
     - JSON
 
+markup:
+  highlight:
+    noClasses: false
+    style: rose-pine-dawn
+
+  goldmark:
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block: [ [ "$$", "$$" ] ]
+          inline: [ [ "$", "$" ] ]
+
+    parser:
+      wrapStandAloneImageWithinParagraph: false
+
 menu:
   main:
     - name: Archive
@@ -95,18 +111,7 @@ menu:
       pageRef: /about
       weight: 4
 
-markup:
-  highlight:
-    noClasses: false
-    style: rose-pine-dawn
-
-  goldmark:
-    extensions:
-      passthrough:
-        enable: true
-        delimiters:
-          block: [ [ "$$", "$$" ] ]
-          inline: [ [ "$", "$" ] ]
-
-    parser:
-      wrapStandAloneImageWithinParagraph: false
+params:
+  home:
+    title: Justin Chen's Blog
+    subtitle: A world where insightful idea sparks

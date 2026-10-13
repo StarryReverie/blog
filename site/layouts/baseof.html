@@ -18,9 +18,12 @@
     {{- partial "resources/vendors/katex.html" $ -}}
   </head>
 
-  <body class="space-y-section bg-background pb-page">
-    {{- partial "components/header.html" $ -}}
-    <main>{{- block "main" $ -}}{{- end -}}</main>
+  <body class="flex min-h-dvh flex-col gap-y-section bg-background pb-page">
+    <div class="relative">
+      {{- partial "components/header.html" $ -}}
+      <section class="">{{- block "hero" $ -}}{{- end -}}</section>
+    </div>
+    <main class="grow">{{- block "main" $ -}}{{- end -}}</main>
     {{- partialCached "components/footer.html" $ -}}
   </body>
 </html>
