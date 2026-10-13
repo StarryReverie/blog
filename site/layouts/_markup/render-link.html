@@ -1,6 +1,6 @@
 {{- $url := urls.Parse $.Destination -}}
 <a
-  href="{{ $.Destination | safeURL }}"
+  href="{{ $.Destination | safe.URL }}"
   {{ with $title := $.Title }}title="{{ $title }}"{{ end }}
   {{ if $url.IsAbs }}rel="external"{{ end }}
   class="link"

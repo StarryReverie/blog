@@ -4,9 +4,9 @@
 
 {{- with $iconFile := resources.Get (printf "icons/tabler/%s/%s.svg" $style $name) -}}
   <span
-    {{ printf "class=%q" (printf "inline-icon %s" $extraClasses) | safeHTMLAttr }}
+    {{ printf "class=%q" (printf "inline-icon %s" $extraClasses) | safe.HTMLAttr }}
     aria-hidden="true"
-    >{{ $iconFile.Content | safeHTML }}</span
+    >{{ $iconFile.Content | safe.HTML }}</span
   >
 {{- else -}}
   {{- errorf "could not find icon %q in @tabler/icons" $name -}}
