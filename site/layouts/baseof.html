@@ -12,9 +12,10 @@
       {{- end -}}
     </title>
 
-    {{- partialCached "resources/fonts.html" "emptyContext" -}}
     {{- partial "resources/css.html" "emptyContext" -}}
-    {{- partialCached "resources/js.html" "emptyContext" -}}
+    {{- partial "resources/fonts.html" "emptyContext" -}}
+    {{- partial "resources/js.html" "emptyContext" -}}
+    {{- partial "resources/vendors/katex.html" $ -}}
   </head>
 
   <body class="space-y-section bg-background pb-page">

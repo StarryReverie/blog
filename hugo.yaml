@@ -33,6 +33,10 @@ module:
     - source: site/static
       target: static
 
+    - source: node_modules/katex/dist
+      target: assets/vendors/katex
+      disableWatch: true
+
     - source: node_modules/@tabler/icons/icons
       target: assets/icons/tabler
       disableWatch: true
