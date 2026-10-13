@@ -1,7 +1,7 @@
 {{- define "main" -}}
   <div class="mx-auto max-w-3xl space-y-section px-page">
     <header>
-      <h1 class="text-fl-h1 font-bold text-secondary">All Posts</h1>
+      <h1 class="text-fl-h1 font-bold text-heading">All Posts</h1>
 
       <div class="prose">{{ $.Content }}</div>
     </header>
@@ -13,7 +13,7 @@
             <h2>
               <a
                 href="{{ $entry.RelPermalink }}"
-                class="text-fl-emphasis font-bold text-secondary transition-colors duration-400 hover:text-secondary-active"
+                class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
                 >{{ $entry.Title }}</a
               >
             </h2>
