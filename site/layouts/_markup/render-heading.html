@@ -1,0 +1,7 @@
+{{/* Prettier formatter could not handle something like '<h{{ $.Level }}>' */}}
+{{- printf "<h%d %s>" $.Level (printf "id=%q" $.Anchor | safe.HTMLAttr) | safe.HTML -}}
+{{ $.Text }}
+<a href="#{{ $.Anchor }}" class="text-muted transition-colors duration-400 hover:text-subtle">
+  {{- partial "components/content/icon.html" (dict "name" "link") -}}
+</a>
+{{- printf "</h%d>" $.Level | safe.HTML -}}
