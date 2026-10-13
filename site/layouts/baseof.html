@@ -18,8 +18,8 @@
   </head>
 
   <body class="space-y-section bg-background pb-page">
-    <header>{{- partial "components/header.html" $ -}}</header>
-    {{- block "main" $ -}}<main></main>{{- end -}}
-    <footer>{{- partialCached "components/footer.html" $ -}}</footer>
+    {{- partial "components/header.html" $ -}}
+    <main>{{- block "main" $ -}}{{- end -}}</main>
+    {{- partialCached "components/footer.html" $ -}}
   </body>
 </html>

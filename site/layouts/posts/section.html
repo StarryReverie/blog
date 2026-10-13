@@ -1,12 +1,12 @@
 {{- define "main" -}}
-  <div class="mx-auto mt-section max-w-3xl space-y-section px-page">
+  <div class="mx-auto max-w-3xl space-y-section px-page">
     <header>
       <h1 class="text-fl-h1 font-bold text-secondary">All Posts</h1>
 
       <div class="prose">{{ $.Content }}</div>
     </header>
 
-    <div class="mt-line space-y-gutter">
+    <div class="space-y-gutter">
       {{- range $entry := where site.RegularPages "Section" "posts" -}}
         <article class="-mx-inset space-y-stack rounded-sm bg-card p-inset">
           <header class="space-y-line">

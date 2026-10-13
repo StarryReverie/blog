@@ -1,4 +1,4 @@
-<div x-data="{ open: false }" class="w-full bg-card">
+<header x-data="{ open: false }" class="w-full bg-card">
   <div class="mx-auto max-w-4xl px-page py-component">
     <div class="flex items-center justify-between">
       <a
@@ -35,7 +35,7 @@
       </nav>
     {{- end -}}
   </div>
-</div>
+</header>
 
 {{- define "_partials/components/header.html/menu-item.html" -}}
   {{- range $entry := $.menu -}}
