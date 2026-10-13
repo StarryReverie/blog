@@ -1,17 +1,7 @@
-{{- with $rawJsResource := resources.Get "js/main.js" -}}
+{{- partialCached "resources/js.html/load.html" "emptyContext" -}}
+
+{{- define "_partials/resources/js.html/load.html" -}}
+  {{- $rawJsResource := resources.Get "js/main.js" -}}
   {{- $opts := dict "minify" (not hugo.IsDevelopment) "format" "iife" "target" "es2018" -}}
-  {{- with $jsResource := $rawJsResource | js.Build $opts -}}
-    {{- if hugo.IsDevelopment -}}
-      <script src="{{ $jsResource.RelPermalink }}" defer></script>
-    {{- else -}}
-      {{- with $prodJsResource := $jsResource | fingerprint -}}
-        <script
-          src="{{ $prodJsResource.RelPermalink }}"
-          integrity="{{ $prodJsResource.Data.Integrity }}"
-          crossorigin="anonymous"
-          defer
-        ></script>
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
+  {{- partial "resources/loaders/js.html" ($rawJsResource | js.Build $opts) -}}
 {{- end -}}

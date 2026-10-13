@@ -3,23 +3,12 @@
 {{- end -}}
 
 {{- define "_partials/resources/vendors/katex.html/load.html" -}}
-  {{- with $devCss := resources.Get "vendors/katex/katex.min.css" -}}
-    {{- range $font := resources.Match "vendors/katex/fonts/*.woff2" -}}
-      {{ $font.Publish }}
-    {{- end -}}
+  {{- range $font := resources.Match "vendors/katex/fonts/*.woff2" -}}
+    {{ $font.Publish }}
+  {{- end -}}
 
-    {{- if hugo.IsDevelopment -}}
-      <link rel="stylesheet" href="{{ $devCss.RelPermalink }}" />
-    {{- else -}}
-      {{- with $prodCss := $devCss | fingerprint -}}
-        <link
-          rel="stylesheet"
-          href="{{ $prodCss.RelPermalink }}"
-          integrity="{{ $prodCss.Data.Integrity }}"
-          crossorigin="anonymous"
-        />
-      {{- end -}}
-    {{- end -}}
+  {{- with $devCss := resources.Get "vendors/katex/katex.min.css" -}}
+    {{- partial "resources/loaders/css.html" $devCss -}}
   {{- else -}}
     {{- errorf "Could not find `katex.min.css`. You may need to run `npm clean-install` to fetch the corresponding npm package." -}}
   {{- end -}}

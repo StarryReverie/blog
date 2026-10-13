@@ -37,8 +37,8 @@ module:
       target: assets/vendors/katex
       disableWatch: true
 
-    - source: node_modules/@tabler/icons/icons
-      target: assets/icons/tabler
+    - source: node_modules/@tabler/icons
+      target: assets/vendors/tabler
       disableWatch: true
 
 build:
