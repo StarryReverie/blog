@@ -22,6 +22,21 @@
         <p class="text-center text-fl-emphasis font-bold text-heading md:text-left">
           {{ $.Site.Params.home.subtitle }}
         </p>
+
+        <ul class="flex items-center justify-center gap-inline md:justify-start">
+          {{- range $entry := $.Site.Params.social -}}
+            <li>
+              <a
+                href="{{ $entry.url }}"
+                title="{{ $entry.name }}"
+                rel="external"
+                class="text-fl-xl text-subtle transition-colors duration-400 hover:text-foreground"
+              >
+                {{- partial "components/content/icon.html" (dict "name" $entry.icon) -}}
+              </a>
+            </li>
+          {{- end -}}
+        </ul>
       </div>
     </header>
   </div>
