@@ -16,7 +16,7 @@
   <div class="space-y-gutter">
     {{- range $entry := $.entries -}}
       <section class="-mx-inset space-y-stack rounded-sm bg-card p-inset">
-        {{- partial $.entryToContent $entry -}}
+        {{- partialCached $.entryToContent $entry $entry -}}
       </section>
     {{- end -}}
   </div>

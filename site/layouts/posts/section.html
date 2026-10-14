@@ -3,35 +3,6 @@
     "headerTitle" "All Posts"
     "headerContent" ""
     "entries" (where site.RegularPages "Section" "posts")
-    "entryToContent" "_/posts/section.html/entryToContent.html")
+    "entryToContent" "components/posts/card.html")
   -}}
-{{- end -}}
-
-{{- define "_partials/_/posts/section.html/entryToContent.html" -}}
-  <header class="space-y-line">
-    <h2>
-      <a
-        href="{{ $.RelPermalink }}"
-        class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
-        >{{ $.Title }}</a
-      >
-    </h2>
-
-    <p class="text-fl-note text-subtle">
-      {{- partial "components/content/date.html" $.Date -}}
-    </p>
-  </header>
-
-  <p class="text-foreground">
-    {{ $.Content | transform.Plainify | strings.Truncate 120 }}
-  </p>
-
-  <div class="flex justify-end">
-    <a
-      href="{{ $.RelPermalink }}"
-      class="text-fl-note text-subtle transition-colors duration-400 hover:text-foreground"
-    >
-      Read More ...
-    </a>
-  </div>
 {{- end -}}
