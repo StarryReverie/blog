@@ -1,43 +1,37 @@
 {{- define "main" -}}
-  <div class="mx-auto max-w-3xl space-y-section px-page">
-    <header>
-      <h1 class="text-fl-h1 font-bold text-heading">All Posts</h1>
+  {{- partial "views/main-sections.html" (dict
+    "headerTitle" "All Posts"
+    "headerContent" ""
+    "entries" (where site.RegularPages "Section" "posts")
+    "entryToContent" "_/posts/section.html/entryToContent.html")
+  -}}
+{{- end -}}
 
-      <div class="prose">{{ $.Content }}</div>
-    </header>
+{{- define "_partials/_/posts/section.html/entryToContent.html" -}}
+  <header class="space-y-line">
+    <h2>
+      <a
+        href="{{ $.RelPermalink }}"
+        class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
+        >{{ $.Title }}</a
+      >
+    </h2>
 
-    <div class="space-y-gutter">
-      {{- range $entry := where site.RegularPages "Section" "posts" -}}
-        <article class="-mx-inset space-y-stack rounded-sm bg-card p-inset">
-          <header class="space-y-line">
-            <h2>
-              <a
-                href="{{ $entry.RelPermalink }}"
-                class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
-                >{{ $entry.Title }}</a
-              >
-            </h2>
+    <p class="text-fl-note text-subtle">
+      {{- partial "components/content/date.html" $.Date -}}
+    </p>
+  </header>
 
-            <p class="text-fl-note text-subtle">
-              {{- partial "components/content/date.html" $entry.Date -}}
-            </p>
-          </header>
+  <p class="text-foreground">
+    {{ $.Content | transform.Plainify | strings.Truncate 120 }}
+  </p>
 
-          <p class="text-foreground">
-            {{ $entry.Content | transform.Plainify | strings.Truncate 120 }}
-          </p>
-
-          <div class="flex justify-end">
-            <a
-              href="{{ $entry.RelPermalink }}"
-              class="text-fl-note text-subtle transition-colors duration-400 hover:text-foreground"
-              >Read More ...</a
-            >
-          </div>
-        </article>
-      {{- else -}}
-        <p class="text-subtle">No article yet ...</p>
-      {{- end -}}
-    </div>
+  <div class="flex justify-end">
+    <a
+      href="{{ $.RelPermalink }}"
+      class="text-fl-note text-subtle transition-colors duration-400 hover:text-foreground"
+    >
+      Read More ...
+    </a>
   </div>
 {{- end -}}

@@ -1,0 +1,25 @@
+{{- $currentContext := or $.currentContext "emptyContext" -}}
+
+{{- $headerTitle := $.headerTitle -}}
+{{- $headerContent := $.headerContent -}}
+{{- $content := $.content -}}
+{{- $isProse := or $.isProse false -}}
+
+{{- partial "views/main.html" (dict
+  "currentContext" $currentContext
+  "headerTitle" $headerTitle
+  "headerContent" $headerContent
+  "content" (partial "views/main-content.html/content.html" (dict "content" $content "isProse" $isProse)))
+-}}
+
+{{- define "_partials/views/main-content.html/content.html" -}}
+  {{- if $.isProse -}}
+    <div class="-mx-inset prose max-w-none rounded-sm bg-card p-inset">
+      {{ $.content }}
+    </div>
+  {{- else -}}
+    <div class="-mx-inset max-w-none rounded-sm bg-card p-inset">
+      {{ $.content }}
+    </div>
+  {{- end -}}
+{{- end -}}
