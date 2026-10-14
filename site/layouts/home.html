@@ -15,7 +15,9 @@
 
       <div class="flex flex-col items-center gap-line md:items-start">
         <!-- HACK: `md:mt-1` and `md:-ml-0.5` moves the title a bit to make it more visually aligned. -->
-        <h1 class="text-center text-fl-h1 font-bold text-primary md:mt-1 md:-ml-0.5 md:text-left">
+        <h1
+          class="text-center text-fl-h1 font-bold text-primary md:mt-[calc(2*var(--space-control)+var(--static-type-body)*var(--line-height-body))] md:-ml-0.5 md:text-left"
+        >
           {{ $.Site.Params.home.title }}
         </h1>
 
@@ -37,6 +39,14 @@
               </a>
             </li>
           {{- end -}}
+        </ul>
+
+        <ul class="flex justify-center gap-inline md:justify-start">
+          <a
+            href="{{ ($.Site.GetPage "posts").RelPermalink }}"
+            class="rounded-full bg-primary px-[calc(2*var(--space-control))] py-control text-st-body font-bold text-primary-foreground transition-colors duration-400 hover:bg-card hover:text-primary hover:outline-1 hover:outline-primary"
+            >Posts</a
+          >
         </ul>
       </div>
     </header>
