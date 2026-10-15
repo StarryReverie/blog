@@ -1,0 +1,36 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["*"],
+      "commitMessagePrefix": "chore: ",
+      "commitMessageAction": "update"
+    },
+    {
+      "matchUpdateTypes": ["pin", "pinDigest"],
+      "commitMessageAction": "pin"
+    },
+    {
+      "matchUpdateTypes": ["rollback"],
+      "commitMessageAction": "roll back"
+    },
+    {
+      "matchUpdateTypes": ["replacement"],
+      "commitMessageAction": "replace"
+    },
+
+    {
+      "description": "Nix Flake inputs",
+      "matchManagers": ["nix"],
+      "commitMessageAction": "update",
+      "commitMessageTopic": "Nix Flake inputs"
+    }
+  ],
+  "nix": {
+    "enabled": true
+  }
+}
+
