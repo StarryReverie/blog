@@ -86,8 +86,8 @@ markup:
 
 menu:
   main:
-    - name: Archive
-      pageRef: /archives
+    - name: Posts
+      pageRef: /posts
       weight: 1
     - name: Categories
       pageRef: /categories
@@ -95,21 +95,24 @@ menu:
     - name: Tags
       pageRef: /tags
       weight: 3
+    - name: Archives
+      pageRef: /archives
+      weight: 4
     - name: About
       pageRef: /about
-      weight: 4
+      weight: 5
 
 params:
   home:
     title: Justin Chen's Blog
     subtitle: A world where insightful idea sparks
   social:
-    - name: GitHub
-      url: https://github.com/StarryReverie
-      icon: brand-github
     - name: Telegram
       url: https://t.me/starryreverie_cc
       icon: brand-telegram
+    - name: GitHub
+      url: https://github.com/StarryReverie
+      icon: brand-github
     - name: Matrix
       url: https://matrix.to/#/@starryreverie:matrix.org
       icon: brand-matrix
