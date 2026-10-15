@@ -4,7 +4,6 @@
     ./packages.nix
   ];
 
-
   perSystem =
     { system, ... }:
     {

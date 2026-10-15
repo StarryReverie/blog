@@ -7,7 +7,8 @@
         >{{ site.Title }}</a
       >
 
-      {{- with $menu := site.Menus.main -}}
+      <div class="flex items-center">
+        {{- $menu := site.Menus.main -}}
         <nav aria-label="Main Menu" class="hidden md:block">
           <ul class="flex items-center">
             {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
@@ -24,7 +25,23 @@
         >
           {{- partial "components/content/icon.html" (dict "name" "menu-2") -}}
         </button>
-      {{- end -}}
+
+        <button
+          type="button"
+          x-data="themeToggle"
+          @click="toggle()"
+          :aria-label="dark ? 'Switch to light theme' : 'Switch to dark theme'"
+          :title="dark ? 'Switch to light theme' : 'Switch to dark theme'"
+          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
+        >
+          <span x-show="dark" x-cloak>
+            {{- partial "components/content/icon.html" (dict "name" "moon") -}}
+          </span>
+          <span x-show="!dark" x-cloak>
+            {{- partial "components/content/icon.html" (dict "name" "sun") -}}
+          </span>
+        </button>
+      </div>
     </div>
 
     {{- with $menu := site.Menus.main -}}

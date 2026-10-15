@@ -5,3 +5,14 @@
   {{- $opts := dict "minify" (not hugo.IsDevelopment) "format" "iife" "target" "es2018" -}}
   {{- partial "resources/loaders/js.html" ($rawJsResource | js.Build $opts) -}}
 {{- end -}}
+
+
+<script>
+  (() => {
+    const t = localStorage.getItem("theme");
+    document.documentElement.classList.toggle(
+      "dark",
+      t === "dark" || (!t && matchMedia("(prefers-color-scheme: dark)").matches),
+    );
+  })();
+</script>
