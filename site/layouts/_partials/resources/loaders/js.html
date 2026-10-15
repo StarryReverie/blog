@@ -1,0 +1,12 @@
+{{- if hugo.IsDevelopment -}}
+  <script src="{{ $.RelPermalink }}" defer></script>
+{{- else -}}
+  {{- with $prodResource := $ | fingerprint -}}
+    <script
+      src="{{ $prodResource.RelPermalink }}"
+      integrity="{{ $prodResource.Data.Integrity }}"
+      crossorigin="anonymous"
+      defer
+    ></script>
+  {{- end -}}
+{{- end -}}

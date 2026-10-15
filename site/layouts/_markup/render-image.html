@@ -1,0 +1,19 @@
+{{- if $.IsBlock -}}
+  <figure class="flex flex-col items-center">
+    <img
+      src="{{ $.Destination | safe.URL }}"
+      {{ with $text := $.PlainText }}alt="{{ $text }}"{{ end }}
+      class="h-auto max-w-full"
+    />
+    {{- with $title := $.Title -}}
+      <figcaption>{{ $title }}</figcaption>
+    {{- end -}}
+  </figure>
+{{- else -}}
+  <img
+    src="{{ $.Destination | safe.URL }}"
+    {{ with $text := $.PlainText }}alt="{{ $text }}"{{ end }}
+    {{ with $title := $.Title }}title="{{ $title }}"{{ end }}
+    class="h-auto max-w-full"
+  />
+{{- end -}}

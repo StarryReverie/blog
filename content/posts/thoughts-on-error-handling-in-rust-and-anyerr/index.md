@@ -2,7 +2,8 @@
 title: 对 Rust 错误处理的思考和 anyerr
 date: 2025-02-20T11:08:21+08:00
 draft: false
-categories: Tech
+categories:
+  - Tech
 tags:
   - Rust
   - Project

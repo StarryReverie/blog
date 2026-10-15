@@ -1,3 +1,8 @@
 [formatter.nix]
 command = "nixfmt"
-includes = ["*.nix"]
+includes = [ "*.nix" ]
+
+[formatter.frontend]
+command = "npx"
+options = [ "prettier", "--write" ]
+includes = [ "site/layouts/*", "site/assets/css/*" ]

@@ -1,0 +1,15 @@
+{{- if $.Param "math" -}}
+  {{- partialCached "resources/vendors/katex.html/load.html" "emptyContext" -}}
+{{- end -}}
+
+{{- define "_partials/resources/vendors/katex.html/load.html" -}}
+  {{- range $font := resources.Match "vendors/katex/fonts/*.woff2" -}}
+    {{ $font.Publish }}
+  {{- end -}}
+
+  {{- with $devCss := resources.Get "vendors/katex/katex.min.css" -}}
+    {{- partial "resources/loaders/css.html" $devCss -}}
+  {{- else -}}
+    {{- errorf "Could not find `katex.min.css`. You may need to run `npm clean-install` to fetch the corresponding npm package." -}}
+  {{- end -}}
+{{- end -}}

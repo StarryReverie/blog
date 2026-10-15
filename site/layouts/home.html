@@ -1,0 +1,66 @@
+{{- define "hero" -}}
+  <!-- The total height of this div and the navbar is approximately 100dvh. -->
+  <div
+    style="--collapsed-navbar-height: calc(var(--fluid-type-emphasis) * var(--line-height-emphasis) + 2 * var(--space-component))"
+    class="relative mx-auto h-[calc(100dvh-var(--collapsed-navbar-height))] px-page"
+  >
+    <!-- Make this title component centered relative to the whole viewport. -->
+    <header
+      style="--header-y-offset: calc(50% - var(--collapsed-navbar-height))"
+      class="absolute inset-x-0 top-[var(--header-y-offset)] flex -translate-y-1/2 flex-col items-center justify-center gap-stack md:flex-row md:gap-inset"
+    >
+      <img
+        src="{{ (resources.Get "images/avatar.jpg").RelPermalink }}"
+        alt="avatar"
+        class="max-w-40 rounded-full object-cover outline-4 outline-subtle"
+      />
+
+      <div class="flex flex-col items-center gap-line md:items-start">
+        <!-- HACK: `md:mt-1` and `md:-ml-0.5` moves the title a bit to make it more visually aligned. -->
+        <h1
+          style="--button-height: calc(2 * var(--space-control) + var(--static-type-body) * var(--line-height-body))"
+          class="text-center text-fl-h1 font-bold text-primary md:mt-[var(--button-height)] md:-ml-0.5 md:text-left"
+        >
+          {{ $.Site.Params.home.title }}
+        </h1>
+
+        <p class="text-center text-fl-emphasis font-bold text-heading md:text-left">
+          {{ $.Site.Params.home.subtitle }}
+        </p>
+
+        <ul class="flex items-center justify-center gap-inline md:justify-start">
+          {{- range $entry := $.Site.Params.social -}}
+            <li>
+              <a
+                href="{{ $entry.url }}"
+                title="{{ $entry.name }}"
+                {{ if $entry.isExternal }}rel="external noopener noreferrer" target="_blank"{{ end }}
+                class="text-fl-xl text-subtle transition-colors duration-400 hover:text-foreground"
+              >
+                {{- partial "components/content/icon.html" (dict "name" $entry.icon) -}}
+              </a>
+            </li>
+          {{- end -}}
+        </ul>
+
+        <ul class="flex justify-center gap-inline md:justify-start">
+          <a
+            href="{{ ($.Site.GetPage "posts").RelPermalink }}"
+            class="rounded-full border-2 border-primary bg-primary px-[calc(2*var(--space-control))] py-control text-st-body font-bold text-primary-foreground transition-colors duration-400 hover:bg-card hover:text-primary"
+            >Posts</a
+          >
+        </ul>
+      </div>
+    </header>
+  </div>
+{{- end -}}
+
+{{- define "main" -}}
+  <div class="mx-auto max-w-3xl space-y-gutter px-page">
+    {{- if gt (strings.CountRunes .Content) 0 -}}
+      <section class="-mx-inset prose max-w-none rounded-sm bg-card p-inset">
+        {{ $.Content }}
+      </section>
+    {{- end -}}
+  </div>
+{{- end -}}

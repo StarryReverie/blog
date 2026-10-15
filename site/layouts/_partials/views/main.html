@@ -1,0 +1,15 @@
+{{- $currentContext := or $.currentContext "emptyContext" -}}
+
+{{- $headerTitle := $.headerTitle -}}
+{{- $headerContent := $.headerContent -}}
+{{- $content := $.content -}}
+
+
+<div class="mx-auto max-w-3xl space-y-section px-page">
+  <header class="space-y-line">
+    <h1 class="text-fl-h1 font-bold text-heading">{{ $headerTitle }}</h1>
+    <div>{{ $headerContent }}</div>
+  </header>
+
+  <div>{{ $content }}</div>
+</div>

@@ -1,0 +1,13 @@
+{{- define "main" -}}
+  <!-- prettier-ignore-start -->
+  {{- partial "views/main-content.html" (dict
+    "headerTitle" $.Title
+    "headerContent" (partial "components/taxonomy/term-statistics.html" (dict
+      "name" "categories"
+      "terms" $.Data.Terms))
+    "content" (partial "components/taxonomy/cloud.html" (dict
+      "terms" $.Data.Terms
+      "icon" "folder")))
+  -}}
+  <!-- prettier-ignore-end -->
+{{- end -}}

@@ -25,4 +25,3 @@
 
   outputs = _inputs: { };
 }
-

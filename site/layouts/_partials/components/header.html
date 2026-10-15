@@ -1,0 +1,53 @@
+<header x-data="{ open: false }" class="w-full bg-card">
+  <div class="mx-auto max-w-4xl px-page py-component">
+    <div class="flex items-center justify-between">
+      <a
+        href="{{ site.Home.RelPermalink }}"
+        class="text-fl-emphasis font-bold text-primary transition-colors duration-400 hover:text-primary-active"
+        >{{ site.Title }}</a
+      >
+
+      {{- with $menu := site.Menus.main -}}
+        <nav aria-label="Main Menu" class="hidden md:block">
+          <ul class="flex items-center">
+            {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
+          </ul>
+        </nav>
+
+        <button
+          type="button"
+          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background md:hidden"
+          @click="open = !open"
+          :aria-expanded="open"
+          aria-controls="menu-mobile"
+          aria-label="Main Menu"
+        >
+          {{- partial "components/content/icon.html" (dict "name" "menu-2") -}}
+        </button>
+      {{- end -}}
+    </div>
+
+    {{- with $menu := site.Menus.main -}}
+      <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
+        <ul class="flex flex-col">
+          {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
+        </ul>
+      </nav>
+    {{- end -}}
+  </div>
+</header>
+
+{{- define "_partials/components/header.html/menu-item.html" -}}
+  {{- range $entry := $.menu -}}
+    {{- $name := or (and .Identifier (T $entry.Identifier)) $entry.Name -}}
+    {{- $isActive := or ($.page.IsMenuCurrent "main" $entry) ($.page.HasMenuCurrent "main" $entry) -}}
+    <li>
+      <a
+        href="{{ $entry.URL }}"
+        {{ if $isActive }}aria-current="page"{{ end }}
+        class="block rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+        >{{ $name }}</a
+      >
+    </li>
+  {{- end -}}
+{{- end -}}

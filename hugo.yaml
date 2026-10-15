@@ -1,0 +1,136 @@
+baseURL: https://blog.starryreverie.cc/
+title: StarryReverie 星缀夜空
+copyright: Copyright (C) 2025 [Justin Chen](https://github.com/StarryReverie/) · Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+locale: zh-cn
+
+enableRobotsTXT: true
+hasCJKLanguage: true
+
+publishDir: .hugo-publish
+resourceDir: .hugo-resources
+
+module:
+  mounts:
+    - source: site/data
+      target: data
+    - source: site/layouts
+      target: layouts
+    - source: site/i18n
+      target: i18n
+    - source: site/archetypes
+      target: archetypes
+    - source: site/assets
+      target: assets
+    - source: hugo_stats.json
+      target: assets/notwatching/hugo_stats.json
+      disableWatch: true
+    - source: site/static
+      target: static
+    - source: node_modules/katex/dist
+      target: assets/vendors/katex
+      disableWatch: true
+    - source: node_modules/@tabler/icons
+      target: assets/vendors/tabler
+      disableWatch: true
+
+build:
+  buildStats:
+    enable: true
+
+  cachebusters:
+    - source: 'assets/notwatching/hugo_stats\.json'
+      target: css
+    - source: '(postcss|tailwind)\.config\.js'
+      target: css
+
+security:
+  exec:
+    target: static
+    allow:
+     - ^(dart-)?sass$
+     - ^go$
+     - ^git$
+     - ^node$
+     - ^postcss$
+     - ^tailwindcss$
+
+taxonomies:
+  category: categories
+  tag: tags
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+outputs:
+  home:
+    - html
+    - rss
+  section:
+    - html
+    - rss
+  taxonomy:
+    - html
+  term:
+    - html
+
+markup:
+  highlight:
+    noClasses: false
+    style: rose-pine-dawn
+
+  goldmark:
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block: [ [ "$$", "$$" ] ]
+          inline: [ [ "$", "$" ] ]
+
+    parser:
+      wrapStandAloneImageWithinParagraph: false
+
+menu:
+  main:
+    - name: Posts
+      pageRef: /posts
+      weight: 1
+    - name: Categories
+      pageRef: /categories
+      weight: 2
+    - name: Tags
+      pageRef: /tags
+      weight: 3
+    - name: Archives
+      pageRef: /archives
+      weight: 4
+    - name: About
+      pageRef: /about
+      weight: 5
+
+params:
+  home:
+    title: Justin Chen's Blog
+    subtitle: A world where insightful idea sparks
+  social:
+    - name: Telegram
+      url: https://t.me/starryreverie_cc
+      icon: brand-telegram
+      isExternal: true
+    - name: Matrix
+      url: https://matrix.to/#/@starryreverie:matrix.org
+      icon: brand-matrix
+      isExternal: true
+    - name: Email
+      url: mailto:starryreverie@proton.me
+      icon: mail-opened
+      isExternal: true
+    - name: GitHub
+      url: https://github.com/StarryReverie
+      icon: brand-github
+      isExternal: true
+    - name: RSS
+      url: /index.xml
+      icon: rss
+      isExternal: false
+

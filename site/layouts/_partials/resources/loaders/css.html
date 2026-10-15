@@ -1,0 +1,12 @@
+{{- if hugo.IsDevelopment -}}
+  <link rel="stylesheet" href="{{ $.RelPermalink }}" />
+{{- else -}}
+  {{- with $prodResource := $ | fingerprint -}}
+    <link
+      rel="stylesheet"
+      href="{{ $prodResource.RelPermalink }}"
+      integrity="{{ $prodResource.Data.Integrity }}"
+      crossorigin="anonymous"
+    />
+  {{- end -}}
+{{- end -}}

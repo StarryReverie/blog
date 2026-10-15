@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale }}" dir="{{ or site.Language.Direction "ltr" }}" class="bg-card">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>
+      {{- block "title" $ -}}
+        {{- if page.IsHome -}}
+          {{ site.Title }}
+        {{- else -}}
+          {{ printf "%s | %s" site.Title page.Title }}
+        {{- end -}}
+      {{- end -}}
+    </title>
+
+    {{- partial "resources/css.html" "emptyContext" -}}
+    {{- partial "resources/fonts.html" "emptyContext" -}}
+    {{- partial "resources/js.html" "emptyContext" -}}
+    {{- partial "resources/vendors/katex.html" $ -}}
+  </head>
+
+  <body class="flex min-h-dvh flex-col gap-y-section bg-background pb-page">
+    <div>
+      {{- partial "components/header.html" $ -}}
+      <section class="">{{- block "hero" $ -}}{{- end -}}</section>
+    </div>
+    <main class="grow">{{- block "main" $ -}}{{- end -}}</main>
+    {{- partialCached "components/footer.html" $ -}}
+  </body>
+</html>

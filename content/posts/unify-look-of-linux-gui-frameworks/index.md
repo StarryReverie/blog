@@ -2,7 +2,8 @@
 title: 统一 Linux GUI 框架主题和外观
 date: 2024-07-31T23:21:07+08:00
 draft: false
-categories: Tech
+categories:
+  - Tech
 tags:
   - Linux
   - Desktop Environment

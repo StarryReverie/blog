@@ -1,0 +1,18 @@
+{
+  "printWidth": 120,
+  "plugins": [
+    "@htnabe/prettier-plugin-go-template",
+    "prettier-plugin-tailwindcss"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "site/layouts/**/*.html"
+      ],
+      "options": {
+        "parser": "go-template"
+      }
+    }
+  ],
+  "tailwindStylesheet": "./site/assets/css/main.css"
+}

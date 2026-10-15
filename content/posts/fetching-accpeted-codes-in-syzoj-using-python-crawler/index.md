@@ -2,7 +2,8 @@
 title: Python 网络爬虫获取 SYZOJ AC 代码
 date: 2022-04-18T15:23:12+08:00
 draft: false
-categories: Tech
+categories:
+  - Tech
 tags:
   - Python
   - Web

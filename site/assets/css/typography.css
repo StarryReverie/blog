@@ -1,0 +1,281 @@
+:root {
+  /* Primitives */
+  --static-type-xs: 0.6944rem;
+  --static-type-sm: 0.8333rem;
+  --static-type-base: 1rem;
+  --static-type-lg: 1.2rem;
+  --static-type-xl: 1.44rem;
+  --static-type-2xl: 1.728rem;
+  --static-type-3xl: 2.0736rem;
+  --static-type-4xl: 2.4883rem;
+
+  --fluid-type-xs: clamp(var(--static-type-xs), 0.684rem + 0.0465vw, 0.72rem);
+  --fluid-type-sm: clamp(var(--static-type-sm), 0.8061rem + 0.1212vw, 0.9rem);
+  --fluid-type-base: clamp(var(--static-type-base), 0.9489rem + 0.2273vw, 1.125rem);
+  --fluid-type-lg: clamp(var(--static-type-lg), 1.1156rem + 0.375vw, 1.4063rem);
+  --fluid-type-xl: clamp(var(--static-type-xl), 1.31rem + 0.5778vw, 1.7578rem);
+  --fluid-type-2xl: clamp(var(--static-type-2xl), 1.536rem + 0.8532vw, 2.1973rem);
+  --fluid-type-3xl: clamp(var(--static-type-3xl), 1.7983rem + 1.2236vw, 2.7466rem);
+  --fluid-type-4xl: clamp(var(--static-type-4xl), 2.1018rem + 1.718vw, 3.4332rem);
+
+  --static-space-3xs: 0.25rem;
+  --static-space-2xs: 0.5rem;
+  --static-space-xs: 0.75rem;
+  --static-space-sm: 1rem;
+  --static-space-base: 1.5rem;
+  --static-space-lg: 2rem;
+  --static-space-xl: 3rem;
+  --static-space-2xl: 4rem;
+  --static-space-3xl: 6rem;
+
+  --fluid-space-3xs: clamp(var(--static-space-3xs), 0.2244rem + 0.1136vw, 0.3125rem);
+  --fluid-space-2xs: clamp(var(--static-space-2xs), 0.4744rem + 0.1136vw, 0.5625rem);
+  --fluid-space-xs: clamp(var(--static-space-xs), 0.6989rem + 0.2273vw, 0.875rem);
+  --fluid-space-sm: clamp(var(--static-space-sm), 0.9489rem + 0.2273vw, 1.125rem);
+  --fluid-space-base: clamp(var(--static-space-base), 1.4233rem + 0.3409vw, 1.6875rem);
+  --fluid-space-lg: clamp(var(--static-space-lg), 1.8977rem + 0.4545vw, 2.25rem);
+  --fluid-space-xl: clamp(var(--static-space-xl), 2.8466rem + 0.6818vw, 3.375rem);
+  --fluid-space-2xl: clamp(var(--static-space-2xl), 3.7955rem + 0.9091vw, 4.5rem);
+  --fluid-space-3xl: clamp(var(--static-space-3xl), 5.6932rem + 1.3636vw, 6.75rem);
+
+  --fluid-space-3xs-2xs: clamp(0.25rem, 0.1222rem + 0.5682vw, 0.5625rem);
+  --fluid-space-2xs-xs: clamp(0.5rem, 0.3466rem + 0.6818vw, 0.875rem);
+  --fluid-space-xs-sm: clamp(0.75rem, 0.5966rem + 0.6818vw, 1.125rem);
+  --fluid-space-sm-base: clamp(1rem, 0.7188rem + 1.25vw, 1.6875rem);
+  --fluid-space-base-lg: clamp(1.5rem, 1.1932rem + 1.3636vw, 2.25rem);
+  --fluid-space-lg-xl: clamp(2rem, 1.4375rem + 2.5vw, 3.375rem);
+  --fluid-space-xl-2xl: clamp(3rem, 2.3864rem + 2.7273vw, 4.5rem);
+  --fluid-space-2xl-3xl: clamp(4rem, 2.875rem + 5vw, 6.75rem);
+
+  --fluid-space-sm-lg: clamp(1rem, 0.4886rem + 2.2727vw, 2.25rem);
+
+  --line-height-xs: 1.6;
+  --line-height-sm: 1.55;
+  --line-height-base: 1.5;
+  --line-height-lg: 1.35;
+  --line-height-xl: 1.25;
+  --line-height-2xl: 1.2;
+  --line-height-3xl: 1.15;
+  --line-height-4xl: 1.1;
+
+  --line-height-prose: 1.75;
+  --line-height-code: 1.45;
+
+  /* Semantic aliases */
+  --static-type-body: var(--static-type-base);
+  --static-type-note: var(--static-type-sm);
+  --static-type-emphasis: var(--static-type-lg);
+  --static-type-h1: var(--static-type-3xl);
+  --static-type-h2: var(--static-type-2xl);
+  --static-type-h3: var(--static-type-xl);
+  --static-type-h4: var(--static-type-lg);
+  --static-type-h5: var(--static-type-base);
+  --static-type-h6: var(--static-type-sm);
+
+  --fluid-type-body: var(--fluid-type-base);
+  --fluid-type-note: var(--fluid-type-sm);
+  --fluid-type-emphasis: var(--fluid-type-lg);
+  --fluid-type-h1: var(--fluid-type-3xl);
+  --fluid-type-h2: var(--fluid-type-2xl);
+  --fluid-type-h3: var(--fluid-type-xl);
+  --fluid-type-h4: var(--fluid-type-lg);
+  --fluid-type-h5: var(--fluid-type-base);
+  --fluid-type-h6: var(--fluid-type-sm);
+
+  --line-height-body: var(--line-height-base);
+  --line-height-note: var(--line-height-sm);
+  --line-height-emphasis: var(--line-height-lg);
+  --line-height-h1: var(--line-height-3xl);
+  --line-height-h2: var(--line-height-2xl);
+  --line-height-h3: var(--line-height-xl);
+  --line-height-h4: var(--line-height-lg);
+  --line-height-h5: var(--line-height-base);
+  --line-height-h6: var(--line-height-sm);
+
+  --space-page: var(--fluid-space-lg);
+  --space-inset: var(--fluid-space-base);
+  --space-component: var(--static-space-sm);
+  --space-control: var(--static-space-2xs);
+
+  --space-section: var(--fluid-space-xl);
+  --space-gutter: var(--fluid-space-base);
+  --space-stack: var(--fluid-space-sm);
+  --space-line: var(--fluid-space-2xs);
+  --space-inline: var(--static-space-xs);
+}
+
+@theme inline {
+  --text-*: initial;
+
+  /* Primitives */
+  --text-st-xs: var(--static-type-xs);
+  --text-st-xs--line-height: var(--line-height-xs);
+  --text-st-sm: var(--static-type-sm);
+  --text-st-sm--line-height: var(--line-height-sm);
+  --text-st-base: var(--static-type-base);
+  --text-st-base--line-height: var(--line-height-base);
+  --text-st-lg: var(--static-type-lg);
+  --text-st-lg--line-height: var(--line-height-lg);
+  --text-st-xl: var(--static-type-xl);
+  --text-st-xl--line-height: var(--line-height-xl);
+  --text-st-2xl: var(--static-type-2xl);
+  --text-st-2xl--line-height: var(--line-height-2xl);
+  --text-st-3xl: var(--static-type-3xl);
+  --text-st-3xl--line-height: var(--line-height-3xl);
+  --text-st-4xl: var(--static-type-4xl);
+  --text-st-4xl--line-height: var(--line-height-4xl);
+
+  --text-fl-xs: var(--fluid-type-xs);
+  --text-fl-xs--line-height: var(--line-height-xs);
+  --text-fl-sm: var(--fluid-type-sm);
+  --text-fl-sm--line-height: var(--line-height-sm);
+  --text-fl-base: var(--fluid-type-base);
+  --text-fl-base--line-height: var(--line-height-base);
+  --text-fl-lg: var(--fluid-type-lg);
+  --text-fl-lg--line-height: var(--line-height-lg);
+  --text-fl-xl: var(--fluid-type-xl);
+  --text-fl-xl--line-height: var(--line-height-xl);
+  --text-fl-2xl: var(--fluid-type-2xl);
+  --text-fl-2xl--line-height: var(--line-height-2xl);
+  --text-fl-3xl: var(--fluid-type-3xl);
+  --text-fl-3xl--line-height: var(--line-height-3xl);
+  --text-fl-4xl: var(--fluid-type-4xl);
+  --text-fl-4xl--line-height: var(--line-height-4xl);
+
+  --spacing-st-3xs: var(--static-space-3xs);
+  --spacing-st-2xs: var(--static-space-2xs);
+  --spacing-st-xs: var(--static-space-xs);
+  --spacing-st-sm: var(--static-space-sm);
+  --spacing-st-base: var(--static-space-base);
+  --spacing-st-lg: var(--static-space-lg);
+  --spacing-st-xl: var(--static-space-xl);
+  --spacing-st-2xl: var(--static-space-2xl);
+  --spacing-st-3xl: var(--static-space-3xl);
+
+  --spacing-fl-3xs: var(--fluid-space-3xs);
+  --spacing-fl-2xs: var(--fluid-space-2xs);
+  --spacing-fl-xs: var(--fluid-space-xs);
+  --spacing-fl-sm: var(--fluid-space-sm);
+  --spacing-fl-base: var(--fluid-space-base);
+  --spacing-fl-lg: var(--fluid-space-lg);
+  --spacing-fl-xl: var(--fluid-space-xl);
+  --spacing-fl-2xl: var(--fluid-space-2xl);
+  --spacing-fl-3xl: var(--fluid-space-3xl);
+
+  --spacing-fl-3xs-2xs: var(--fluid-space-3xs-2xs);
+  --spacing-fl-2xs-xs: var(--fluid-space-2xs-xs);
+  --spacing-fl-xs-sm: var(--fluid-space-xs-sm);
+  --spacing-fl-sm-base: var(--fluid-space-sm-base);
+  --spacing-fl-base-lg: var(--fluid-space-base-lg);
+  --spacing-fl-lg-xl: var(--fluid-space-lg-xl);
+  --spacing-fl-xl-2xl: var(--fluid-space-xl-2xl);
+  --spacing-fl-2xl-3xl: var(--fluid-space-2xl-3xl);
+
+  --spacing-fl-sm-lg: var(--fluid-space-sm-lg);
+
+  /* Semantic aliases */
+  --text-st-body: var(--static-type-body);
+  --text-st-body--line-height: var(--line-height-body);
+  --text-st-note: var(--static-type-note);
+  --text-st-note--line-height: var(--line-height-note);
+  --text-st-emphasis: var(--static-type-emphasis);
+  --text-st-emphasis--line-height: var(--line-height-emphasis);
+  --text-st-h1: var(--static-type-h1);
+  --text-st-h1--line-height: var(--line-height-h1);
+  --text-st-h2: var(--static-type-h2);
+  --text-st-h2--line-height: var(--line-height-h2);
+  --text-st-h3: var(--static-type-h3);
+  --text-st-h3--line-height: var(--line-height-h3);
+  --text-st-h4: var(--static-type-h4);
+  --text-st-h4--line-height: var(--line-height-h4);
+  --text-st-h5: var(--static-type-h5);
+  --text-st-h5--line-height: var(--line-height-h5);
+  --text-st-h6: var(--static-type-h6);
+  --text-st-h6--line-height: var(--line-height-h6);
+
+  --text-fl-body: var(--fluid-type-body);
+  --text-fl-body--line-height: var(--line-height-body);
+  --text-fl-note: var(--fluid-type-note);
+  --text-fl-note--line-height: var(--line-height-note);
+  --text-fl-emphasis: var(--fluid-type-emphasis);
+  --text-fl-emphasis--line-height: var(--line-height-emphasis);
+  --text-fl-h1: var(--fluid-type-h1);
+  --text-fl-h1--line-height: var(--line-height-h1);
+  --text-fl-h2: var(--fluid-type-h2);
+  --text-fl-h2--line-height: var(--line-height-h2);
+  --text-fl-h3: var(--fluid-type-h3);
+  --text-fl-h3--line-height: var(--line-height-h3);
+  --text-fl-h4: var(--fluid-type-h4);
+  --text-fl-h4--line-height: var(--line-height-h4);
+  --text-fl-h5: var(--fluid-type-h5);
+  --text-fl-h5--line-height: var(--line-height-h5);
+  --text-fl-h6: var(--fluid-type-h6);
+  --text-fl-h6--line-height: var(--line-height-h6);
+
+  --spacing-page: var(--space-page);
+  --spacing-inset: var(--space-inset);
+  --spacing-component: var(--space-component);
+  --spacing-control: var(--space-control);
+
+  --spacing-section: var(--space-section);
+  --spacing-gutter: var(--space-gutter);
+  --spacing-stack: var(--space-stack);
+  --spacing-line: var(--space-line);
+  --spacing-inline: var(--space-inline);
+}
+
+.prose {
+  font-size: var(--fluid-type-base);
+  line-height: var(--line-height-prose);
+}
+
+.prose h1 {
+  font-size: var(--fluid-type-h1);
+  line-height: var(--line-height-h1);
+  font-weight: 700;
+}
+
+.prose h2 {
+  font-size: var(--fluid-type-h2);
+  line-height: var(--line-height-h2);
+  font-weight: 700;
+}
+
+.prose h3 {
+  font-size: var(--fluid-type-h3);
+  line-height: var(--line-height-h3);
+  font-weight: 600;
+}
+
+.prose h4 {
+  font-size: var(--fluid-type-h4);
+  line-height: var(--line-height-h4);
+  font-weight: 600;
+}
+
+.prose h5 {
+  font-size: var(--fluid-type-h5);
+  line-height: var(--line-height-h5);
+  font-weight: 600;
+}
+
+.prose h6 {
+  font-size: var(--fluid-type-h6);
+  line-height: var(--line-height-h6);
+  font-weight: 600;
+}
+
+.prose pre {
+  line-height: var(--line-height-code);
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+.prose :not(pre) > code {
+  background-color: var(--muted);
+  border-radius: 0.25rem;
+  padding: 0.15em 0.4em;
+}

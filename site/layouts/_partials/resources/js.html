@@ -1,0 +1,7 @@
+{{- partialCached "resources/js.html/load.html" "emptyContext" -}}
+
+{{- define "_partials/resources/js.html/load.html" -}}
+  {{- $rawJsResource := resources.Get "js/main.js" -}}
+  {{- $opts := dict "minify" (not hugo.IsDevelopment) "format" "iife" "target" "es2018" -}}
+  {{- partial "resources/loaders/js.html" ($rawJsResource | js.Build $opts) -}}
+{{- end -}}

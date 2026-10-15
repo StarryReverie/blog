@@ -1,0 +1,8 @@
+{{- define "main" -}}
+  {{- partial "views/main-sections.html" (dict
+    "headerTitle" "All Posts"
+    "headerContent" ""
+    "entries" (where site.RegularPages "Section" "posts")
+    "entryToContent" "components/posts/card.html")
+  -}}
+{{- end -}}

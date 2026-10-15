@@ -2,7 +2,8 @@
 title: anyerr 上下文中的类型体操
 date: 2025-02-27T10:27:45+08:00
 draft: false
-categories: Tech
+categories:
+  - Tech
 tags:
   - Rust
   - Generics

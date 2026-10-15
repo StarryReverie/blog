@@ -1,0 +1,11 @@
+{{- with (templates.Defer (dict "key" "global")) -}}
+  {{- partialCached "resources/css.html/load.html" "emptyContext" -}}
+{{- end -}}
+
+{{- define "_partials/resources/css.html/load.html" -}}
+  {{- partial "resources/loaders/css.html" (css.ChromaStyles (dict "targetPath" "css/chroma.css")) -}}
+
+  {{- $rawMainCssResource := resources.Get "css/main.css" -}}
+  {{- $opts := dict "minify" (not hugo.IsDevelopment) -}}
+  {{- partial "resources/loaders/css.html" ($rawMainCssResource | css.TailwindCSS $opts) -}}
+{{- end -}}

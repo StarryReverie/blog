@@ -1,0 +1,15 @@
+{{- $opts := dict "output" "htmlAndMathml" "displayMode" (eq $.Type "block") -}}
+{{- with $res := try (transform.ToMath $.Inner $opts) -}}
+  {{- with $err := $res.Err -}}
+    {{- errorf "Unable to render mathematical markup to HTML using the transform.ToMath function. The KaTeX display engine threw the following error: %s: see %s." $err $.Position }}
+  {{- else -}}
+    {{- if eq $.Type "block" -}}
+      <!-- The math display block inside this <p> has extra margin, so add negative margin to the outer <p> to reduce the extra spacing. -->
+      <p class="-mt-[2*var(--space-line)] -mb-[2*var(--space-line)] overflow-x-scroll">
+        {{- $res.Value -}}
+      </p>
+    {{- else -}}
+      {{- $res.Value -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
