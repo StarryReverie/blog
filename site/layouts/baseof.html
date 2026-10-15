@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>
-      {{- if page.IsHome -}}
-        {{ site.Title }}
-      {{- else -}}
-        {{ printf "%s | %s" site.Title page.Title }}
+      {{- block "title" $ -}}
+        {{- if page.IsHome -}}
+          {{ site.Title }}
+        {{- else -}}
+          {{ printf "%s | %s" site.Title page.Title }}
+        {{- end -}}
       {{- end -}}
     </title>
 

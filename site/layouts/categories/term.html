@@ -1,3 +1,7 @@
+{{- define "title" -}}
+  {{ printf "%s | Categories/%s" site.Title $.Title }}
+{{- end -}}
+
 {{- define "main" -}}
   <!-- prettier-ignore-start -->
   {{- partial "views/main-sections.html" (dict
