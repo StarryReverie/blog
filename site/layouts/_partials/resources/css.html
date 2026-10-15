@@ -3,7 +3,15 @@
 {{- end -}}
 
 {{- define "_partials/resources/css.html/load.html" -}}
-  {{- partial "resources/loaders/css.html" (css.ChromaStyles (dict "targetPath" "css/chroma.css")) -}}
+  {{- partial "resources/loaders/css.html" (css.ChromaStyles (dict
+    "style" "rose-pine-dawn"
+    "targetPath" "css/chroma-light.css"))
+  -}}
+  {{- partial "resources/loaders/css.html" (css.ChromaStyles (dict
+    "style" "rose-pine"
+    "targetPath" "css/chroma-dark.css"
+    "modeSelector" true))
+  -}}
 
   {{- $rawMainCssResource := resources.Get "css/main.css" -}}
   {{- $opts := dict "minify" (not hugo.IsDevelopment) -}}
