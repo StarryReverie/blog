@@ -64,9 +64,15 @@ minify:
 
 outputs:
   home:
-    - HTML
-    - RSS
-    - JSON
+    - html
+    - rss
+  section:
+    - html
+    - rss
+  taxonomy:
+    - html
+  term:
+    - html
 
 markup:
   highlight:
@@ -110,12 +116,21 @@ params:
     - name: Telegram
       url: https://t.me/starryreverie_cc
       icon: brand-telegram
-    - name: GitHub
-      url: https://github.com/StarryReverie
-      icon: brand-github
+      isExternal: true
     - name: Matrix
       url: https://matrix.to/#/@starryreverie:matrix.org
       icon: brand-matrix
+      isExternal: true
     - name: Email
       url: mailto:starryreverie@proton.me
-      icon: mail
+      icon: mail-opened
+      isExternal: true
+    - name: GitHub
+      url: https://github.com/StarryReverie
+      icon: brand-github
+      isExternal: true
+    - name: RSS
+      url: /index.xml
+      icon: rss
+      isExternal: false
+
