@@ -1,0 +1,54 @@
+{{- define "main" -}}
+  {{- $entries := where site.RegularPages "Section" "posts" -}}
+
+  {{- partial "views/main-content.html" (dict
+    "headerTitle" $.Title
+    "headerContent" (partial "_/miscellaneous/archives.html/headerContent.html" $entries)
+    "content" (partial "_/miscellaneous/archives.html/content.html" $entries))
+  -}}
+{{- end -}}
+
+{{- define "_partials/_/miscellaneous/archives.html/headerContent.html" -}}
+  <p class="text-fl-body text-foreground">
+    {{- partial "components/content/icon.html" (dict "name" "abacus") }}
+    {{ len $ }} entries in total
+  </p>
+
+  {{- $totalWordCount := 0 -}}
+  {{- range $entry := $ -}}
+    {{- $totalWordCount = add $totalWordCount $entry.WordCount -}}
+  {{- end -}}
+  <p class="text-fl-body text-foreground">
+    {{- partial "components/content/icon.html" (dict "name" "vocabulary") }}
+    {{ $totalWordCount }} words has been written
+  </p>
+{{- end -}}
+
+{{- define "_partials/_/miscellaneous/archives.html/content.html" -}}
+  <div class="space-y-stack">
+    {{- range $group := $.GroupByDate "2006" "desc" -}}
+      <section class="space-y-line">
+        <h2 class="text-fl-emphasis font-bold text-heading">
+          {{ $group.Key }}
+        </h2>
+
+        <ul class="flex flex-col gap-line">
+          {{- range $entry := $group.Pages -}}
+            <li class="ml-inline flex gap-inline">
+              <time datetime="{{ $entry.Date.Format `02-01` }}" class="text-fl-note font-bold text-subtle">
+                {{ $entry.Date.Format `02-01` }}
+              </time>
+
+              <a
+                href="{{ $entry.RelPermalink }}"
+                class="text-fl-body text-foreground transition-colors duration-400 hover:text-primary"
+              >
+                {{ or $entry.LinkTitle $entry.Title }}
+              </a>
+            </li>
+          {{- end -}}
+        </ul>
+      </section>
+    {{- end -}}
+  </div>
+{{- end -}}

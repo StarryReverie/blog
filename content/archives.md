@@ -1,5 +1,5 @@
 ---
-title: Archive
+title: Archives
+type: miscellaneous
 layout: archives
-summary: archives
 ---
