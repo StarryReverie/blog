@@ -1,7 +1,6 @@
 ---
 title: About
-hidemeta: true
-ShowReadingTime: false
+type: miscellaneous
 ---
 
 我是 Justin Chen，BIT CS 专业在读学生。爱好编程、游戏、阅读、音乐。
@@ -9,16 +8,14 @@ ShowReadingTime: false
 在开发方面：
 
 - 在 Linux 平台下开发
-- 掌握的技术栈包括 C/C++、Rust、Java、AI，以及一点点 Frontend
+- 掌握的技术栈包括 C/C++、Rust、Haskell、Nix、Java，以及一点点 Frontend
 - 参与 [Nixpkgs](https://github.com/NixOS/nixpkgs) 的贡献与维护
 - 开发一些[开源项目](https://github.com/StarryReverie)
 
 在游戏方面：
 
 - 最爱 Minecraft，喜欢 Architecture 和 Restone
-- 其他游戏有 Forza Horizon 4、Portal 2、Overwatch 2
-
-请通过 [QQ](https://wpa.qq.com/msgrd?v=3&uin=1246186412&site=qq&menu=yes)、[Email](mailto:starryreverie@proton.me) 或 [Telegram](https://t.me/starryreverie_cc) 联系我。
+- 其他游戏有 Forza Horizon 4、Portal 2、Phigros、Arknights 等等
 
 ---
 
