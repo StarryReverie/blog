@@ -35,8 +35,8 @@
         <ul class="flex flex-col gap-line">
           {{- range $entry := $group.Pages -}}
             <li class="ml-inline flex gap-inline">
-              <time datetime="{{ $entry.Date.Format `02-01` }}" class="text-fl-note font-bold text-subtle">
-                {{ $entry.Date.Format `02-01` }}
+              <time datetime="{{ $entry.Date.Format `01-02` }}" class="text-fl-note font-bold text-subtle">
+                {{ $entry.Date.Format `01-02` }}
               </time>
 
               <a
