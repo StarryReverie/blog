@@ -18,12 +18,17 @@
 {{- define "_partials/_/miscellaneous/links.html/content.html" -}}
   <ul class="-mx-component grid grid-cols-1 gap-stack">
     {{- range $entry := site.Params.links -}}
-      <li class="flex items-stretch gap-inline rounded-sm bg-card p-component">
-        <img
-          src="{{ $entry.avatar }}"
-          alt="avatar for {{ $entry.title }}"
-          class="size-18 shrink-0 rounded-sm object-cover transition-transform duration-400 hover:-rotate-5 md:size-20"
-        />
+      {{- $avatarRef := printf "images/links/%s" $entry.avatar -}}
+      {{- with $avatar := resources.Get $avatarRef -}}
+        <li class="flex items-stretch gap-inline rounded-sm bg-card p-component">
+          <img
+            src="{{ $avatar.RelPermalink }}"
+            alt="avatar for {{ $entry.title }}"
+            class="size-18 shrink-0 rounded-sm object-cover transition-transform duration-400 hover:-rotate-5 md:size-20"
+          />
+      {{- else -}}
+        {{- errorf "Could not find avatar asset %q" $avatarRef -}}
+      {{- end -}}
 
         <div class="border-l-1 border-l-subtle pl-inline">
           <h2>
