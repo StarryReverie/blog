@@ -103,14 +103,18 @@ menu:
     - name: Archives
       pageRef: /archives
       weight: 4
+    - name: Links
+      pageRef: /links
+      weight: 5
     - name: About
       pageRef: /about
-      weight: 5
+      weight: 6
 
 params:
   home:
     title: Justin Chen's Blog
     subtitle: A world where insightful idea sparks
+
   social:
     - name: Telegram
       url: https://t.me/starryreverie_cc
@@ -132,3 +136,13 @@ params:
       url: /index.xml
       icon: rss
       isExternal: false
+
+  links:
+    - title: "@rikkaneko's Blog"
+      description: I hope one day all mankind will stop fighting against each others, and start working together to explore the vast universe.
+      avatar: https://avatars.githubusercontent.com/u/55078931
+      url: https://blog.nekoid.cc/
+    - title: Cuskiy
+      description: A self-proclaimed GNU hacker — passionate about making the world better through technology and open source.
+      avatar: https://ity.moe/avatar.svg
+      url: https://ity.moe/
