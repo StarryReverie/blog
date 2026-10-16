@@ -40,9 +40,10 @@ jobs:
           nix-build --expr '
             let
               blog = (import ./.).legacyPackages.x86_64-linux.rendered;
+              blogRevision = "${{ github.sha }}";
               baseUrl = "${{ steps.pages.outputs.base_url }}/";
             in
-            blog.override { inherit baseUrl; }
+            blog.override { inherit blogRevision baseUrl; }
           '
 
       - name: Upload Artifact

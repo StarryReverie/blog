@@ -1,6 +1,20 @@
 <footer class="mx-auto flex max-w-3xl flex-col items-center gap-line px-page">
-  <p class="text-center text-fl-note text-subtle">{{ site.Title }}</p>
-  <p class="text-center text-fl-note text-subtle">{{ site.Copyright | transform.Markdownify }}</p>
+  <p class="text-center text-fl-note text-subtle">
+    Built with source
+    <a
+      href="https://github.com/StarryReverie/blog/tree/{{ site.Params.build.revision }}"
+      rel="external noopener noreferrer"
+      target="_blank"
+      class="link"
+    >
+      <code class="font-mono">blog@ng-{{ site.Params.build.revision }}</code>
+    </a>
+  </p>
+
+  <p class="text-center text-fl-note text-subtle">
+    {{ site.Copyright | transform.Markdownify }}
+  </p>
+
   <p class="text-center text-fl-note text-subtle">
     Made with <a href="https://gohugo.io/" rel="external noopener noreferrer" target="_blank" class="link">Hugo</a>,
     <a href="https://tailwindcss.com/" rel="external noopener noreferrer" target="_blank" class="link">Tailwind CSS</a>

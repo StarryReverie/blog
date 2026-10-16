@@ -150,3 +150,6 @@ params:
       description: 选择一个难到几乎无人看好的项目，带着那种“我 偏要证明给他们看”的冲劲去完成。
       avatar: blog.chenpan.me.svg
       url: https://blog.chenpan.me/
+
+  build:
+    revision: unversioned

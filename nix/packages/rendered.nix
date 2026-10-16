@@ -34,9 +34,20 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     nodejs
   ];
 
+  configurePhase = ''
+    cat > hugo.override.yaml <<EOF
+    params:
+      build:
+        revision: "${blogRevision}"
+    EOF
+  '';
+
   buildPhase = ''
     # Hugo doesn't follow symlinks.
     cp -r ${finalAttrs.npmDeps}/node_modules node_modules
-    hugo --minify --destination=$out ${lib.optionalString (baseUrl != null) "--baseURL=\"${baseUrl}\""}
+    hugo --config=hugo.yaml,hugo.override.yaml \
+      --minify \
+      --destination=$out \
+      ${lib.optionalString (baseUrl != null) "--baseURL=\"${baseUrl}\""}
   '';
 })
