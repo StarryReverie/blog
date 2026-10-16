@@ -5,12 +5,12 @@
   nodejs,
   stdenvNoCC,
 
-  blogRevision ? "unversioned",
+  blogRevision ? null,
   baseUrl ? null,
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "blog-rendered";
-  version = "ng-${blogRevision}";
+  version = "ng-${if blogRevision != null then blogRevision else "unversioned"}";
 
   src = lib.fileset.toSource {
     root = ../../.;
@@ -34,20 +34,24 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     nodejs
   ];
 
-  configurePhase = ''
-    cat > hugo.override.yaml <<EOF
-    params:
-      build:
-        revision: "${blogRevision}"
-    EOF
-  '';
+  configurePhase =
+    let
+      optionalCfg = key: value: lib.optionalString (value != null) "${key}: ${value}";
+    in
+    ''
+      cat > hugo.override.yaml <<EOF
+      ${optionalCfg "baseURL" baseUrl}
+      params:
+        build:
+          ${optionalCfg "revision" blogRevision}
+      EOF
+    '';
 
   buildPhase = ''
     # Hugo doesn't follow symlinks.
     cp -r ${finalAttrs.npmDeps}/node_modules node_modules
     hugo --config=hugo.yaml,hugo.override.yaml \
       --minify \
-      --destination=$out \
-      ${lib.optionalString (baseUrl != null) "--baseURL=\"${baseUrl}\""}
+      --destination=$out
   '';
 })
