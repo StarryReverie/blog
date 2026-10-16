@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <style>
+    .wedge {
+      fill: none;
+      stroke: oklch(0.23 0.01 270);
+      stroke-width: 2.4;
+      stroke-linejoin: round;
+    }
+    @media (prefers-color-scheme: dark) {
+      .wedge { stroke: oklch(0.88 0.005 80); }
+    }
+  </style>
+  <!--
+    Six 30° wedges at 60° intervals, radius 40, center (50,50).
+    Each: arc start → arc end → center → close.
+  -->
+  <path class="wedge" d="M50 10A40 40 0 0 1 70 15.36L50 50Z"/>
+  <path class="wedge" d="M84.64 30A40 40 0 0 1 90 50L50 50Z"/>
+  <path class="wedge" d="M84.64 70A40 40 0 0 1 70 84.64L50 50Z"/>
+  <path class="wedge" d="M50 90A40 40 0 0 1 30 84.64L50 50Z"/>
+  <path class="wedge" d="M15.36 70A40 40 0 0 1 10 50L50 50Z"/>
+  <path class="wedge" d="M15.36 30A40 40 0 0 1 30 15.36L50 50Z"/>
+</svg>

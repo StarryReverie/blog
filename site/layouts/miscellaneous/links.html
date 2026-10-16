@@ -1,0 +1,52 @@
+{{- define "main" -}}
+  <!-- prettier-ignore-start -->
+  {{- partial "views/main.html" (dict
+    "headerTitle" $.Title
+    "headerContent" (partial "_/miscellaneous/links.html/headerContent.html" "emptyContext")
+    "content" (partial "_/miscellaneous/links.html/content.html" "emptyContext"))
+  -}}
+  <!-- prettier-ignore-end -->
+{{- end -}}
+
+{{- define "_partials/_/miscellaneous/links.html/headerContent.html" -}}
+  <p class="text-fl-body text-foreground">
+    {{- partial "components/content/icon.html" (dict "name" "message-search") }}
+    Dear my fellow friends!
+  </p>
+{{- end -}}
+
+{{- define "_partials/_/miscellaneous/links.html/content.html" -}}
+  <ul class="-mx-component grid grid-cols-1 gap-stack">
+    {{- range $entry := site.Params.links -}}
+      {{- $avatarRef := printf "images/links/%s" $entry.avatar -}}
+      {{- with $avatar := resources.Get $avatarRef -}}
+        <li class="flex items-stretch gap-inline rounded-sm bg-card p-component">
+          <img
+            src="{{ $avatar.RelPermalink }}"
+            alt="avatar for {{ $entry.title }}"
+            class="size-18 shrink-0 rounded-sm object-cover transition-transform duration-400 hover:-rotate-5 md:size-20"
+          />
+      {{- else -}}
+        {{- errorf "Could not find avatar asset %q" $avatarRef -}}
+      {{- end -}}
+
+        <div class="border-l-1 border-l-subtle pl-inline">
+          <h2>
+            <a
+              href="{{ $entry.url }}"
+              rel="external noopener noreferrer"
+              target="_blank"
+              class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
+            >
+              {{ $entry.title }}
+            </a>
+          </h2>
+
+          <p class="line-clamp-2 text-fl-note text-subtle italic">
+            {{ $entry.description }}
+          </p>
+        </div>
+      </li>
+    {{- end -}}
+  </ul>
+{{- end -}}

@@ -21,15 +21,15 @@
           style="--button-height: calc(2 * var(--space-control) + var(--static-type-body) * var(--line-height-body))"
           class="text-center text-fl-h1 font-bold text-primary md:mt-[var(--button-height)] md:-ml-0.5 md:text-left"
         >
-          {{ $.Site.Params.home.title }}
+          {{ site.Params.home.title }}
         </h1>
 
         <p class="text-center text-fl-emphasis font-bold text-heading md:text-left">
-          {{ $.Site.Params.home.subtitle }}
+          {{ site.Params.home.subtitle }}
         </p>
 
         <ul class="flex items-center justify-center gap-inline md:justify-start">
-          {{- range $entry := $.Site.Params.social -}}
+          {{- range $entry := site.Params.social -}}
             <li>
               <a
                 href="{{ $entry.url }}"
@@ -45,7 +45,7 @@
 
         <ul class="flex justify-center gap-inline md:justify-start">
           <a
-            href="{{ ($.Site.GetPage "posts").RelPermalink }}"
+            href="{{ (site.GetPage "posts").RelPermalink }}"
             class="rounded-full border-2 border-primary bg-primary px-[calc(2*var(--space-control))] py-control text-st-body font-bold text-primary-foreground transition-colors duration-400 hover:bg-background hover:text-primary"
             >Posts</a
           >
