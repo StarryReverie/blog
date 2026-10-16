@@ -4,26 +4,28 @@
 {{- $content := $.Content -}}
 
 
-<header class="space-y-line">
-  <h2>
-    <a
-      href="{{ $relPermalink }}"
-      class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
-      >{{ or $title }}</a
-    >
-  </h2>
+<div class="space-y-stack">
+  <header class="space-y-line">
+    <h2>
+      <a
+        href="{{ $relPermalink }}"
+        class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
+        >{{ or $title }}</a
+      >
+    </h2>
 
-  <p class="text-fl-note text-subtle">
-    {{- partial "components/content/date.html" $date -}}
+    <p class="text-fl-note text-subtle">
+      {{- partial "components/content/date.html" $date -}}
+    </p>
+  </header>
+
+  <p class="text-foreground">
+    {{ $content | transform.Plainify | strings.Truncate 120 }}
   </p>
-</header>
 
-<p class="text-foreground">
-  {{ $content | transform.Plainify | strings.Truncate 120 }}
-</p>
-
-<div class="flex justify-end">
-  <a href="{{ $relPermalink }}" class="text-fl-note text-subtle transition-colors duration-400 hover:text-foreground">
-    Read More ...
-  </a>
+  <div class="flex justify-end">
+    <a href="{{ $relPermalink }}" class="text-fl-note text-subtle transition-colors duration-400 hover:text-foreground">
+      Read More ...
+    </a>
+  </div>
 </div>
