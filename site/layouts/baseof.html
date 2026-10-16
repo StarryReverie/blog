@@ -14,7 +14,7 @@
       {{- end -}}
     </title>
 
-    {{- partial "schema.html" . -}}
+    {{- partial "schema.html" $ -}}
 
     {{- partial "resources/favicon.html" "emptyContext" -}}
     {{- partial "resources/css.html" "emptyContext" -}}
@@ -23,10 +23,10 @@
     {{- partial "resources/vendors/katex.html" $ -}}
   </head>
 
-  <body class="flex min-h-dvh flex-col gap-y-section bg-background pb-page">
+  <body hx-boost:inherited="true" class="flex min-h-dvh flex-col gap-y-section bg-background pb-page">
     <div>
       {{- partial "components/header.html" $ -}}
-      <section class="">{{- block "hero" $ -}}{{- end -}}</section>
+      <section>{{- block "hero" $ -}}{{- end -}}</section>
     </div>
     <main class="grow">{{- block "main" $ -}}{{- end -}}</main>
     {{- partialCached "components/footer.html" $ -}}
