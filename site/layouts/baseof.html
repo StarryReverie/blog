@@ -23,7 +23,12 @@
     {{- partial "resources/vendors/katex.html" $ -}}
   </head>
 
-  <body hx-boost:inherited="true" class="flex min-h-dvh flex-col gap-y-section bg-background pb-page">
+  <body
+    hx-boost:inherited="true"
+    hx-indicator:inherited="#global-loading-pbr"
+    class="flex min-h-dvh flex-col gap-y-section bg-background pb-page"
+  >
+    {{- partialCached "components/loading-pbr.html" "emptyContext" -}}
     <div>
       {{- partial "components/header.html" $ -}}
       <section>{{- block "hero" $ -}}{{- end -}}</section>

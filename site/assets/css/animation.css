@@ -1,0 +1,23 @@
+@theme {
+  --animate-indeterminate-pbr: indeterminate-pbr 1s linear infinite;
+}
+
+@keyframes indeterminate-pbr {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(500%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
