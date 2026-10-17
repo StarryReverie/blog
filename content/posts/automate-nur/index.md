@@ -6,7 +6,10 @@ categories:
   - Guide
 tags:
   - Scripting
+  - Shell
   - Nix
+  - CI
+  - Productivity
 math: false
 ---
 

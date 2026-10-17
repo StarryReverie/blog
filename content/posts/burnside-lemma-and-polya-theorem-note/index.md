@@ -8,7 +8,7 @@ tags:
   - C++
   - Algorithm
   - Mathematics
-  - Abstract Algebra
+  - Algebra
 math: true
 ---
 

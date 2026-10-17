@@ -6,7 +6,7 @@ categories:
   - Guide
 tags:
   - Linux
-  - Desktop Environment
+  - Desktop
   - NixOS
   - Systemd
 math: false

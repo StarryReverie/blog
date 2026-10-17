@@ -158,6 +158,39 @@ params:
     - Showcase
     - Thought
 
+  tags:
+    - Algebra
+    - Algorithm
+    - Brainfuck
+    - C++
+    - CI
+    - Compiler
+    - Computer Graphics
+    - Concurrency
+    - Desktop
+    - Gaming
+    - Generics
+    - Graph Theory
+    - Haskell
+    - Helix
+    - Linux
+    - Mathematics
+    - Minecraft
+    - Nix
+    - NixOS
+    - Number Theory
+    - Polymorphism
+    - Productivity
+    - Project
+    - Python
+    - Ray Tracing
+    - Rust
+    - Scripting
+    - Shell
+    - Systemd
+    - Text Editor
+    - Web
+
   build:
     branch: main
     revision: unversioned

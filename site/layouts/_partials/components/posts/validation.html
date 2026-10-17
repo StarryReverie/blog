@@ -1,4 +1,4 @@
-{{- range $taxonomy := slice "categories" -}}
+{{- range $taxonomy := slice "categories" "tags" -}}
   {{- range $term := $.GetTerms $taxonomy -}}
     {{- if not (collections.In (index site.Params $taxonomy) $term.LinkTitle) -}}
       {{- errorf "Page %q refers to a non-existent term %q in taxonomy %q" $.Path $term.LinkTitle $taxonomy -}}

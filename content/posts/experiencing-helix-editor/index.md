@@ -6,6 +6,7 @@ categories:
   - Experience
 tags:
   - Helix
+  - Text Editor
   - Rust
   - Productivity
 ---

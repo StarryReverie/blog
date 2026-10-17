@@ -6,7 +6,9 @@ categories:
   - Note
 tags:
   - Algorithm
+  - Computer Graphics
   - Ray Tracing
+  - Rust
 math: true
 ---
 
