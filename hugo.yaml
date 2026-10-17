@@ -151,6 +151,11 @@ params:
       avatar: blog.chenpan.me.svg
       url: https://blog.chenpan.me/
 
+  categories:
+    - Tech
+    - Algorithm Competition
+    - Documentation
+
   build:
     branch: main
     revision: unversioned

@@ -1,4 +1,6 @@
 {{- define "main" -}}
+  {{- partial "components/posts/validation.html" $ -}}
+
   {{- partial "views/main-content.html" (dict
     "headerTitle" $.Title
     "headerContent" (partial "_/posts/page.html/headerContent.html" $)
