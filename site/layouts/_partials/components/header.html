@@ -1,5 +1,6 @@
 <header x-data="{ open: false }" class="w-full bg-card">
   <div class="mx-auto max-w-4xl px-page py-component">
+    {{- $menu := site.Menus.main -}}
     <div class="flex items-center justify-between">
       <a
         href="{{ site.Home.RelPermalink }}"
@@ -8,12 +9,27 @@
       >
 
       <div class="flex items-center">
-        {{- $menu := site.Menus.main -}}
         <nav aria-label="Main Menu" class="hidden md:block">
           <ul class="flex items-center">
             {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
           </ul>
         </nav>
+
+        <button
+          type="button"
+          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
+          x-data="themeToggle"
+          @click="toggle()"
+          :aria-label="dark ? 'Switch to light theme' : 'Switch to dark theme'"
+          :title="dark ? 'Switch to light theme' : 'Switch to dark theme'"
+        >
+          <span class="inline dark:hidden">
+            {{- partial "components/content/icon.html" (dict "name" "sun") -}}
+          </span>
+          <span class="hidden dark:inline">
+            {{- partial "components/content/icon.html" (dict "name" "moon") -}}
+          </span>
+        </button>
 
         <button
           type="button"
@@ -25,32 +41,14 @@
         >
           {{- partial "components/content/icon.html" (dict "name" "menu-2") -}}
         </button>
-
-        <button
-          type="button"
-          x-data="themeToggle"
-          @click="toggle()"
-          :aria-label="dark ? 'Switch to light theme' : 'Switch to dark theme'"
-          :title="dark ? 'Switch to light theme' : 'Switch to dark theme'"
-          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
-        >
-          <span class="inline-flex dark:hidden">
-            {{- partial "components/content/icon.html" (dict "name" "sun") -}}
-          </span>
-          <span class="hidden dark:inline-flex">
-            {{- partial "components/content/icon.html" (dict "name" "moon") -}}
-          </span>
-        </button>
       </div>
     </div>
 
-    {{- with $menu := site.Menus.main -}}
-      <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
-        <ul class="flex flex-col">
-          {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
-        </ul>
-      </nav>
-    {{- end -}}
+    <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
+      <ul class="flex flex-col">
+        {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
+      </ul>
+    </nav>
   </div>
 </header>
 
