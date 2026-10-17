@@ -11,6 +11,38 @@
 }
 
 @font-face {
+  font-family: "Lato";
+  src: url("../fonts/lato-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: url("../fonts/lato-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: url("../fonts/lato-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cascadia Mono";
+  src: url("../fonts/cascadia-mono-latin.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Lato Fallback: Arial";
   src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans");
   ascent-override: 101.0345%;
