@@ -34,11 +34,11 @@
           :title="dark ? 'Switch to light theme' : 'Switch to dark theme'"
           class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
         >
-          <span x-show="dark" x-cloak>
-            {{- partial "components/content/icon.html" (dict "name" "moon") -}}
-          </span>
-          <span x-show="!dark" x-cloak>
+          <span class="inline-flex dark:hidden">
             {{- partial "components/content/icon.html" (dict "name" "sun") -}}
+          </span>
+          <span class="hidden dark:inline-flex">
+            {{- partial "components/content/icon.html" (dict "name" "moon") -}}
           </span>
         </button>
       </div>
