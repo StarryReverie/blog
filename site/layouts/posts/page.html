@@ -3,35 +3,8 @@
 
   {{- partial "views/main-content.html" (dict
     "headerTitle" $.Title
-    "headerContent" (partial "_/posts/page.html/headerContent.html" $)
+    "headerContent" (partial "components/posts/page-metadata.html" $)
     "content" $.Content
     "isProse" true)
   -}}
-{{- end -}}
-
-{{- define "_partials/_/posts/page.html/headerContent.html" -}}
-  <div class="space-y-line">
-    <p class="text-fl-body text-foreground">
-      {{- partial "components/content/date.html" $.Date -}}
-    </p>
-
-    <ul class="flex flex-wrap gap-line">
-      {{- range $taxonomyCfg := slice
-        (dict "type" "categories" "icon" "folder")
-        (dict "type" "tags" "icon" "tag")
-      -}}
-        {{- range $termPage := $.GetTerms $taxonomyCfg.type -}}
-          <li>
-            <a
-              href="{{ $termPage.RelPermalink }}"
-              class="text-fl-body text-subtle transition-colors duration-400 hover:text-foreground"
-            >
-              {{- partial "components/content/icon.html" (dict "name" $taxonomyCfg.icon) }}
-              {{ $termPage.LinkTitle }}
-            </a>
-          </li>
-        {{- end -}}
-      {{- end -}}
-    </ul>
-  </div>
 {{- end -}}
