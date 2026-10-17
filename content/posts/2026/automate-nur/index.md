@@ -17,8 +17,6 @@ aliases:
 
 构建全自动构建、更新和缓存的 Nix User Repository。
 
-<!--more-->
-
 ## 背景
 
 随着我的 [NixOS 配置仓库](https://github.com/StarryReverie/StarryNix-Infrastructure) 中包含的非 Nixpkgs 包越来越多，每次 NixOS 更新的时间都大幅增加，大多数都浪费在复制各种工具链及构建时依赖和编译上。虽然我的几个个人项目已经相继集成了自己的 Binary Cache，理想情况下可以避免重复构建，但是在 NixOS 配置 Flake 中依赖这些 Flake 总感觉没有那么方便，且为了吃上缓存不得不间接引入多个 Nixpkgs。
