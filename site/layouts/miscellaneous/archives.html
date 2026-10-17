@@ -9,19 +9,21 @@
 {{- end -}}
 
 {{- define "_partials/_/miscellaneous/archives.html/headerContent.html" -}}
-  <p class="text-fl-body text-foreground">
-    {{- partial "components/content/icon.html" (dict "name" "abacus") }}
-    {{ len $ }} entries in total
-  </p>
+  <div>
+    <p class="text-fl-body text-foreground">
+      {{- partial "components/content/icon.html" (dict "name" "abacus") }}
+      {{ len $ }} entries in total
+    </p>
 
-  {{- $totalWordCount := 0 -}}
-  {{- range $entry := $ -}}
-    {{- $totalWordCount = add $totalWordCount $entry.WordCount -}}
-  {{- end -}}
-  <p class="text-fl-body text-foreground">
-    {{- partial "components/content/icon.html" (dict "name" "vocabulary") }}
-    {{ $totalWordCount }} words has been written
-  </p>
+    {{- $totalWordCount := 0 -}}
+    {{- range $entry := $ -}}
+      {{- $totalWordCount = add $totalWordCount $entry.WordCount -}}
+    {{- end -}}
+    <p class="text-fl-body text-foreground">
+      {{- partial "components/content/icon.html" (dict "name" "vocabulary") }}
+      {{ $totalWordCount }} words has been written
+    </p>
+  </div>
 {{- end -}}
 
 {{- define "_partials/_/miscellaneous/archives.html/content.html" -}}

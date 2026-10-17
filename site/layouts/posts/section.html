@@ -4,7 +4,7 @@
 
   {{- partial "views/main-sections.html" (dict
     "headerTitle" "All Posts"
-    "headerContent" ""
+    "headerContent" (partial "components/posts/section-metadata.html" $pager)
     "entries" $pager.Pages
     "entryToContent" "components/posts/card.html"
     "extraContent" (partial "components/pagination.html" $pager))
