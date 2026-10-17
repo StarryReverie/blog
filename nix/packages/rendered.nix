@@ -12,6 +12,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "blog-rendered";
   version = "ng-${if blogRevision != null then blogRevision else "unversioned"}";
 
+  __structuredAttrs = true;
+  strictDeps = true;
+
   src = lib.fileset.toSource {
     root = ../../.;
     fileset = lib.fileset.unions [
