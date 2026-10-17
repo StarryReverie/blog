@@ -227,6 +227,7 @@
 .prose {
   font-size: var(--fluid-type-base);
   line-height: var(--line-height-prose);
+  overflow-wrap: break-word;
 }
 
 .prose h1 {
@@ -278,4 +279,8 @@
   background-color: var(--muted);
   border-radius: 0.25rem;
   padding: 0.15em 0.4em;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
