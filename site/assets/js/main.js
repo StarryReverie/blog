@@ -3,6 +3,7 @@ import collapse from "@alpinejs/collapse";
 import "htmx.org";
 import "htmx.org/dist/ext/hx-alpine-compat.js";
 import "htmx.org/dist/ext/hx-head.js";
+import "htmx.org/dist/ext/hx-history-cache.js";
 
 Alpine.plugin(collapse);
 
