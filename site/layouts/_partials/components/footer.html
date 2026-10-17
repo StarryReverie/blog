@@ -1,15 +1,27 @@
 <footer class="mx-auto flex max-w-3xl flex-col items-center gap-line px-page">
-  <p class="text-center text-fl-note text-subtle">
-    Built with source
-    <a
-      href="https://github.com/StarryReverie/blog/tree/{{ site.Params.build.revision }}"
-      rel="external noopener noreferrer"
-      target="_blank"
-      class="link"
-    >
-      <code class="font-mono">blog@ng-{{ site.Params.build.revision }}</code>
-    </a>
-  </p>
+  {{- with $buildInfo := site.Params.build -}}
+    {{- $revisionRepo := "main" -}}
+    {{- $revisionText := "unversioned" -}}
+
+    {{- if ne $buildInfo.revision "unversioned" -}}
+      {{- $revisionRepo = $buildInfo.revision -}}
+      {{- $revisionText = strings.Substr $buildInfo.revision 0 8 -}}
+    {{- end -}}
+
+
+    <p class="text-center text-fl-note text-subtle">
+      Built with source
+      <a
+        href="https://github.com/StarryReverie/blog/tree/{{ $revisionRepo }}"
+        rel="external noopener noreferrer"
+        target="_blank"
+        class="link"
+      >
+        <code class="text-mono">blog@ng-{{ $revisionText }}</code>
+      </a>
+    </p>
+  {{- end -}}
+
 
   <p class="text-center text-fl-note text-subtle">
     {{ site.Copyright | transform.Markdownify }}

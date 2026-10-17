@@ -1,6 +1,6 @@
 baseURL: https://blog.starryreverie.cc/
 title: StarryReverie 星缀夜空
-copyright: Copyright (C) 2025 [Justin Chen](https://github.com/StarryReverie/) · Except where otherwise noted, content is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/), and website and development environment source codes are licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+copyright: Copyright (C) 2025 [Justin Chen](https://github.com/StarryReverie/). Except where otherwise noted, content is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/), and website and development environment source codes are licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 locale: zh-cn
 
 enableRobotsTXT: true
@@ -147,9 +147,10 @@ params:
       avatar: ity.moe.svg
       url: https://ity.moe/
     - title: Chen Pan
-      description: 选择一个难到几乎无人看好的项目，带着那种“我 偏要证明给他们看”的冲劲去完成。
+      description: 选择一个难到几乎无人看好的项目，带着那种“我偏要证明给他们看”的冲劲去完成。
       avatar: blog.chenpan.me.svg
       url: https://blog.chenpan.me/
 
   build:
+    branch: main
     revision: unversioned
