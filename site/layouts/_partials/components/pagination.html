@@ -10,10 +10,12 @@
 
   {{- if $.HasNext -}}
     <a
+      href="{{ $.Next.URL }}"
+      hx-get="{{ $.Next.URL }}"
+      hx-push-url="true"
       hx-swap="outerHTML"
       hx-select="#entry-sections > *"
       hx-target="#extra-wrapper"
-      href="{{ $.Next.URL }}"
       class="rounded-full border-2 border-primary px-[calc(2*var(--space-control))] py-control text-st-note text-primary transition-colors duration-400 hover:border-primary-active hover:bg-background hover:text-primary-active"
     >
       Load More ...
