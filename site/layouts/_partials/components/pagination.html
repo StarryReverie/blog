@@ -1,0 +1,22 @@
+<div class="flex justify-center gap-stack">
+  {{- if $.HasPrev -}}
+    <a
+      href="{{ $.Prev.URL }}"
+      class="rounded-full border-2 border-subtle px-[calc(2*var(--space-control))] py-control text-st-note text-subtle transition-colors duration-400 hover:border-foreground hover:text-foreground"
+    >
+      Go Previous
+    </a>
+  {{- end -}}
+
+  {{- if $.HasNext -}}
+    <a
+      hx-swap="outerHTML"
+      hx-select="#entry-sections > *"
+      hx-target="#extra-wrapper"
+      href="{{ $.Next.URL }}"
+      class="rounded-full border-2 border-primary px-[calc(2*var(--space-control))] py-control text-st-note text-primary transition-colors duration-400 hover:border-primary-active hover:bg-background hover:text-primary-active"
+    >
+      Load More ...
+    </a>
+  {{- end -}}
+</div>
