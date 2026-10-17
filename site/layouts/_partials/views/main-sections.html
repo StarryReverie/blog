@@ -1,17 +1,13 @@
-{{- $currentContext := or $.currentContext "emptyContext" -}}
-
-{{- $headerTitle := $.headerTitle -}}
-{{- $headerContent := $.headerContent -}}
-{{- $entries := $.entries -}}
-{{- $entryToContent := $.entryToContent -}}
-{{- $extraContent := or $.extraContent "" -}}
-
+<!-- prettier-ignore-start -->
 {{- partial "views/main.html" (dict
-  "currentContext" $currentContext
-  "headerTitle" $headerTitle
-  "headerContent" $headerContent
-  "content" (partial "views/main-sections.html/content.html" (dict "entries" $entries "entryToContent" $entryToContent "extraContent" $extraContent)))
+  "headerTitle" $.headerTitle
+  "headerContent" $.headerContent
+  "content" (partial "views/main-sections.html/content.html" (dict
+    "entries" $.entries
+    "entryToContent" $.entryToContent
+    "extraContent" ($.extraContent | default ""))))
 -}}
+<!-- prettier-ignore-end -->
 
 {{- define "_partials/views/main-sections.html/content.html" -}}
   <div id="entry-sections" class="space-y-gutter">

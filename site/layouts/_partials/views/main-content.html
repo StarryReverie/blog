@@ -1,16 +1,12 @@
-{{- $currentContext := or $.currentContext "emptyContext" -}}
-
-{{- $headerTitle := $.headerTitle -}}
-{{- $headerContent := $.headerContent -}}
-{{- $content := $.content -}}
-{{- $isProse := or $.isProse false -}}
-
+<!-- prettier-ignore-start -->
 {{- partial "views/main.html" (dict
-  "currentContext" $currentContext
-  "headerTitle" $headerTitle
-  "headerContent" $headerContent
-  "content" (partial "views/main-content.html/content.html" (dict "content" $content "isProse" $isProse)))
+  "headerTitle" $.headerTitle
+  "headerContent" $.headerContent
+  "content" (partial "views/main-content.html/content.html" (dict
+    "content" $.content
+    "isProse" ($.isProse | default false))))
 -}}
+<!-- prettier-ignore-end -->
 
 {{- define "_partials/views/main-content.html/content.html" -}}
   {{- if $.isProse -}}

@@ -1,7 +1,7 @@
 {{- if hugo.IsDevelopment -}}
   <link rel="stylesheet" href="{{ $.RelPermalink }}" />
 {{- else -}}
-  {{- with $prodResource := $ | fingerprint -}}
+  {{- with $prodResource := $ | resources.Fingerprint -}}
     <link
       rel="stylesheet"
       href="{{ $prodResource.RelPermalink }}"

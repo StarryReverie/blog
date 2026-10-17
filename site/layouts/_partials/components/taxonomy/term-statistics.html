@@ -1,8 +1,4 @@
-{{- $name := $.name -}}
-{{- $terms := $.terms -}}
-
-
 <p class="text-fl-body text-foreground">
   {{- partial "components/content/icon.html" (dict "name" "abacus") }}
-  {{ len $terms }} {{ strings.ToLower $name }} in total
+  {{ len $.terms }} {{ strings.ToLower $.name }} in total
 </p>

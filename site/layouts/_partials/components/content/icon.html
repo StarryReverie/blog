@@ -1,13 +1,10 @@
-{{- $name := $.name -}}
-{{- $style := or $.style "outline" -}}
-{{- $extraClasses := or $.extraClasses "" -}}
-
-{{- with $iconFile := resources.Get (printf "vendors/tabler/icons/%s/%s.svg" $style $name) -}}
+{{- $path := printf "vendors/tabler/icons/%s/%s.svg" ($.style | default "outline") $.name -}}
+{{- with $iconFile := resources.Get $path -}}
   <span
-    {{ printf "class=%q" (printf "inline-icon %s" $extraClasses) | safe.HTMLAttr }}
+    {{ printf "class=%q" (printf "inline-icon %s" ($.extraClasses | default "")) | safe.HTMLAttr }}
     aria-hidden="true"
     >{{ $iconFile.Content | safe.HTML }}</span
   >
 {{- else -}}
-  {{- errorf "could not find icon %q in @tabler/icons" $name -}}
+  {{- errorf "could not find icon %q in @tabler/icons" $.name -}}
 {{- end -}}

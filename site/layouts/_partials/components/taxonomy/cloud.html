@@ -1,15 +1,11 @@
-{{- $terms := $.terms -}}
-{{- $icon := $.icon -}}
-
-
 <ul class="flex flex-wrap gap-2">
-  {{- range $term := $terms.Alphabetical -}}
+  {{- range $term := $.terms.Alphabetical -}}
     <li class="flex">
       <a
         href="{{ $term.Page.RelPermalink }}"
         class="rounded-full bg-muted px-[calc(1.5*var(--space-control))] py-control text-fl-body leading-none text-foreground transition-colors duration-400 hover:bg-background"
       >
-        {{- partial "components/content/icon.html" (dict "name" $icon) }}
+        {{- partial "components/content/icon.html" (dict "name" $.icon) }}
         {{ $term.Page.LinkTitle }}
         <sup class="font-bold text-subtle">{{ $term.Count }}</sup>
       </a>
