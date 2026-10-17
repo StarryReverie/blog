@@ -5,9 +5,9 @@ draft: false
 categories:
   - Showcase
 tags:
-  - Rust
   - Generics
   - Polymorphism
+  - Rust
 math: false
 ---
 

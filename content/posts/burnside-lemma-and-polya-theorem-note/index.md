@@ -5,10 +5,10 @@ draft: false
 categories:
   - Note
 tags:
-  - C++
-  - Algorithm
-  - Mathematics
   - Algebra
+  - Algorithm
+  - C++
+  - Mathematics
 math: true
 ---
 

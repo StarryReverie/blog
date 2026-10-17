@@ -5,8 +5,8 @@ draft: false
 categories:
   - Note
 tags:
-  - C++
   - Algorithm
+  - C++
   - Mathematics
 math: true
 ---

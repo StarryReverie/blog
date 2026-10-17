@@ -5,9 +5,9 @@ draft: false
 categories:
   - Thought
 tags:
-  - Rust
   - Generics
   - Project
+  - Rust
 math: false
 ---
 

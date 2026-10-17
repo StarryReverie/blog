@@ -5,8 +5,8 @@ draft: false
 categories:
   - Note
 tags:
-  - C++
   - Algorithm
+  - C++
   - Graph Theory
 math: true
 ---

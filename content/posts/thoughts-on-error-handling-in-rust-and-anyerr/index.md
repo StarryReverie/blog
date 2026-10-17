@@ -5,8 +5,8 @@ draft: false
 categories:
   - Thought
 tags:
-  - Rust
   - Project
+  - Rust
 math: false
 ---
 

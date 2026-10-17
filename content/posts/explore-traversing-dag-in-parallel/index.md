@@ -5,10 +5,10 @@ draft: false
 categories:
   - Thought
 tags:
-  - Haskell
-  - Nix
   - Algorithm
   - Concurrency
+  - Haskell
+  - Nix
 math: false
 ---
 

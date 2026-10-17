@@ -5,11 +5,11 @@ draft: false
 categories:
   - Guide
 tags:
+  - CI
+  - Nix
+  - Productivity
   - Scripting
   - Shell
-  - Nix
-  - CI
-  - Productivity
 math: false
 ---
 

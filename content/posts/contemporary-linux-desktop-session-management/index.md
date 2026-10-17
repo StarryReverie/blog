@@ -5,8 +5,8 @@ draft: false
 categories:
   - Guide
 tags:
-  - Linux
   - Desktop
+  - Linux
   - NixOS
   - Systemd
 math: false

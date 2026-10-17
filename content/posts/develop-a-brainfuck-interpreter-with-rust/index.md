@@ -5,9 +5,9 @@ draft: false
 categories:
   - Showcase
 tags:
-  - Rust
   - Brainfuck
   - Compiler
+  - Rust
 ---
 
 项目地址：<https://github.com/StarryReverie/brainfuck-interpreter>

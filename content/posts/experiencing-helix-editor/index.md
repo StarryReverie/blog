@@ -6,9 +6,9 @@ categories:
   - Experience
 tags:
   - Helix
-  - Text Editor
-  - Rust
   - Productivity
+  - Rust
+  - Text Editor
 ---
 
 最近发现了一个用 Rust 写的 Vim-like 编辑器 Helix，用有强大的性能和各种开箱即用的功能。经过短暂时间的体验，我认为 Helix 已经可以在大部分领域替代 Vim/Neovim/VS Code。

@@ -5,9 +5,9 @@ draft: false
 categories:
   - Guide
 tags:
-  - NixOS
-  - Minecraft
   - Gaming
+  - Minecraft
+  - NixOS
 ---
 
 紧张的考试周过后，终于有时间和朋友玩 Minecraft 了。为了方便进行多人游戏，我和 [@whitepaperdog](https://github.com/whitepaperdog) 决定购买一台云主机作为服务器。鉴于 NixOS 强大的 reproducibility 以及我这半年使用 NixOS 的优秀体验，我决定将服务器的系统更换为 NixOS，并在其之上部署 Minecraft 服务。

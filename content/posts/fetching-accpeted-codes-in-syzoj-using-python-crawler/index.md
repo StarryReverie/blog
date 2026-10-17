@@ -5,9 +5,9 @@ draft: false
 categories:
   - Guide
 tags:
+  - Concurrency
   - Python
   - Web
-  - Concurrency
 ---
 
 写本文之前，我共有两百多道题目在校内 `OJ` 上通过，由于某些原因，想要保存这些代码，于是想到使用 `Python` 实现自动爬取代码。同时考虑到效率问题，决定使用 `aiohttp` 编写一个高性能异步爬虫。
