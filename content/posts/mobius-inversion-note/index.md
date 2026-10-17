@@ -3,7 +3,7 @@ title: 莫比乌斯反演学习笔记
 date: 2022-02-20T11:23:07+08:00
 draft: false
 categories:
-  - Algorithm Competition
+  - Note
 tags:
   - C++
   - Algorithm

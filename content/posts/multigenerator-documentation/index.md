@@ -3,7 +3,7 @@ title: MultiGenerator 使用文档
 date: 2022-04-04T22:15:15+08:00
 draft: false
 categories:
-  - Documentation
+  - Showcase
 tags:
   - C++
   - Concurrency

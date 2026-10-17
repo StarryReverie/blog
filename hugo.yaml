@@ -152,9 +152,11 @@ params:
       url: https://blog.chenpan.me/
 
   categories:
-    - Tech
-    - Algorithm Competition
-    - Documentation
+    - Experience
+    - Guide
+    - Note
+    - Showcase
+    - Thought
 
   build:
     branch: main

@@ -3,7 +3,7 @@ title: 无需宏为 Trait Objects 实现 Any
 date: 2025-03-17T20:48:11+08:00
 draft: false
 categories:
-  - Tech
+  - Showcase
 tags:
   - Rust
   - Generics

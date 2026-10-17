@@ -2,7 +2,8 @@
 title: 自动化 NUR
 date: 2026-10-08T09:46:45+08:00
 draft: false
-categories: Tech
+categories:
+  - Guide
 tags:
   - Scripting
   - Nix

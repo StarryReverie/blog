@@ -3,7 +3,7 @@ title: 光线追踪中的 Multiple Importance Sampling
 date: 2025-08-07T09:34:03+08:00
 draft: false
 categories:
-  - Tech
+  - Note
 tags:
   - Algorithm
   - Ray Tracing

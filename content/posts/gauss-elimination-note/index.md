@@ -3,7 +3,7 @@ title: 高斯消元学习笔记
 date: 2022-02-06T16:06:35+08:00
 draft: false
 categories:
-  - Algorithm Competition
+  - Note
 tags:
   - C++
   - Algorithm

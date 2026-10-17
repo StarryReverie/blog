@@ -3,7 +3,7 @@ title: 欧拉函数 & 欧拉定理学习笔记
 date: 2022-02-10T08:37:50+08:00
 draft: false
 categories:
-  - Algorithm Competition
+  - Note
 tags:
   - C++
   - Algorithm

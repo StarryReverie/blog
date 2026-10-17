@@ -3,7 +3,7 @@ title: Burnside 引理 & Pólya 定理学习笔记
 date: 2022-02-12T19:14:24+08:00
 draft: false
 categories:
-  - Algorithm Competition
+  - Note
 tags:
   - C++
   - Algorithm

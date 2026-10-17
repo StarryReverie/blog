@@ -3,7 +3,7 @@ title: 二分图匹配学习笔记
 date: 2022-02-22T13:31:06+08:00
 draft: false
 categories:
-  - Algorithm Competition
+  - Note
 tags:
   - C++
   - Algorithm

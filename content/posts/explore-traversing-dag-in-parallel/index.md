@@ -3,7 +3,7 @@ title: 探索并行遍历 DAG
 date: 2026-09-23T21:16:00+08:00
 draft: false
 categories:
-  - Tech
+  - Thought
 tags:
   - Haskell
   - Nix

@@ -3,7 +3,7 @@ title: 用 NixOS 部署 Minecraft 服务器
 date: 2024-07-05T15:42:09+08:00
 draft: false
 categories:
-  - Tech
+  - Guide
 tags:
   - NixOS
   - Minecraft

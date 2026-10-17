@@ -3,7 +3,7 @@ title: NixOS 镜像中的 Secret 管理
 date: 2026-08-19T19:59:45+08:00
 draft: false
 categories:
-  - Tech
+  - Guide
 tags:
   - Linux
   - NixOS

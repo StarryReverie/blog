@@ -3,7 +3,7 @@ title: 现代 Linux 桌面会话管理
 date: 2026-02-18T20:47:53+08:00
 draft: false
 categories:
-  - Tech
+  - Guide
 tags:
   - Linux
   - Desktop Environment

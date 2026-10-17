@@ -3,7 +3,7 @@ title: 结合 SPPM 的 Path Tracing
 date: 2025-08-10T19:55:17+08:00
 draft: false
 categories:
-  - Tech
+  - Note
 tags:
   - Algorithm
   - Ray Tracing
