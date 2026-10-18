@@ -9,7 +9,7 @@
       >
 
       <div class="flex items-center">
-        <nav aria-label="Main Menu" class="hidden md:block">
+        <nav aria-label="Main Menu" class="hidden lg:block">
           <ul class="flex items-center">
             {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
           </ul>
@@ -33,7 +33,7 @@
 
         <button
           type="button"
-          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background md:hidden"
+          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background lg:hidden"
           @click="open = !open"
           :aria-expanded="open"
           aria-controls="menu-mobile"
@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
+    <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="lg:hidden" aria-label="Main Menu">
       <ul class="flex flex-col">
         {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
       </ul>

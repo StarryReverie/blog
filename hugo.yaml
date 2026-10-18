@@ -94,21 +94,24 @@ menu:
     - name: Posts
       pageRef: /posts
       weight: 1
+    - name: Journals
+      pageRef: /journals
+      weight: 2
     - name: Categories
       pageRef: /categories
-      weight: 2
+      weight: 3
     - name: Tags
       pageRef: /tags
-      weight: 3
+      weight: 4
     - name: Archives
       pageRef: /archives
-      weight: 4
+      weight: 5
     - name: Links
       pageRef: /links
-      weight: 5
+      weight: 6
     - name: About
       pageRef: /about
-      weight: 6
+      weight: 7
 
 params:
   home:

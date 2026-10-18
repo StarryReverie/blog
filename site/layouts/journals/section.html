@@ -1,0 +1,12 @@
+{{- define "main" -}}
+  {{- $pages := where site.RegularPages "Section" "journals" -}}
+  {{- $pager := $.Paginate $pages -}}
+
+  {{- partial "views/main-sections.html" (dict
+    "headerTitle" "All Journals"
+    "headerContent" (partial "components/section-metadata.html" $pager)
+    "entries" $pager.Pages
+    "entryToContent" "components/journals/card-content.html"
+    "extraContent" (partial "components/pagination.html" $pager))
+  -}}
+{{- end -}}

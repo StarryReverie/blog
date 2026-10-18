@@ -1,0 +1,22 @@
+<div class="space-y-line">
+  <div class="text-foreground">
+    {{ $.Content | transform.Plainify | strings.Truncate 500 }}
+  </div>
+
+  <div class="flex justify-between">
+    <a
+      href="{{ $.RelPermalink }}"
+      class="text-fl-note text-subtle transition-colors duration-400 hover:text-primary"
+    >
+      View in Separate Page
+    </a>
+
+    <a
+      href="{{ $.RelPermalink }}"
+      class="flex gap-1 text-fl-note text-subtle transition-colors duration-400 hover:text-primary"
+    >
+      <span>{{- partial "components/content/date-time.html" $.Date -}}</span>
+      <span>{{- partial "components/content/icon.html" (dict "name" "link") -}}</span>
+    </a>
+  </div>
+</div>
