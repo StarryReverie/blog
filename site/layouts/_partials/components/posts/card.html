@@ -8,8 +8,9 @@
       >
     </h2>
 
-    <p class="text-fl-note text-subtle">
-      {{- partial "components/content/date.html" $.Date -}}
+    <p class="flex gap-1 text-fl-note text-subtle">
+      <span>{{- partial "components/content/icon.html" (dict "name" "calendar-up") -}}</span>
+      <span>{{- partial "components/content/date.html" $.Date -}}</span>
     </p>
   </header>
 

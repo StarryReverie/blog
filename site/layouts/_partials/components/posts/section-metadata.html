@@ -1,11 +1,11 @@
 <div>
-  <p class="text-fl-body text-foreground">
-    {{- partial "components/content/icon.html" (dict "name" "file-text") }}
-    Currently at page #{{ $.PageNumber }} in {{ $.TotalPages }} pages
+  <p class="flex gap-1 text-fl-body text-foreground">
+    <span>{{- partial "components/content/icon.html" (dict "name" "file-text") -}}</span>
+    <span>Currently at page #{{ $.PageNumber }} in {{ $.TotalPages }} pages</span>
   </p>
 
-  <p class="text-fl-body text-foreground">
-    {{- partial "components/content/icon.html" (dict "name" "abacus") }}
-    {{ $.NumberOfElements }} entries in this page
+  <p class="flex gap-1 text-fl-body text-foreground">
+    <span>{{- partial "components/content/icon.html" (dict "name" "abacus") -}}</span>
+    <span>{{ $.NumberOfElements }} entries in this page</span>
   </p>
 </div>

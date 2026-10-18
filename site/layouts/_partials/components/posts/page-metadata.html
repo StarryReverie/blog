@@ -1,6 +1,7 @@
 <div class="space-y-line">
-  <p class="text-fl-body text-foreground">
-    {{- partial "components/content/date.html" $.Date -}}
+  <p class="flex gap-1 text-fl-body text-foreground">
+    <span>{{- partial "components/content/icon.html" (dict "name" "calendar-up") -}}</span>
+    <span>{{- partial "components/content/date.html" $.Date -}}</span>
   </p>
 
   <ul class="flex flex-wrap gap-line">
@@ -12,10 +13,10 @@
         <li>
           <a
             href="{{ $termPage.RelPermalink }}"
-            class="text-fl-body text-subtle transition-colors duration-400 hover:text-foreground"
+            class="flex gap-1 text-fl-body text-subtle transition-colors duration-400 hover:text-foreground"
           >
-            {{- partial "components/content/icon.html" (dict "name" $taxonomyCfg.icon) }}
-            {{ $termPage.LinkTitle }}
+            <span>{{- partial "components/content/icon.html" (dict "name" $taxonomyCfg.icon) -}}</span>
+            <span>{{ $termPage.LinkTitle }}</span>
           </a>
         </li>
       {{- end -}}

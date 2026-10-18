@@ -9,8 +9,8 @@
 {{- end -}}
 
 {{- define "_partials/_/404.html/headerContent.html" -}}
-  <p class="text-fl-body text-foreground">
-    {{- partial "components/content/icon.html" (dict "name" "alert-triangle") }}
-    Oops! Not Found!
+  <p class="flex gap-1 text-fl-body text-foreground">
+    <span>{{- partial "components/content/icon.html" (dict "name" "alert-triangle") -}}</span>
+    <span>Oops! Not Found!</span>
   </p>
 {{- end -}}

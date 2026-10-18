@@ -9,9 +9,9 @@
 {{- end -}}
 
 {{- define "_partials/_/miscellaneous/links.html/headerContent.html" -}}
-  <p class="text-fl-body text-foreground">
-    {{- partial "components/content/icon.html" (dict "name" "message-search") }}
-    Dear my fellow friends!
+  <p class="flex gap-1 text-fl-body text-foreground">
+    <span>{{- partial "components/content/icon.html" (dict "name" "message-search") -}}</span>
+    <span>Dear my fellow friends!</span>
   </p>
 {{- end -}}
 
