@@ -277,6 +277,7 @@
 
 .prose :not(pre) > code {
   background-color: var(--muted);
+  font-weight: 500;
   border-radius: 0.25rem;
   padding: 0.15em 0.4em;
   white-space: normal;
