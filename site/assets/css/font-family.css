@@ -4,7 +4,7 @@
     "Lato Fallback: Helvetica", "Lato Fallback: Noto Sans", Arial, "Open Sans", Roboto, "Segoe UI", Helvetica,
     "Noto Sans", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-mono:
-    "Cascadia Mono", "Cascadia Mono Fallback: Courier New", "Cascadia Mono Fallback: Maple Mono",
+    "Cascadia Mono Box", "Cascadia Mono", "Cascadia Mono Fallback: Courier New", "Cascadia Mono Fallback: Maple Mono",
     "Cascadia Mono Fallback: DejaVu Sans Mono", "Cascadia Mono Fallback: Roboto Mono",
     "Cascadia Mono Fallback: Noto Sans Mono", "Courier New", "Maple Mono", "DejaVu Sans Mono", "Roboto Mono",
     "Noto Sans Mono", ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Noto Sans Mono CJK SC", monospace;
@@ -40,6 +40,15 @@
   font-weight: 200 700;
   font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: "Cascadia Mono Box";
+  src: url("../fonts/cascadia-mono-box.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+2500-257F;
 }
 
 @font-face {

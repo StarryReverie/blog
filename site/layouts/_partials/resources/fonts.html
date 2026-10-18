@@ -5,6 +5,8 @@
   {{ $latoBold := resources.Get "fonts/lato-700.woff2" }}
   {{ $latoItalic := resources.Get "fonts/lato-400-italic.woff2" }}
   {{ $mono := resources.Get "fonts/cascadia-mono-latin.woff2" }}
+  {{ $monoBox := resources.Get "fonts/cascadia-mono-box.woff2" }}
+  {{- $_ := $monoBox.Publish -}}
   <link rel="preload" href="{{ $lato.RelPermalink }}" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="{{ $latoBold.RelPermalink }}" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="{{ $latoItalic.RelPermalink }}" as="font" type="font/woff2" crossorigin />
