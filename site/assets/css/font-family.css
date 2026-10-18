@@ -43,6 +43,14 @@
 }
 
 @font-face {
+  font-family: "Cascadia Mono";
+  src: url("../fonts/cascadia-mono-latin-italic.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Cascadia Mono Box";
   src: url("../fonts/cascadia-mono-box.woff2") format("woff2");
   font-weight: 400;
