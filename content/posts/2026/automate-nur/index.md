@@ -19,7 +19,7 @@ aliases:
 
 ## 背景
 
-随着我的 [NixOS 配置仓库](https://github.com/StarryReverie/StarryNix-Infrastructure) 中包含的非 Nixpkgs 包越来越多，每次 NixOS 更新的时间都大幅增加，大多数都浪费在复制各种工具链及构建时依赖和编译上。虽然我的几个个人项目已经相继集成了自己的 Binary Cache，理想情况下可以避免重复构建，但是在 NixOS 配置 Flake 中依赖这些 Flake 总感觉没有那么方便，且为了吃上缓存不得不间接引入多个 Nixpkgs。
+随着我的[NixOS 配置仓库](https://github.com/StarryReverie/StarryNix-Infrastructure)中包含的非 Nixpkgs 包越来越多，每次 NixOS 更新的时间都大幅增加，大多数都浪费在复制各种工具链及构建时依赖和编译上。虽然我的几个个人项目已经相继集成了自己的 Binary Cache，理想情况下可以避免重复构建，但是在 NixOS 配置 Flake 中依赖这些 Flake 总感觉没有那么方便，且为了吃上缓存不得不间接引入多个 Nixpkgs。
 
 因此我决定把大部分的第三方包都放进 NUR 并由 NUR 维护一个独立的 Binary Cache，NixOS 配置依赖 NUR，这样就可以尽可能减少额外的 Flake 依赖了。
 
@@ -96,7 +96,7 @@ $ tree -L 2
 └── treefmt.toml
 ```
 
-我选择了把供下游消费的部分和 NUR 内部使用的分离，对外公开的部分都放在顶层，如 `。/pkgs/`，NUR 内部的工具都放置在 `./repo-nix/` 中。
+我选择了把供下游消费的部分和 NUR 内部使用的分离，对外公开的部分都放在顶层，如 `./pkgs/`，NUR 内部的工具都放置在 `./repo-nix/` 中。
 
 ## 自动化相关功能
 
