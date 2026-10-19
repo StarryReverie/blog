@@ -4,18 +4,19 @@
   "headerContent" $.headerContent
   "content" (partial "views/main-content.html/content.html" (dict
     "content" $.content
-    "isProse" ($.isProse | default false))))
+    "isProse" ($.isProse | default false)
+    "extraContent" $.extraContent)))
 -}}
 <!-- prettier-ignore-end -->
 
 {{- define "_partials/views/main-content.html/content.html" -}}
-  {{- if $.isProse -}}
-    <div class="-mx-inset prose max-w-none rounded-sm bg-card p-inset">
+  <div class="space-y-stack">
+    <div class="{{ if $.isProse }}prose{{ end }} -mx-inset max-w-none rounded-sm bg-card p-inset">
       {{ $.content }}
     </div>
-  {{- else -}}
-    <div class="-mx-inset max-w-none rounded-sm bg-card p-inset">
-      {{ $.content }}
+
+    <div>
+      {{ $.extraContent }}
     </div>
-  {{- end -}}
+  </div>
 {{- end -}}

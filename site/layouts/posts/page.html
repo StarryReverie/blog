@@ -5,6 +5,7 @@
     "headerTitle" $.Title
     "headerContent" (partial "components/posts/page-metadata.html" $)
     "content" $.Content
-    "isProse" true)
+    "isProse" true
+    "extraContent" (partial "components/page-navigation.html" $.Page))
   -}}
 {{- end -}}

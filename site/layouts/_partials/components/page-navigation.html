@@ -1,0 +1,21 @@
+<div class="flex">
+  {{/* Reverse the ordering to make the entry above the current one on the section page the previous one */}}
+  {{- with $prev := $.NextInSection -}}
+    <a
+      href="{{ $prev.RelPermalink }}"
+      class="me-auto rounded-full border-2 border-subtle px-[calc(2*var(--space-control))] py-control text-st-note text-subtle transition-colors duration-400 hover:border-foreground hover:text-foreground"
+    >
+      Read New
+    </a>
+  {{- end -}}
+
+  {{/* Reverse the ordering to make the entry below the current one on the section page the next one */}}
+  {{- with $next := $.PrevInSection -}}
+    <a
+      href="{{ $next.RelPermalink }}"
+      class="ms-auto rounded-full border-2 border-subtle px-[calc(2*var(--space-control))] py-control text-st-note text-subtle transition-colors duration-400 hover:border-foreground hover:text-foreground"
+    >
+      Read Old
+    </a>
+  {{- end -}}
+</div>

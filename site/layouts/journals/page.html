@@ -7,7 +7,8 @@
     "headerTitle" (partial "_/journals/page.html/headerTitle.html" $)
     "headerContent" ""
     "content" $.Content
-    "isProse" true)
+    "isProse" true
+    "extraContent" (partial "components/page-navigation.html" $.Page))
   -}}
 {{- end -}}
 
