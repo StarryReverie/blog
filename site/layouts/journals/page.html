@@ -1,0 +1,24 @@
+{{- define "title" -}}
+  {{ printf "%s | %s" site.Title ($.Date.Format "Mon Jan 2 15:04 2006") }}
+{{- end -}}
+
+{{- define "main" -}}
+  {{- partial "views/main-content.html" (dict
+    "headerTitle" (partial "_/journals/page.html/headerTitle.html" $)
+    "headerContent" ""
+    "content" $.Content
+    "isProse" true)
+  -}}
+{{- end -}}
+
+{{- define "_partials/_/journals/page.html/headerTitle.html" -}}
+  <div class="flex flex-col">
+    <span class="text-fl-h4 font-bold text-subtle">
+      {{ $.Date.Format "Monday, Jaunary 2, 2006" }}
+    </span>
+
+    <span class="text-fl-h1 font-bold text-foreground">
+      {{ $.Date.Format "15:04" }}
+    </span>
+  </div>
+{{- end -}}
