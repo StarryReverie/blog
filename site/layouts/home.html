@@ -39,13 +39,19 @@
           {{- end -}}
         </ul>
 
-        <ul class="flex justify-center gap-inline md:justify-start">
+        <div class="flex justify-center gap-inline md:justify-start">
           <a
             href="{{ (site.GetPage "posts").RelPermalink }}"
             class="rounded-full border-2 border-primary bg-primary px-[calc(2*var(--space-control))] py-control text-st-body font-bold text-primary-foreground transition-colors duration-400 hover:bg-background hover:text-primary"
             >Posts</a
           >
-        </ul>
+
+          <a
+            href="{{ (site.GetPage "journals").RelPermalink }}"
+            class="rounded-full border-2 border-foreground bg-background px-[calc(2*var(--space-control))] py-control text-st-body font-bold text-foreground transition-colors duration-400 hover:border-primary hover:text-primary"
+            >Journals</a
+          >
+        </div>
       </div>
     </header>
   </div>

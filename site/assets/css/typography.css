@@ -285,3 +285,38 @@
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
+
+.prose.prose-small {
+  font-size: calc(0.9 * var(--fluid-type-base));
+  line-height: calc(0.9 * var(--line-height-prose));
+}
+
+.prose.prose-small h1 {
+  font-size: calc(0.9 * var(--fluid-type-h1));
+  line-height: calc(0.9 * var(--line-height-h1));
+}
+
+.prose.prose-small h2 {
+  font-size: calc(0.9 * var(--fluid-type-h2));
+  line-height: calc(0.9 * var(--line-height-h2));
+}
+
+.prose.prose-small h3 {
+  font-size: calc(0.9 * var(--fluid-type-h3));
+  line-height: calc(0.9 * var(--line-height-h3));
+}
+
+.prose.prose-small h4 {
+  font-size: calc(0.9 * var(--fluid-type-h4));
+  line-height: calc(0.9 * var(--line-height-h4));
+}
+
+.prose.prose-small h5 {
+  font-size: calc(0.9 * var(--fluid-type-h5));
+  line-height: calc(0.9 * var(--line-height-h5));
+}
+
+.prose.prose-small h6 {
+  font-size: calc(0.9 * var(--fluid-type-h6));
+  line-height: calc(0.9 * var(--line-height-h6));
+}
