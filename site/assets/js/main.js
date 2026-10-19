@@ -33,3 +33,5 @@ Alpine.data("themeToggle", () => ({
 window.Alpine = Alpine;
 
 Alpine.start();
+
+htmx.config.transitions = true;
