@@ -3,18 +3,18 @@
     <h2>
       <a
         href="{{ $.RelPermalink }}"
-        class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
+        class="text-fl-h3 font-bold text-heading transition-colors duration-400 hover:text-primary"
         >{{ $.LinkTitle | default $.Title }}</a
       >
     </h2>
 
-    <p class="flex gap-1 text-fl-note text-subtle">
+    <p class="flex gap-1 text-fl-body text-subtle">
       <span>{{- partial "components/content/icon.html" (dict "name" "calendar-up") -}}</span>
       <span>{{- partial "components/content/date.html" $.Date -}}</span>
     </p>
   </header>
 
-  <p class="text-foreground">
+  <p class="text-fl-body text-foreground">
     {{ $.Content | transform.Plainify | strings.Truncate 120 }}
   </p>
 

@@ -1,19 +1,18 @@
-<div class="space-y-line">
+<div class="space-y-stack">
+  <p class="flex gap-1 text-fl-body text-subtle">
+    <span>{{- partial "components/content/icon.html" (dict "name" "calendar-up") -}}</span>
+    <span>{{- partial "components/content/date-time.html" $.Date -}}</span>
+  </p>
+
   <div class="prose-small prose max-w-none">
     {{ $.Content }}
   </div>
 
-  <div class="flex flex-wrap justify-between">
-    <p class="flex gap-1 text-fl-note text-subtle">
-      <span>{{- partial "components/content/icon.html" (dict "name" "calendar-up") -}}</span>
-      <span>{{- partial "components/content/date-time.html" $.Date -}}</span>
-    </p>
-
+  <div class="flex justify-end">
     <a
       href="{{ $.RelPermalink }}"
-      class="flex gap-1 text-fl-note text-subtle transition-colors duration-400 hover:text-primary"
+      class="text-fl-note text-subtle transition-colors duration-400 hover:text-foreground"
     >
-      <span>{{- partial "components/content/icon.html" (dict "name" "link") -}}</span>
       View in Separate Page ...
     </a>
   </div>
