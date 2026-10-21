@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="text-scale" content="scale" />
     <meta name="color-scheme" content="dark light" />
 
     <title>
@@ -15,13 +16,17 @@
       {{- end -}}
     </title>
 
+    {{- partialCached "resources/favicon.html" "emptyContext" -}}
+    {{- partial "resources/css.html" "emptyContext" -}}
+    {{- partialCached "resources/fonts.html" "emptyContext" -}}
+    {{- partialCached "resources/js.html" "emptyContext" -}}
+    {{- partial "resources/vendors/katex.html" $ -}}
+
     {{- partial "schema.html" $ -}}
 
-    {{- partial "resources/favicon.html" "emptyContext" -}}
-    {{- partial "resources/css.html" "emptyContext" -}}
-    {{- partial "resources/fonts.html" "emptyContext" -}}
-    {{- partial "resources/js.html" "emptyContext" -}}
-    {{- partial "resources/vendors/katex.html" $ -}}
+    {{- with $rss := $.OutputFormats.Get "rss" -}}
+      {{- printf "<link rel=%q type=%q href=%q title=%q>" $rss.Rel $rss.MediaType.Type $rss.Permalink site.Title | safeHTML -}}
+    {{- end -}}
   </head>
 
   <body
@@ -34,7 +39,7 @@
       {{- partial "components/header.html" $ -}}
       <section>{{- block "hero" $ -}}{{- end -}}</section>
     </div>
-    <main class="grow">{{- block "main" $ -}}{{- end -}}</main>
+    <main id="main" class="grow">{{- block "main" $ -}}{{- end -}}</main>
     {{- partialCached "components/footer.html" $ -}}
   </body>
 </html>
