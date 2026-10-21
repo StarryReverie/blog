@@ -25,3 +25,6 @@ indent_size = 2
 
 [*.kdl]
 indent_size = 4
+
+[justfile]
+indent_size = 2

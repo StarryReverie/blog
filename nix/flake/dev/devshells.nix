@@ -8,6 +8,8 @@
           pkgsDev.hugo
           pkgsDev.nodejs
 
+          pkgsDev.just
+
           pkgsDev.nixfmt
           pkgsDev.treefmt
         ];
