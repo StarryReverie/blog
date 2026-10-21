@@ -1,5 +1,5 @@
 {{- define "title" -}}
-  {{ printf "%s | %s" site.Title ($.Date.Format "Mon Jan 2 15:04 2006") }}
+  {{ printf "%s | %s" ($.Date.Format "Mon Jan 2 15:04 2006") site.Title }}
 {{- end -}}
 
 {{- define "main" -}}

@@ -10,7 +10,7 @@
         {{- if page.IsHome -}}
           {{ site.Title }}
         {{- else -}}
-          {{ printf "%s | %s" site.Title page.Title }}
+          {{ printf "%s | %s" page.Title site.Title }}
         {{- end -}}
       {{- end -}}
     </title>
