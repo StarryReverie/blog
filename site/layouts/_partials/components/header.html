@@ -24,10 +24,10 @@
           :title="dark ? 'Switch to light theme' : 'Switch to dark theme'"
         >
           <span class="inline dark:hidden">
-            {{- partial "components/content/icon.html" (dict "name" "sun") -}}
+            {{- partialCached "components/content/icon.html" (dict "name" "sun") "sun" -}}
           </span>
           <span class="hidden dark:inline">
-            {{- partial "components/content/icon.html" (dict "name" "moon") -}}
+            {{- partialCached "components/content/icon.html" (dict "name" "moon") "moon" -}}
           </span>
         </button>
 
@@ -39,7 +39,7 @@
           aria-controls="menu-mobile"
           aria-label="Main Menu"
         >
-          {{- partial "components/content/icon.html" (dict "name" "menu-2") -}}
+          {{- partialCached "components/content/icon.html" (dict "name" "menu-2") "menu-2" -}}
         </button>
       </div>
     </div>

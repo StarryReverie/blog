@@ -5,7 +5,7 @@
         href="{{ $term.Page.RelPermalink }}"
         class="flex gap-1 rounded-full bg-muted px-[calc(1.5*var(--space-control))] py-control text-fl-body leading-none text-foreground transition-colors duration-400 hover:bg-background"
       >
-        <span>{{- partial "components/content/icon.html" (dict "name" $.icon) -}}</span>
+        <span>{{- partialCached "components/content/icon.html" (dict "name" $.icon) $.icon -}}</span>
         <span>{{ $term.Page.LinkTitle }} <sup class="font-bold text-subtle">{{ $term.Count }}</sup></span>
       </a>
     </li>

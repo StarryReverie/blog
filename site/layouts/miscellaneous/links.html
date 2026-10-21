@@ -10,7 +10,7 @@
 
 {{- define "_partials/_/miscellaneous/links.html/headerContent.html" -}}
   <p class="flex gap-1 text-fl-body text-foreground">
-    <span>{{- partial "components/content/icon.html" (dict "name" "message-search") -}}</span>
+    <span>{{- partialCached "components/content/icon.html" (dict "name" "message-search") "message-search" -}}</span>
     <span>Dear my fellow friends!</span>
   </p>
 {{- end -}}

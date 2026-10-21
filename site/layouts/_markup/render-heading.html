@@ -3,6 +3,6 @@
 {{ $.Text }}
 {{- /* Remove the space between */ -}}
 <a href="#{{ $.Anchor }}" title="{{ $.Text }}" class="ms-1 text-muted transition-colors duration-400 hover:text-subtle">
-  {{- partial "components/content/icon.html" (dict "name" "link") -}}
+  {{- partialCached "components/content/icon.html" (dict "name" "link") "link" -}}
 </a>
 {{- printf "</h%d>" $.Level | safe.HTML -}}

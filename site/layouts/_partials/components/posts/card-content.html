@@ -9,7 +9,7 @@
     </h2>
 
     <p class="flex gap-1 text-fl-body text-subtle">
-      <span>{{- partial "components/content/icon.html" (dict "name" "calendar-up") -}}</span>
+      <span>{{- partialCached "components/content/icon.html" (dict "name" "calendar-up") "calendar-up" -}}</span>
       <span>{{- partial "components/content/date.html" $.Date -}}</span>
     </p>
   </header>

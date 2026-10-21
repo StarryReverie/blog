@@ -1,4 +1,4 @@
 <p class="flex gap-1 text-fl-body text-foreground">
-  <span>{{- partial "components/content/icon.html" (dict "name" "abacus") -}}</span>
+  <span>{{- partialCached "components/content/icon.html" (dict "name" "abacus") "abacus" -}}</span>
   <span>{{ len $.terms }} {{ strings.ToLower $.name }} in total</span>
 </p>

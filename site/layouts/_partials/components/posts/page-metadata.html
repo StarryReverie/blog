@@ -1,6 +1,6 @@
 <div class="space-y-line">
   <p class="flex gap-1 text-fl-body text-foreground">
-    <span>{{- partial "components/content/icon.html" (dict "name" "calendar-up") -}}</span>
+    <span>{{- partialCached "components/content/icon.html" (dict "name" "calendar-up") "calendar-up" -}}</span>
     <span>{{- partial "components/content/date.html" $.Date -}}</span>
   </p>
 
@@ -15,7 +15,9 @@
             href="{{ $termPage.RelPermalink }}"
             class="flex gap-1 text-fl-body text-subtle transition-colors duration-400 hover:text-foreground"
           >
-            <span>{{- partial "components/content/icon.html" (dict "name" $taxonomyCfg.icon) -}}</span>
+            <span
+              >{{- partialCached "components/content/icon.html" (dict "name" $taxonomyCfg.icon) $taxonomyCfg.icon -}}</span
+            >
             <span>{{ $termPage.LinkTitle }}</span>
           </a>
         </li>

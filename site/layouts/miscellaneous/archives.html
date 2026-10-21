@@ -11,7 +11,7 @@
 {{- define "_partials/_/miscellaneous/archives.html/headerContent.html" -}}
   <div>
     <p class="flex gap-1 text-fl-body text-foreground">
-      <span>{{- partial "components/content/icon.html" (dict "name" "abacus") -}}</span>
+      <span>{{- partialCached "components/content/icon.html" (dict "name" "abacus") "abacus" -}}</span>
       <span>{{ len $ }} entries in total</span>
     </p>
 
@@ -20,7 +20,7 @@
       {{- $totalWordCount = add $totalWordCount $entry.WordCount -}}
     {{- end -}}
     <p class="flex gap-1 text-fl-body text-foreground">
-      <span>{{- partial "components/content/icon.html" (dict "name" "vocabulary") -}}</span>
+      <span>{{- partialCached "components/content/icon.html" (dict "name" "vocabulary") "vocabulary" -}}</span>
       <span>{{ $totalWordCount }} words has been written</span>
     </p>
   </div>
