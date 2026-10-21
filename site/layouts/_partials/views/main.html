@@ -1,8 +1,15 @@
-<div class="mx-auto max-w-3xl space-y-section px-page">
-  <header class="space-y-line">
-    <h1 class="text-fl-h1 font-bold text-heading">{{ $.headerTitle }}</h1>
-    <div>{{ $.headerContent }}</div>
-  </header>
+<div class="relative mx-auto max-w-3xl px-page py-section">
+  <img
+    src="{{ (resources.Get "images/background.webp").RelPermalink }}"
+    class="absolute inset-x-0 z-0 h-80 w-full -translate-y-[var(--space-section)] mask-x-from-75% mask-b-from-70% object-cover opacity-20 dark:opacity-10"
+  />
 
-  <div>{{ $.content }}</div>
+  <div class="relative z-10 space-y-section">
+    <header class="space-y-line">
+      <h1 class="text-fl-h1 font-bold text-heading">{{ $.headerTitle }}</h1>
+      <div>{{ $.headerContent }}</div>
+    </header>
+
+    <div>{{ $.content }}</div>
+  </div>
 </div>
