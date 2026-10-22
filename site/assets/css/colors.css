@@ -57,8 +57,8 @@
   --primary-dim-active: color-mix(in oklab, var(--primary-active) 35%, transparent);
   --primary-foreground: var(--color-base-50);
 
-  --secondary: var(--color-secondary-800);
-  --secondary-active: var(--color-secondary-600);
+  --secondary: var(--color-secondary-600);
+  --secondary-active: var(--color-secondary-400);
   --secondary-dim: color-mix(in oklab, var(--secondary) 20%, transparent);
   --secondary-dim-active: color-mix(in oklab, var(--secondary-active) 35%, transparent);
   --secondary-foreground: var(--color-secondary-50);
