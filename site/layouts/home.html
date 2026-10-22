@@ -40,17 +40,17 @@
         </ul>
 
         <div class="flex justify-center gap-inline md:justify-start">
-          <a
-            href="{{ (site.GetPage "posts").RelPermalink }}"
-            class="rounded-full bg-primary px-[calc(2*var(--space-control))] py-control text-st-body font-bold text-primary-foreground transition-colors duration-400 hover:bg-primary-active"
-            >Posts</a
-          >
+          {{- partial "components/buttons/brand.html" (dict
+            "title" "Posts"
+            "link" (site.GetPage "posts").RelPermalink
+            "type" "primary")
+          -}}
 
-          <a
-            href="{{ (site.GetPage "journals").RelPermalink }}"
-            class="rounded-full bg-primary-dim px-[calc(2*var(--space-control))] py-control text-st-body font-bold text-primary transition-colors duration-400 hover:bg-primary-dim-active"
-            >Journals</a
-          >
+          {{- partial "components/buttons/brand.html" (dict
+            "title" "Journals"
+            "link" (site.GetPage "journals").RelPermalink
+            "type" "auxiliary")
+          -}}
         </div>
       </div>
     </header>

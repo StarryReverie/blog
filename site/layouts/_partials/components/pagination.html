@@ -1,24 +1,25 @@
 <div class="flex justify-center gap-stack">
   {{- if $.HasPrev -}}
-    <a
-      href="{{ $.Prev.URL }}"
-      class="rounded-full bg-neutral-dim px-[calc(2*var(--space-control))] py-control text-fl-note text-neutral transition-colors duration-400 hover:bg-neutral-dim-active"
-    >
-      Go Previous
-    </a>
+    {{- partial "components/buttons/normal.html" (dict
+      "title" "Go Previous"
+      "link" $.Prev.URL
+      "type" "neutral")
+    -}}
   {{- end -}}
 
   {{- if $.HasNext -}}
-    <a
-      href="{{ $.Next.URL }}"
-      hx-get="{{ $.Next.URL }}"
-      hx-push-url="true"
-      hx-swap="outerHTML"
-      hx-select="#entry-sections > *"
-      hx-target="#extra-wrapper"
-      class="rounded-full bg-primary-dim px-[calc(2*var(--space-control))] py-control text-fl-note text-primary transition-colors duration-400 hover:bg-primary-dim-active"
-    >
-      Load More ...
-    </a>
+    <!-- prettier-ignore-start -->
+    {{- partial "components/buttons/normal.html" (dict
+      "title" "Load More ..."
+      "link" $.Next.URL
+      "type" "primary"
+      "extraAttrs" (dict
+        "hx-get" $.Next.URL
+        "hx-push-url" "true"
+        "hx-swap" "outerHTML"
+        "hx-select" "#entry-sections > *"
+        "hx-target" "#extra-wrapper"))
+    -}}
+    <!-- prettier-ignore-end -->
   {{- end -}}
 </div>

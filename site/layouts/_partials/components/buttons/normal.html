@@ -1,0 +1,17 @@
+<a
+  href="{{ $.link }}"
+  {{ range $attr, $value := $.extraAttrs }}
+    {{ printf "%s=%q" $attr $value | safe.HTMLAttr }}
+  {{ end }}
+  class="{{ if eq $.type "primary" }}
+    bg-primary-dim text-primary hover:bg-primary-dim-active
+  {{ else if eq $.type "secondary" }}
+    bg-secondary-dim text-secondary hover:bg-secondary-dim-active
+  {{ else if eq $.type "neutral" }}
+    bg-neutral-dim text-neutral hover:bg-neutral-dim-active
+  {{ else }}
+    {{- errorf "Unknown brand button type %q" ($.type | default "") -}}
+  {{ end }} {{ $.extraClasses | default "" }} rounded-full px-[calc(2*var(--space-control))] py-control text-fl-note transition-colors duration-400"
+>
+  {{ $.title }}
+</a>

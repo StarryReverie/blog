@@ -1,21 +1,19 @@
 <div class="flex">
-  {{/* Reverse the ordering to make the entry above the current one on the section page the previous one */}}
-  {{- with $prev := $.NextInSection -}}
-    <a
-      href="{{ $prev.RelPermalink }}"
-      class="me-auto rounded-full bg-neutral-dim px-[calc(2*var(--space-control))] py-control text-fl-note text-neutral transition-colors duration-400 hover:bg-neutral-dim-active"
-    >
-      Read Newer
-    </a>
+  {{- with $next := $.NextInSection -}}
+    {{- partial "components/buttons/normal.html" (dict
+      "title" "Read Newer"
+      "link" $next.RelPermalink
+      "type" "neutral"
+      "extraClasses" "me-auto")
+    -}}
   {{- end -}}
 
-  {{/* Reverse the ordering to make the entry below the current one on the section page the next one */}}
-  {{- with $next := $.PrevInSection -}}
-    <a
-      href="{{ $next.RelPermalink }}"
-      class="ms-auto rounded-full bg-neutral-dim px-[calc(2*var(--space-control))] py-control text-fl-note text-neutral transition-colors duration-400 hover:bg-neutral-dim-active"
-    >
-      Read Older
-    </a>
+  {{- with $prev := $.PrevInSection -}}
+    {{- partial "components/buttons/normal.html" (dict
+      "title" "Read Older"
+      "link" $prev.RelPermalink
+      "type" "neutral"
+      "extraClasses" "ms-auto")
+    -}}
   {{- end -}}
 </div>
