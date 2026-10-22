@@ -2,12 +2,15 @@
   hugo,
   importNpmLock,
   lib,
-  nodejs,
+  nodejs_latest,
   stdenvNoCC,
 
   blogRevision ? null,
   baseUrl ? null,
 }:
+let
+  nodejs = nodejs_latest;
+in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "blog-rendered";
   version = "ng-${if blogRevision != null then blogRevision else "unversioned"}";

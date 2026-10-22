@@ -6,7 +6,7 @@
       devShells.default = pkgsDev.mkShellNoCC {
         packages = [
           pkgsDev.hugo
-          pkgsDev.nodejs
+          pkgsDev.nodejs_latest
 
           pkgsDev.just
 
