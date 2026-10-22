@@ -3,7 +3,7 @@
   {{- partial "views/main.html" (dict
     "headerTitle" $.Title
     "headerContent" (partial "_/miscellaneous/links.html/headerContent.html" "emptyContext")
-    "content" (partial "_/miscellaneous/links.html/content.html" "emptyContext"))
+    "content" (partial "_/miscellaneous/links.html/content.html" $))
   -}}
   <!-- prettier-ignore-end -->
 {{- end -}}
@@ -16,7 +16,15 @@
 {{- end -}}
 
 {{- define "_partials/_/miscellaneous/links.html/content.html" -}}
-  <div class="-mx-component">
-    {{- partial "components/links/card-list.html" site.Params.links -}}
+  <div class="space-y-stack">
+    <div class="-mx-inset">
+      {{- partial "components/links/card-list.html" site.Params.links -}}
+    </div>
+
+    {{- if gt (strings.CountRunes $.Content) 0 -}}
+      <div class="-mx-inset prose max-w-none rounded-sm bg-card p-inset">
+        {{ $.Content }}
+      </div>
+    {{- end -}}
   </div>
 {{- end -}}
