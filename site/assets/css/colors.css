@@ -53,11 +53,21 @@
 
   --primary: var(--color-primary-700);
   --primary-active: var(--color-primary-500);
+  --primary-dim: color-mix(in oklab, var(--primary) 20%, transparent);
+  --primary-dim-active: color-mix(in oklab, var(--primary-active) 35%, transparent);
   --primary-foreground: var(--color-base-50);
 
   --secondary: var(--color-secondary-800);
   --secondary-active: var(--color-secondary-600);
+  --secondary-dim: color-mix(in oklab, var(--secondary) 20%, transparent);
+  --secondary-dim-active: color-mix(in oklab, var(--secondary-active) 35%, transparent);
   --secondary-foreground: var(--color-secondary-50);
+
+  --neutral: var(--color-base-700);
+  --neutral-active: var(--color-base-500);
+  --neutral-dim: color-mix(in oklab, var(--neutral) 15%, transparent);
+  --neutral-dim-active: color-mix(in oklab, var(--neutral-active) 30%, transparent);
+  --neutral-foreground: var(--color-base-50);
 }
 
 .dark {
@@ -75,13 +85,17 @@
   --heading: var(--color-base-50);
   --subtle: var(--color-base-400);
 
-  --primary: var(--color-primary-500);
+  --primary: var(--color-primary-400);
   --primary-active: var(--color-primary-300);
   --primary-foreground: var(--color-base-50);
 
   --secondary: var(--color-secondary-500);
   --secondary-active: var(--color-secondary-300);
-  --secondary-foreground: var(--color-secondary-50);
+  --secondary-foreground: var(--color-base-50);
+
+  --neutral: var(--color-base-300);
+  --neutral-active: var(--color-base-200);
+  --neutral-foreground: var(--color-base-50);
 }
 
 @theme inline {
@@ -99,11 +113,21 @@
 
   --color-primary: var(--primary);
   --color-primary-active: var(--primary-active);
+  --color-primary-dim: var(--primary-dim);
+  --color-primary-dim-active: var(--primary-dim-active);
   --color-primary-foreground: var(--primary-foreground);
 
   --color-secondary: var(--secondary);
   --color-secondary-active: var(--secondary-active);
+  --color-secondary-dim: var(--secondary-dim);
+  --color-secondary-dim-active: var(--secondary-dim-active);
   --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-neutral: var(--neutral);
+  --color-neutral-active: var(--neutral-active);
+  --color-neutral-dim: var(--neutral-dim);
+  --color-neutral-dim-active: var(--neutral-dim-active);
+  --color-neutral-foreground: var(--neutral-foreground);
 }
 
 .prose {
