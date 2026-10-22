@@ -1,0 +1,24 @@
+<div class="flex items-stretch gap-inline rounded-sm bg-card p-component">
+  <img
+    src="{{ $.avatarUrl }}"
+    alt="avatar for {{ $.title }}"
+    class="size-18 shrink-0 rounded-sm object-cover transition-transform duration-400 hover:-rotate-5 md:size-20"
+  />
+
+  <div class="border-l-1 border-l-subtle pl-inline">
+    <h2>
+      <a
+        href="{{ $.url }}"
+        rel="external noopener noreferrer"
+        target="_blank"
+        class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
+      >
+        {{ $.title }}
+      </a>
+    </h2>
+
+    <p class="line-clamp-2 text-fl-note text-subtle">
+      {{ $.description }}
+    </p>
+  </div>
+</div>

@@ -16,39 +16,7 @@
 {{- end -}}
 
 {{- define "_partials/_/miscellaneous/links.html/content.html" -}}
-  <ul class="-mx-component grid grid-cols-1 gap-stack">
-    {{- range $entry := site.Params.links -}}
-      <li class="flex items-stretch gap-inline rounded-sm bg-card p-component">
-        {{- $avatarRef := printf "images/links/%s" $entry.avatar -}}
-
-        {{- with $avatar := resources.Get $avatarRef -}}
-          <img
-            src="{{ $avatar.RelPermalink }}"
-            alt="avatar for {{ $entry.title }}"
-            class="size-18 shrink-0 rounded-sm object-cover transition-transform duration-400 hover:-rotate-5 md:size-20"
-          />
-        {{- else -}}
-          {{- errorf "Could not find avatar asset %q" $avatarRef -}}
-        {{- end -}}
-
-
-        <div class="border-l-1 border-l-subtle pl-inline">
-          <h2>
-            <a
-              href="{{ $entry.url }}"
-              rel="external noopener noreferrer"
-              target="_blank"
-              class="text-fl-emphasis font-bold text-heading transition-colors duration-400 hover:text-primary"
-            >
-              {{ $entry.title }}
-            </a>
-          </h2>
-
-          <p class="line-clamp-2 text-fl-note text-subtle">
-            {{ $entry.description }}
-          </p>
-        </div>
-      </li>
-    {{- end -}}
-  </ul>
+  <div class="-mx-component">
+    {{- partial "components/links/card-list.html" site.Params.links -}}
+  </div>
 {{- end -}}
