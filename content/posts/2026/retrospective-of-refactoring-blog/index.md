@@ -151,3 +151,174 @@ Space scale 是我觉得更需要确定的一个部分。因为间距的情况�
 我再也不想写原生 CSS 了。我也曾经在某课程项目中写过原生 CSS，但是这种样式和结构分离的做法让我很难受，我要来回不停地在不同编辑器标签页中切换，而且还要考虑各种样式继承和覆盖的问题。
 
 最近我了解到了 Tailwind CSS（相比熟知前端的群友们还是太不敏锐了），这种 utility class 的做法让我感觉非常舒适，简直是看上一眼就喜欢上了。2026 年，Hugo 对于 Tailwind CSS 已经有了 first-class 级别的支持，集成起来几乎没有难度了。所以我马上选择了 Tailwind CSS。
+
+## 模板开发
+
+### 组件化 Go Template
+
+#### Self-Contained 组件
+
+在这次开发中，我大量使用了 Go Template Partials。不过 `partial` 终究是字符串替换，相比 JSX 还是没有那么严格。这就导致了一个问题，`partial` 的结果到底能不能被确定性地展示、是否放在任何地方都有符合预期的内部布局。
+
+具体来说，`partial` 不一定能做到 self-contained。如果一个 `partial` 返回的是多个 HTML 元素，那么替换后都会成为上级 HTML 元素的子节点，上级元素的设置就会影响到这些替换后的子元素，比如间距。或许我们在 `partial` 中并没有打算就这样让这些元素跟随周围环境的样式变化。为了最大程度的可预测性，`partial` 应当只返回恰好一个元素，所有的子元素都包含在一个 `<div>` 中。如果本来就只有一个元素，那么就没有必要再套 `<div>` 了。
+
+考虑模板继承的场景，父模板中的内容是否会被子模板中扩展到内容影响呢？也是有可能的，所以也应该需要在 `block` 的周围套一个 `<div>`。
+
+根据这些原则，我可以举一个例子：
+
+```html
+<!doctype html>
+<html lang="{{ site.Language.Locale }}" dir="{{ or site.Language.Direction `ltr` }}" class="bg-card">
+  <head>
+    <!-- ... -->
+  </head>
+  <body
+    hx-boost:inherited="true"
+    hx-indicator:inherited="#global-loading-pbr"
+    class="flex min-h-dvh flex-col bg-background pb-page"
+  >
+    {{- partialCached "components/loading-pbr.html" "emptyContext" -}}
+    <div>
+      {{- partial "components/header.html" $ -}}
+      <section>{{- block "hero" $ -}}{{- end -}}</section>
+    </div>
+    <main id="main" class="grow">{{- block "main" $ -}}{{- end -}}</main>
+    {{- partialCached "components/footer.html" $ -}}
+  </body>
+</html>
+```
+
+在这之中，`loading-pbr.html`、`header.html`、`footer.html` 都是组件，必定返回恰好一个 HTML 元素。而 `hero`、`main` 等 `block` 的内容无法确定，需要在外包裹一层。
+
+#### 间距
+
+元素的间距可以分为 padding 和 margin。我觉得这里同样需要遵循 self-contained 的原则。间距是不可视的，但是又确实会对元素的布局产生影响。为了避免布局上的各种奇怪问题，我们也应该尽可能让间距的使用可预测。
+
+具体来说，间距是靠元素与元素之间的关系体现的，如果只有一个元素，理应没有间距的概念。那么对于一个单独的组件，它的可视边界周围理应没有间距。如果存在这种可视边界之外的隐藏部分，只有在与其他元素一起布局时，这些隐藏的部分才会显现。间距的减少比增加要困难得多，所以为什么不在一开始就不要加不必要的间距呢？
+
+所以对于没有边框的元素，比如各种文本，最好不要加任何的 padding 和 margin。对于有边框的元素，就不要加任何 margin。某种程度上，这也是为什么 Tailwind CSS 清空元素的默认样式、设置盒模型为 `border-box` 的原因。
+
+那么元素之间的间距就应该交给容器设置。对于普通的 `block` 容器，可以使用 `space-y-*` utility class 配置，这避免了手动给每个元素手动设置 margin。对于 `flex` 和 `grid` 容器，则可以使用 `gap-*` utility class。反之，不要设置 `mt-*` 或 `mb-*` 这样的 utility class，它们违反了 self-contained 原则，哪怕是在局部，也几乎没有使用的必要。以下片段就是一个例子。
+
+```html
+<div class="space-y-section">
+  <header class="space-y-line">
+    <h1 class="text-fl-h1 font-bold text-heading">{{ $.headerTitle }}</h1>
+    <div>{{ $.headerContent }}</div>
+  </header>
+
+  <div>{{ $.content }}</div>
+</div>
+```
+
+当然也有一些例外情况。我目前能想到的就是一个元素宽度受限，但是需要相对于容器水平居中，比如一个限制了最大长度的导航栏。这种情况下可以在这个元素上加 `mx-auto max-w-*`。使用 Flexbox 也不是不可以，需要在容器元素上加 `flex justify-center`，在子元素上加 `grow`，所以不如前一种写法简单。
+
+### Utility Classes 的组合
+
+Utility class 的卖点之一就是可组合性，那么怎么做到可组合呢？我的结论是把所有的 utility classes 尽可能向下移动，直到需要产生对应作用的元素上。
+
+分类来看，对于布局类 utility class，如 `flex`、`gap-*`、`space-*`、`p-*` 等等，它们没有继承性质，所以不能放在父级元素上，所以自然而然地满足了这个要求，只能放在我们想要设置的容器元素本体上。
+
+对于样式类 utility class（其实我也不知道应该叫什么好），如设置颜色的 `text-<color>`、`bg-*`，设置字体排版的 `text-<size>`、`font-*` 等等，则应该直接作用于叶子元素上，也就是直接包含内容的元素上。这些 utility classes 大多可以通过继承往子元素传递，然而这恰恰是我们要避免的！如果我们把样式都放在直接作用的元素上，就可以非常轻松的分析这个元素的样式。反之，就需要考察从当前元素一直到各级祖先元素上的样式，成本更大。更不用说这个元素在一个组件内部的时候，根本无从得知这个组件会被包含在那些元素中，又有哪些样式会继承下来。
+
+这种方法也会导致 utility classes 的重复。但是我觉得这并不会有很严重的影响。如果是结构完全相同的元素，那么大多数情况已经是通过模板引擎的循环结构来生成的，utility classes 也只需写在循环体中一次。如果是结构不同的元素，更多情况下不会有重复样式的可能。在 Visual Hierarchy 上，样式更需要有差异，在功能上，元素的交互行为也有不同，所以几乎不会有很多的 utility classes 重复。
+
+如果真的有大量重复，也有多种可选方案。如果这些重复都在局部的块内，可以通过多光标编辑来解决修改问题。如果是明确的一种样式和功能的模式，可以自定义 utility class，如我的链接颜色样式：
+
+```css
+@utility link {
+  @apply text-primary underline transition-colors duration-400
+    visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
+}
+```
+
+虽然这样做也需要注意不要过度包含 class，以保证组合性。
+
+### JSX-like Partials
+
+前面提到 Go Template Partials 没有 JSX 那么好用，那么如何解决这个问题呢？
+
+事实上，Go Template 足够动态类型，`partial` 可以接受任意类型的参数。没想到动态类型居然成为了优点（笑）。多个参数使用 `dict` 组装，可以模拟命名参数传递。而 Named Slot 功能，也只需要把要插入 slot 的内容提前渲染好，然后通过 `dict` 传递即可。
+
+由于 `partial` 调用使用字符串作为引用，所以我们甚至可以传入一个 `partial` 的名称到另外一个 `partial` 中，接受的 `partial` 使用这个 `partial` 名称进行调用，就实现了一半的高阶 `partial`。当然这实际上只是回调，`partial` 不是 first-class 的，没有闭包功能，也不能作为值自由传递，但是对于我们现有的场景也足够使用了。
+
+一个例子是渲染文章列表页面的实现，以下是一个基本的多节内容模板 `_partials/views/main-sections.html`：
+
+```gotmpl
+<!-- prettier-ignore-start -->
+{{- partial "views/main.html" (dict
+  "headerTitle" $.headerTitle
+  "headerContent" $.headerContent
+  "content" (partial "views/main-sections.html/content.html" (dict
+    "entries" $.entries
+    "entryToContent" $.entryToContent
+    "extraContent" ($.extraContent | default ""))))
+-}}
+<!-- prettier-ignore-end -->
+
+{{- define "_partials/views/main-sections.html/content.html" -}}
+  <div id="entry-sections" class="space-y-gutter">
+    {{- range $entry := $.entries -}}
+      <section class="-mx-inset rounded-sm bg-card p-inset">
+        {{- partialCached $.entryToContent $entry $entry -}}
+      </section>
+    {{- end -}}
+
+
+    <div id="extra-wrapper">
+      {{- $.extraContent -}}
+    </div>
+  </div>
+{{- end -}}
+```
+
+而渲染 Posts 类文章列表的模板 `pages/section.html` 可以这样写：
+
+```gotmpl
+{{- define "main" -}}
+  {{- $pages := where site.RegularPages "Section" "posts" -}}
+  {{- $pager := $.Paginate $pages -}}
+
+  {{- partial "views/main-sections.html" (dict
+    "headerTitle" "All Posts"
+    "headerContent" (partial "components/section-metadata.html" $pager)
+    "entries" $pager.Pages
+    "entryToContent" "components/posts/card-content.html"
+    "extraContent" (partial "components/pagination.html" $pager))
+  -}}
+{{- end -}}
+```
+
+其中 `_partials/components/posts/card-content.html` 的实现为：
+
+```html
+<div class="space-y-stack">
+  <header class="space-y-line">
+    <h2>
+      <a
+        href="{{ $.RelPermalink }}"
+        class="text-fl-h3 font-bold text-heading transition-colors duration-400 hover:text-primary"
+        >{{ $.LinkTitle | default $.Title }}</a
+      >
+    </h2>
+
+    <p class="flex gap-1 text-fl-body text-subtle">
+      <span>{{- partialCached "components/content/icon.html" (dict "name" "calendar-up") "calendar-up" -}}</span>
+      <span>{{- partial "components/content/date.html" $.Date -}}</span>
+    </p>
+  </header>
+
+  <p class="text-fl-body text-foreground">
+    {{ $.Content | transform.Plainify | strings.Truncate 120 }}
+  </p>
+
+  <div class="flex justify-end">
+    <a
+      href="{{ $.RelPermalink }}"
+      class="text-fl-note text-subtle transition-colors duration-400 hover:text-foreground"
+    >
+      Read More ...
+    </a>
+  </div>
+</div>
+```
