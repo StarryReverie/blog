@@ -322,3 +322,56 @@ Utility class 的卖点之一就是可组合性，那么怎么做到可组合呢
   </div>
 </div>
 ```
+
+## 内容管理
+
+### 分类和标签管理
+
+Hugo 的 Taxonomy 机制实际上就是一个扁平化的标签系统，可以给每个文章按照不同的维度添加标签列表。不过我还是选择了传统的分类和标签混合的模式，每篇文章只有一个分类和各种各样的标签。
+
+理论上另外一种可行的使用方法是细分类别，每个类别作为 Taxonomy，类别内有各自的 Term。比如 Taxonomy 可以用 `by-language`、`by-speciality`、`by-domain` 等等，不过我感觉这种划分方式还是比较烧脑，且旧文章还需要迁移，所以就算了。
+
+在此之前，我给文章加标签都是想到哪个就加哪个，所以标签命名比较混乱。因此我想到了一种中心化管理分类和标签的机制。我在 `hugo.yaml` 中添加了额外参数 `params.categories` 和 `params.tags`。在每一篇文章的模板中，调用以下验证逻辑 `components/posts/validation.html`：
+
+```gotmpl
+{{- range $taxonomy := slice "categories" "tags" -}}
+  {{- range $term := $.GetTerms $taxonomy -}}
+    {{- if not (collections.In (index site.Params $taxonomy) $term.LinkTitle) -}}
+      {{- errorf "Page %q refers to a non-existent term %q in taxonomy %q" $.Path $term.LinkTitle $taxonomy -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+```
+
+这样每一篇文章就不可能引用不存在的分类和标签了。在给文章添加标签时，就可以去 `hugo.yaml` 中检查有没有已有的可以使用的标签。
+
+### 分类设计
+
+以前我的分类比较粗糙，在 OI 时代的文章都是 `Algorithm Competition`，而后来的文章都是 `Tech`。这样的分类感觉没有什么意义，所以我重新设计了一套分类方式：
+
+- `Experience`：尝鲜新工具、阅读新书籍等活动的体验和感受。
+- `Guide`：比较详细的、最终目标和成果比较明确的实践教学。
+- `Note`：对已有知识的记录和总结。
+- `Showcase`：新项目的介绍和展示。
+- `Thought`：对某些话题的看法和思考。
+
+这样的分类感觉不多也不少，只划分最基本的文章性质，我目前还是比较满意的。
+
+### 内容结构
+
+我把以往的 `content/posts/<title>` 的结构改为了 `content/posts/<year>/<title>` 的形式，这样就解决了文章难以定位的问题。不按年份划分时，即使是 20 篇左右的文章列表都显得比较混乱。当然修改结构也需要记得添加 `aliases`，确保旧链接仍然有效。
+
+这一次我还尝试加入了 Journals 板块，用于 microblogging。写作需要积累灵感，而 Journals 就比较适合在有一点想法时做一下记录。相比于 Posts，这里的内容不需要很正式，关键在于可以方便地记录。我同时也有在我的 [Telegram Channel](https://t.me/journalctl_xeu) 上更新，那里的内容会更加随意一些，所以我会先在那里初步发布，如果是比较有价值保留的内容，就再搬到这里。
+
+Journals 相对细碎，发布也更加频繁，所以我选择使用 `content/<year>/<month>/<day>/<hour>-<minute>` 的目录结构。Journals 不需要有标题，所以就直接使用日期格式了：
+
+```markdown
+---
+title: {{ time.Format `Monday, January 2, 2006 - 15:04` $.Date }}
+date: {{ $.Date }}
+draft: false
+math: false
+---
+
+<!-- Content -->
+```
