@@ -171,13 +171,17 @@ params:
     - Brainfuck
     - C++
     - CI
+    - CSS
     - Compiler
     - Computer Graphics
     - Concurrency
+    - Design
     - Desktop
+    - Frontend
     - Gaming
     - Generics
     - Graph Theory
+    - HTML
     - Haskell
     - Helix
     - Linux
@@ -196,6 +200,7 @@ params:
     - Shell
     - Systemd
     - Text Editor
+    - UI
     - Web
 
   build:
