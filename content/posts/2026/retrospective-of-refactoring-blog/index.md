@@ -87,3 +87,67 @@ Zine 可以作为 Zig build system 中的一个步骤使用。所以需要处理
 ### Hugo
 
 Hugo 是我在重构博客之前所使用的 SSG，也是我最终选择的 SSG。
+
+Hugo 同样具有各种比较完善的功能。虽然本身是 Go 编写的，但是其内置了一些工具可以和前端工具进行交互，比如 `js.Build` 可以使用 `esbuild` 打包 JS，`css.PostCSS` 和 `css.TailwindCSS` 可以预处理 CSS，`transform.ToMath` 则可以在构建站点时立刻渲染 MathML 和 HTML，不必再引入数学公式渲染 JS。
+
+Hugo 的另外一个重要功能是 Module Mount。虽然没有构建系统可以预先运行一些打包功能，但是 Hugo 可以直接把任意目录挂载到任意目标位置，在模板中使用的都是 VFS 中的结构。所以这可以实现把 `node_modules` 中的某些 `dist` 挂载到资源目录中，某种程度上也是一个另类但很好用的方法。Module Mount 还同时可以用于改变默认的仓库结构。
+
+继续使用 Hugo 意味着我只需要重写模板，对于内容不需要做一点改动。所以这也是我决定继续使用 Hugo 的一个很大的原因。
+
+Hugo 也不是没有缺点，Go Template 在表达能力上差强人意。Go Template 的模板片段即 `partial` 的语法比较受限，不如 JSX 中的组件那么方便。当我需要给 `partial` 传入多个参数时，必须用 `dict` 打包多个参数。同时我也想要 Named Slot 的功能，这样模板片段就可以更方便地组合多个部分的内容。某种程度上这也比较类似模板继承的“扩展”的模式，但是 JSX 的方式明显更加灵活。Hugo 的比较新的版本中引入了 Partial Decorator，这相当于仅有一个 Slot 的简化版本，我觉得在语法上比较类似于 Typst 的 `#xxx()[]` 风格的内容块语法糖。但是，我最终想到了如何实现我想要的功能，将在下文介绍。
+
+## 前端
+
+### 理论准备
+
+自从之前被吐槽我某个 vibe 的网页很丑后，我痛定思痛，决定必须认真学习前端设计，并且这次绝对要完全自己设计，不能偷懒用 AI。我选择的书是《Design for Developers》和《Refactoring UI》。总体上来说，我觉得前者更系统地讲解了各种理论，包括色彩、排版、各种组件的交互等等。按顺序阅读完这本书，我对于怎么设计一个看得过去且合理的网站有了基本的了解。后面这本书我看得不多，我觉得它的知识点比较细碎，从前者开始系统学习会更好。
+
+于是在设计博客时，我做的第一件事情就是确定好 Design System。
+
+### 色彩
+
+我选择了 primary、secondary、base 三个色相，用 [tints.dev](https://www.tints.dev) 生成了 `50` 到 `950` 的阶梯。随后是从这些阶梯中选择一些合适的，作为语义化的别名变量。
+
+对于我这个博客而言，secondary 几乎没有使用。我曾经尝试在一些地方使用这一系列颜色，不过感觉有些喧宾夺主，还是改为 base 系列了。
+
+最终的版本位于 [`color.css`](https://github.com/StarryReverie/blog/blob/965bc4399267ffb7639e54246e95717e40f2be4c/site/assets/css/colors.css)。
+
+当然后续我完成大部分重构后，和群友讨论设计相关的问题，[Cuskiy](https://ity.moe/) 教我可以使用 `color-mix` 混合前景色和透明色来定义边框或背景色，比如 `color-mix(in oklch, var(--text) 10%, transparent)`。我后续倒是用这种做法来调比较次要的按钮的配色。
+
+### 排版
+
+在文字排版方面，我使用了 [Utopia](https://utopia.fyi) 生成了字号阶梯和间距阶梯。值得注意的是这是 Fluid Type Scale 和 Fluid Space Scale，这些 CSS 变量可以随着 Viewport 的宽度动态伸缩，比如
+
+```css
+:root {
+  --static-type-base: 1rem;
+  --fluid-type-base: clamp(var(--static-type-base), 0.9489rem + 0.2273vw, 1.125rem);
+}
+```
+
+随后同样也是选择了一些语义化别名，比如我把 `h1` 到 `h6` 映射到了 `--fluid-type-4xl` 到 `--fluid-type-sm`，在普通文本中定义了 `emphasis`、`body`、`note` 分别对应 `lg`、`base`、`sm`。我当时不太确定是否要在全站完全使用 Fluid Scale，所以仍然保留了 static scale 系列变量，当然到最后我发现基本上没有用到。
+
+Space scale 是我觉得更需要确定的一个部分。因为间距的情况比较复杂，也不如 `h1` 到 `h6` 那么好记忆，不定义别名很容易弄混。我的方法是先把间距分为两类，第一类是一个容器的边框与内部内容之间的间距，即 padding，第二类是容器内的多个子元素之间的间距，即 gap。然后对于每一类，都按从大到小的顺序合理分配一些映射，具体怎么分配，其实也需要找感觉，我是直接结合一些实例内容进行调整的，直到感觉上比较舒服。
+
+```css
+:root {
+  --space-page: var(--fluid-space-lg);
+  --space-inset: var(--fluid-space-base);
+  --space-component: var(--static-space-sm);
+  --space-control: var(--static-space-2xs);
+
+  --space-section: var(--fluid-space-xl);
+  --space-gutter: var(--fluid-space-base);
+  --space-stack: var(--fluid-space-sm);
+  --space-line: var(--fluid-space-2xs);
+  --space-inline: var(--static-space-xs);
+}
+```
+
+因为缺乏经验，这一份配置不是一次成型的，在后续也有一些微调。最终的版本位于 [`typography.css`](https://github.com/StarryReverie/blog/blob/965bc4399267ffb7639e54246e95717e40f2be4c/site/assets/css/typography.css)。
+
+### 技术栈
+
+我再也不想写原生 CSS 了。我也曾经在某课程项目中写过原生 CSS，但是这种样式和结构分离的做法让我很难受，我要来回不停地在不同编辑器标签页中切换，而且还要考虑各种样式继承和覆盖的问题。
+
+最近我了解到了 Tailwind CSS（相比熟知前端的群友们还是太不敏锐了），这种 utility class 的做法让我感觉非常舒适，简直是看上一眼就喜欢上了。2026 年，Hugo 对于 Tailwind CSS 已经有了 first-class 级别的支持，集成起来几乎没有难度了。所以我马上选择了 Tailwind CSS。
