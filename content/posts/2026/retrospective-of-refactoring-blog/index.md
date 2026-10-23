@@ -1,7 +1,7 @@
 ---
 title: 重构博客的总结
 date: 2026-10-23T09:54:35+08:00
-draft: true
+draft: false
 categories:
   - Thought
 tags:
@@ -323,6 +323,119 @@ Utility class 的卖点之一就是可组合性，那么怎么做到可组合呢
 </div>
 ```
 
+### HTMX 集成和渐进式增强
+
+既然我们已经基于 Node.js 集成了 Tailwind CSS，那么再集成一些前端组件也不是那么麻烦。我选择了 htmx 4 来提升前端的交互体验。在原则上，所有的这些功能应当是可选的，在 JS 无法使用的情况下，用户仍然可以使用原有的方式进行交互。
+
+集成 htmx 只需要在 `main.js` 中添加以下内容，然后使用 `js.Build` 即可打包：
+
+```javascript
+import "htmx.org";
+import "htmx.org/dist/ext/hx-alpine-compat.js";
+import "htmx.org/dist/ext/hx-head.js";
+import "htmx.org/dist/ext/hx-history-cache.js";
+
+htmx.config.transitions = true;
+```
+
+以上是本站使用的全部 htmx 导入和配置。
+
+#### 平滑跳转
+
+在 `<body>` 上设置 `hx-boost`，即可自动增强站内链接跳转，当用户点击链接时，htmx 拦截这些事件，并在后台使用 `fetch` API 获取页面内容，获取完成后再进行 DOM 的替换：
+
+```html
+<body
+  hx-boost:inherited="true"
+  hx-indicator:inherited="#global-loading-pbr"
+  class="flex min-h-dvh flex-col bg-background pb-page"
+>
+  {{- partialCached "components/loading-pbr.html" "emptyContext" -}}
+  <!-- ... -->
+</body>
+```
+
+因为指定了 `hx-indicator` 为我的自定义进度条，所以在后台加载的过程中，htmx 会给 `#global-loading-pbr` 元素添加 `htmx-request` class 使其在 Viewport 顶部显示。其中的 `_partials/components/loading-pbr.html` 实现为：
+
+```html
+<div
+  id="global-loading-pbr"
+  class="htmx-indicator fixed inset-x-0 top-0 z-50 h-1 w-1/3 animate-indeterminate-pbr rounded-full bg-primary"
+></div>
+```
+
+相关 CSS 动画实现为：
+
+```css
+@theme {
+  --animate-indeterminate-pbr: indeterminate-pbr 1s linear infinite;
+}
+
+@keyframes indeterminate-pbr {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(500%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+同时注意 `main.js` 的 `htmx.config.transitions = true` 启用了平滑的 View Transition。
+
+#### 文章列表点击加载
+
+其实默认的分页已经足够了，但是我就是想要做一点有意思的东西（炫技）。需要实现的效果是点击 `Load More ...` 后，下一页的文章追加到现有文章列表末尾。
+
+在上文我们已经看到了 `_partials/views/main-sections.html` 的实现，其中有文章列表容器 `<div>` 已经带有 `#entry-sections`，同时这个容器内还有一个 `<div>` `#extra-wrapper`。实际上，这个 `#extra-wrapper` 就是用来放置 `Load More ...` “按钮”的。实际上的实现在 `_partials/components/pagination.html`：
+
+```gotmpl
+<div class="flex justify-center gap-stack">
+  {{- if $.HasPrev -}}
+    {{- partial "components/buttons/normal.html" (dict
+      "title" "Go Previous"
+      "link" $.Prev.URL
+      "type" "neutral")
+    -}}
+  {{- end -}}
+
+  {{- if $.HasNext -}}
+    <!-- prettier-ignore-start -->
+    {{- partial "components/buttons/normal.html" (dict
+      "title" "Load More ..."
+      "link" $.Next.URL
+      "type" "primary"
+      "extraAttrs" (dict
+        "hx-get" $.Next.URL
+        "hx-push-url" "true"
+        "hx-swap" "outerHTML"
+        "hx-select" "#entry-sections > *"
+        "hx-target" "#extra-wrapper"))
+    -}}
+    <!-- prettier-ignore-end -->
+  {{- end -}}
+</div>
+```
+
+其中 `hx-swap="outerHTML"` 和 `hx-target="#extra-wrapper"` 配置了点击后将整个 `#extra-wrapper` 分页组件区域替换为新片段，这里的新片段选择的是返回的响应 HTML 中的 `#entry-sections`，即下一页的文章列表和下一页的分页组件。
+
+Htmx 对于 `hx-get` 请求默认是当作按钮来处理的，地址栏不会发生变化，也无法前进后退。但是我希望这里的行为可以和无 htmx 增强时发生页面跳转的行为尽可能一致，所以我添加了 `hx-push-url="true"`，这样 htmx 就会在请求后修改地址栏为下一页的 URL。
+
+这样做的缺点是地址栏变化和 `Load More ...` 的语义有所冲突。按理来说，旁边的 `Go Previous` 按钮也不应该存在。不过我想到用户如果刷新页面，那么就会直接回到第一页，回看文章列表会更麻烦。如果保留地址栏变化，刷新页面就是回到指定的分页，`Go Previous` 和 `Load More ...` 也仍然可以起到分页移动的功能。我觉得这是一个更值得保留的体验。
+
+当然，当用户点击 `Go Previous` 时，触发的是真正的页面跳转，新页面中所有的非本页文章列表都会丢失。我之前也考虑过把这个按钮实现为直接删除本页的内容、回到上一页的文章列表位置，但是如果用户先刷新页面，存在的文章列表就只有真正属于本页的了，这时候再删除本文列表，就不再剩下任何东西了，所以我最终也没有选择这个方案。
+
 ## 内容管理
 
 ### 分类和标签管理
@@ -331,7 +444,7 @@ Hugo 的 Taxonomy 机制实际上就是一个扁平化的标签系统，可以�
 
 理论上另外一种可行的使用方法是细分类别，每个类别作为 Taxonomy，类别内有各自的 Term。比如 Taxonomy 可以用 `by-language`、`by-speciality`、`by-domain` 等等，不过我感觉这种划分方式还是比较烧脑，且旧文章还需要迁移，所以就算了。
 
-在此之前，我给文章加标签都是想到哪个就加哪个，所以标签命名比较混乱。因此我想到了一种中心化管理分类和标签的机制。我在 `hugo.yaml` 中添加了额外参数 `params.categories` 和 `params.tags`。在每一篇文章的模板中，调用以下验证逻辑 `components/posts/validation.html`：
+在此之前，我给文章加标签都是想到哪个就加哪个，所以标签命名比较混乱。因此我想到了一种中心化管理分类和标签的机制。我在 `hugo.yaml` 中添加了额外参数 `params.categories` 和 `params.tags`。在每一篇文章的模板中，调用以下验证逻辑 `_partials/components/posts/validation.html`：
 
 ```gotmpl
 {{- range $taxonomy := slice "categories" "tags" -}}
@@ -375,3 +488,7 @@ math: false
 
 <!-- Content -->
 ```
+
+## 总结
+
+这一次重构博客真的收获满满，完全自己动手很有成就感，并且向掌握前端设计和相关技术又进了一步。
