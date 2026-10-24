@@ -16,6 +16,8 @@ aliases:
 
 探索如何编写一个更简洁和优雅的并行 DAG 遍历算法。
 
+<!--more-->
+
 ## 背景
 
 最近我有了新的 Idea，想要分析一个 Nix Derivation 的依赖图，并以树形结构打印。在这个图结构中，不是所有的 Derivation 或 Store Object 都会被打印，而是只有那些没有被构建或还没有从缓存服务器上同步的才会被显示。也就是说，分析出某 Store Object 的闭包中在本机上还不存在的部分。这个项目已经基本上完成，名为 [DrvGraph](https://github.com/StarryReverie/DrvGraph)。

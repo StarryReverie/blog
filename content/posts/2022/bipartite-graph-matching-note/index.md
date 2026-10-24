@@ -13,6 +13,8 @@ aliases:
   - /posts/bipartite-graph-matching-note/
 ---
 
+<!--more-->
+
 ## 二分图
 
 ### 定义

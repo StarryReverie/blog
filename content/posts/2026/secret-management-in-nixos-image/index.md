@@ -15,6 +15,8 @@ aliases:
 
 给 NixOS 的 Installer Image 加入 Secret 管理支持。
 
+<!--more-->
+
 ## 背景
 
 玩 NixOS 玩到一定程度，都将面对 Secret 管理这一经典问题，当然对于一般的 NixOS Setup 来说，这并不是非常复杂的问题，有非常多的工具可以解决，如 sops-nix、agenix、vaultix 等。

@@ -16,6 +16,8 @@ aliases:
 
 本文主要介绍多重重要性采样（Multiple Importance Sampling）及其在光线追踪中的典型应用。
 
+<!--more-->
+
 ## Multiple Importance Sampling
 
 ### Monte Carlo Path Tracing

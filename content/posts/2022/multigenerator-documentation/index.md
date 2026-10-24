@@ -12,6 +12,8 @@ aliases:
   - /posts/multigenerator-documentation/
 ---
 
+<!--more-->
+
 ## 概述
 
 > `MultiGenerator` 作为早年我的试验项目，已不再适合于实际使用。如果想要生成数据，请使用性能更高且更简单的 Rust 实现：[`data-gen-rs`](https://github.com/StarryReverie/data-gen-rs)。

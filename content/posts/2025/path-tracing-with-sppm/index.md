@@ -16,6 +16,8 @@ aliases:
 
 随机渐进式光子映射（Stochastic Progressive Photon Mapping, SPPM）是光子映射系列算法的进阶算法，本文介绍如何实现 SPPM 以及如何将 SPPM 与路径追踪（Path Tracing, PT）结合。
 
+<!--more-->
+
 ## 光子映射系列算法
 
 ### 光子映射

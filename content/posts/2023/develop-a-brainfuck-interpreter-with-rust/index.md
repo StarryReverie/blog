@@ -12,6 +12,8 @@ aliases:
   - /posts/develop-a-brainfuck-interpreter-with-rust/
 ---
 
+<!--more-->
+
 项目地址：<https://github.com/StarryReverie/brainfuck-interpreter>
 
 Brainfuck 是什么就不具体介绍了，可以看[这里](https://esolangs.org/wiki/brainfuck)。以下简称 bf。

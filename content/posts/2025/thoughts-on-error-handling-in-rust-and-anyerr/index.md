@@ -14,6 +14,8 @@ aliases:
 
 错误处理是 Rust 中核心的一部分，从标准库中的 `Result<T, E>` 和 `Error` 到社区的 `anyhow`、`thiserror`、`color-eyre`、`snafu` 等 crates，可见其重要地位。但是在我看来，这些仅仅是错误处理机制的基础，而不是一个十分完备的框架，同时某些 crate 的设计，要么不能符合实际需要，要么使用起来很麻烦。本文将阐述我对 Rust 错误处理的理解和自己的实践 [`anyerr`](https://github.com/StarryReverie/anyerr)。
 
+<!--more-->
+
 ## `std` 中的基础设施
 
 在讨论我对错误处理的理解之前，有必要先回顾标准库中与错误处理相关的基础设施。

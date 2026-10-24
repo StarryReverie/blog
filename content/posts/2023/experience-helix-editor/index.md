@@ -15,6 +15,8 @@ aliases:
 
 最近发现了一个用 Rust 写的 Vim-like 编辑器 Helix，用有强大的性能和各种开箱即用的功能。经过短暂时间的体验，我认为 Helix 已经可以在大部分领域替代 Vim/Neovim/VS Code。
 
+<!--more-->
+
 ## 性能
 
 作为一款用 Rust 写的编辑器，Helix 自然拥有优异的性能。得益于其丰富的内置功能，Helix 无需插件就可以完成许多 Vim 只能用插件做到的事，并且还通过 Rust 获得了性能上的优势。现在我的 Neovim 安装有 `coc.nvim`、`vim-visual-multi` 等插件，共十个，启动需要延迟近 0.5 秒，虽然已经显著快于 VS Code，但相比 Helix 的小于 0.1 秒，还是稍显逊色。（当然这可能与我现在用的是 Windows 有关）

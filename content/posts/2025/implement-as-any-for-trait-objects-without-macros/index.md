@@ -19,6 +19,8 @@ aliases:
 
 因此，本文则通过纯 Rust 语法来扩展 trait object，以实现 `Any` 的所有功能。这些实现都可以在 [`better-as-any`](https://github.com/StarryReverie/better-as-any) 找到。
 
+<!--more-->
+
 ## 现有解决方案
 
 ### `downcast`

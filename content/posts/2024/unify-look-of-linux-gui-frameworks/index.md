@@ -14,6 +14,8 @@ aliases:
 
 在 Linux 下，GUI 外观配置一直是一个复杂的话题。本文试图梳理 Qt 和 GTK 两种 GUI 框架的相关概念，并给出不同情况下的配置方案，实现外观的统一。
 
+<!--more-->
+
 本文讨论的 Qt 包括 Qt 5 和 Qt 6，GTK 包括 GTK 2、GTK 3、GTK 4，并且将以 Qt 6 和 GTK 4 为重点。测试的 DE 和 WM 包括 GNOME 4.46、KDE Plamsa 6.1、Hyprland 0.41。
 
 ## 配置组成
