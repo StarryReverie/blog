@@ -78,6 +78,11 @@ markup:
   highlight:
     noClasses: false
 
+  tableOfContents:
+    startLevel: 2
+    endLevel: 6
+    ordered: false
+
   goldmark:
     extensions:
       passthrough:

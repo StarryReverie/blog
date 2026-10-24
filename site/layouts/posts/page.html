@@ -4,8 +4,8 @@
   {{- partial "views/main-content.html" (dict
     "headerTitle" $.Title
     "headerContent" (partial "components/posts/page-metadata.html" $)
-    "content" $.Content
+    "content" (partial "components/posts/content.html" $)
     "isProse" true
-    "extraContent" (partial "components/page-navigation.html" $.Page))
+    "extraContent" (partial "components/page-navigation.html" $))
   -}}
 {{- end -}}
