@@ -30,3 +30,20 @@
     display: block;
   }
 }
+
+@utility prose-toc {
+  & > nav {
+    & ul {
+      @apply my-0 space-y-line;
+    }
+    & li {
+      @apply py-0 leading-none;
+    }
+    & li::marker {
+      @apply leading-none;
+    }
+    & a {
+      @apply text-fl-body leading-none font-normal text-foreground no-underline transition-colors duration-400 hover:text-primary;
+    }
+  }
+}

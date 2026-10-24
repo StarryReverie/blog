@@ -1,0 +1,13 @@
+<div>
+  <div>{{ $.Summary }}</div>
+
+  <details class="rounded-sm bg-background marker:text-subtle">
+    <summary class="p-component text-fl-body leading-none text-foreground">Table of Contents</summary>
+
+    <div class="mx-control prose-toc border-t-1 border-subtle/50 py-control">
+      {{ $.TableOfContents }}
+    </div>
+  </details>
+
+  <div>{{ $.ContentWithoutSummary }}</div>
+</div>
