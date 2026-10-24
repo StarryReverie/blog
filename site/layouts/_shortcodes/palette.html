@@ -1,0 +1,34 @@
+{{- $path := $.Get "path" -}}
+{{- with $file := $.Page.Resources.Get $path -}}
+  {{- $data := transform.Unmarshal $file -}}
+  {{- partial "#/palette.html/impl.html" $data -}}
+{{- else with $data := resources.Get $path -}}
+  {{- $data := transform.Unmarshal $file -}}
+  {{- partial "#/palette.html/impl.html" $data -}}
+{{- else -}}
+  {{- errorf "Could not find data file %q in page resources or global resources" $path -}}
+{{- end -}}
+
+{{- define "_partials/#/palette.html/impl.html" -}}
+  <div class="my-gutter flex flex-col items-stretch">
+    <div class="flex justify-center-safe gap-1 overflow-x-scroll">
+      {{- range $entry := $.palette -}}
+        <div class="flex max-w-12 min-w-10 grow basis-1 flex-col items-stretch gap-line">
+          <span
+            {{ printf "style=%q" (printf "--color-local: %s" $entry.color) | safe.HTMLAttr }}
+            class="h-32 w-full rounded-sm bg-[var(--color-local)]"
+          >
+          </span>
+
+          <span class="text-center text-fl-note text-subtle">
+            {{- $entry.lightness -}}
+          </span>
+        </div>
+      {{- end -}}
+    </div>
+
+    <span class="text-center text-fl-note text-subtle">
+      {{ $.name }}
+    </span>
+  </div>
+{{- end -}}
