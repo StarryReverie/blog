@@ -37,64 +37,36 @@
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 
-  --background: var(--color-base-100);
-  --card: var(--color-base-50);
-  --muted: var(--color-base-200);
+  --background: light-dark(var(--color-base-100), var(--color-base-800));
+  --card: light-dark(var(--color-base-50), var(--color-base-900));
+  --muted: light-dark(var(--color-base-200), var(--color-base-700));
 
-  --border: var(--color-base-200);
-  --input: var(--color-base-300);
-  --focus: var(--color-primary-400);
+  --border: light-dark(var(--color-base-200), var(--color-base-700));
+  --input: light-dark(var(--color-base-300), var(--color-base-600));
+  --focus: light-dark(var(--color-primary-400), var(--color-primary-500));
 
-  --foreground: var(--color-base-900);
-  --heading: var(--color-base-950);
-  --subtle: var(--color-base-600);
+  --foreground: light-dark(var(--color-base-900), var(--color-base-100));
+  --heading: light-dark(var(--color-base-950), var(--color-base-50));
+  --subtle: light-dark(var(--color-base-600), var(--color-base-400));
 
-  --primary: var(--color-primary-700);
-  --primary-active: var(--color-primary-500);
-  --primary-dim: color-mix(in oklab, var(--primary) 20%, transparent);
-  --primary-dim-active: color-mix(in oklab, var(--primary-active) 35%, transparent);
+  --primary: light-dark(var(--color-primary-700), var(--color-primary-400));
+  --primary-active: light-dark(var(--color-primary-500), var(--color-primary-300));
+  --primary-dim: color-mix(in oklch, var(--primary) 20%, transparent);
+  --primary-dim-active: color-mix(in oklch, var(--primary-active) 35%, transparent);
   --primary-foreground: var(--color-base-50);
 
-  --secondary: var(--color-secondary-600);
-  --secondary-active: var(--color-secondary-400);
-  --secondary-dim: color-mix(in oklab, var(--secondary) 20%, transparent);
-  --secondary-dim-active: color-mix(in oklab, var(--secondary-active) 35%, transparent);
+  --secondary: light-dark(var(--color-secondary-600), var(--color-secondary-500));
+  --secondary-active: light-dark(var(--color-secondary-400), var(--color-secondary-300));
+  --secondary-dim: color-mix(in oklch, var(--secondary) 20%, transparent);
+  --secondary-dim-active: color-mix(in oklch, var(--secondary-active) 35%, transparent);
   --secondary-foreground: var(--color-secondary-50);
 
-  --neutral: var(--color-base-700);
-  --neutral-active: var(--color-base-500);
-  --neutral-dim: color-mix(in oklab, var(--neutral) 15%, transparent);
-  --neutral-dim-active: color-mix(in oklab, var(--neutral-active) 30%, transparent);
-  --neutral-foreground: var(--color-base-50);
-}
-
-.dark {
-  color-scheme: dark;
-
-  --background: var(--color-base-800);
-  --card: var(--color-base-900);
-  --muted: var(--color-base-700);
-
-  --border: var(--color-base-700);
-  --input: var(--color-base-600);
-  --focus: var(--color-primary-500);
-
-  --foreground: var(--color-base-100);
-  --heading: var(--color-base-50);
-  --subtle: var(--color-base-400);
-
-  --primary: var(--color-primary-400);
-  --primary-active: var(--color-primary-300);
-  --primary-foreground: var(--color-base-50);
-
-  --secondary: var(--color-secondary-500);
-  --secondary-active: var(--color-secondary-300);
-  --secondary-foreground: var(--color-base-50);
-
-  --neutral: var(--color-base-300);
-  --neutral-active: var(--color-base-200);
+  --neutral: light-dark(var(--color-base-700), var(--color-base-300));
+  --neutral-active: light-dark(var(--color-base-500), var(--color-base-200));
+  --neutral-dim: color-mix(in oklch, var(--neutral) 15%, transparent);
+  --neutral-dim-active: color-mix(in oklch, var(--neutral-active) 30%, transparent);
   --neutral-foreground: var(--color-base-50);
 }
 
@@ -143,15 +115,28 @@
   --tw-prose-quote-borders: var(--border);
   --tw-prose-captions: var(--subtle);
   --tw-prose-code: var(--foreground);
-  --tw-prose-pre-code: #575279; /* From rose-pine-dawn */
-  --tw-prose-pre-bg: #faf4ed; /* From rose-pine-dawn */
+  --tw-prose-pre-code: light-dark(#575279, #e0def4); /* From rose-pine-{dawn,moon} */
+  --tw-prose-pre-bg: light-dark(#faf4ed, #191724); /* From rose-pine-{dawn,moon} */
   --tw-prose-th-borders: var(--border);
   --tw-prose-td-borders: var(--border);
 }
 
-.dark .prose {
-  --tw-prose-pre-code: #e0def4; /* From rose-pine-moon */
-  --tw-prose-pre-bg: #191724; /* From rose-pine-moon */
+.light {
+  color-scheme: light;
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
+.dark {
+  color-scheme: dark;
+}
+
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:not(.light, .light *) {
+      @slot;
+    }
+  }
+
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+}
