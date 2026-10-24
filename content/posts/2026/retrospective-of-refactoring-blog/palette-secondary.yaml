@@ -1,0 +1,24 @@
+name: Secondary
+palette:
+  - lightness: 50
+    color: oklch(0.954 0.025 225.26)
+  - lightness: 100
+    color: oklch(0.91 0.054 221.91)
+  - lightness: 200
+    color: oklch(0.826 0.114 217.68)
+  - lightness: 300
+    color: oklch(0.741 0.109 216.95)
+  - lightness: 400
+    color: oklch(0.664 0.098 217.46)
+  - lightness: 500
+    color: oklch(0.578 0.085 217.45)
+  - lightness: 600
+    color: oklch(0.493 0.073 218.55)
+  - lightness: 700
+    color: oklch(0.399 0.059 218.61)
+  - lightness: 800
+    color: oklch(0.314 0.046 217.94)
+  - lightness: 900
+    color: oklch(0.223 0.033 216.2)
+  - lightness: 950
+    color: oklch(0.175 0.026 218.99)

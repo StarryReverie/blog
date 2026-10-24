@@ -1,0 +1,24 @@
+name: Primary
+palette:
+  - lightness: 50
+    color: oklch(0.957 0.017 279.11)
+  - lightness: 100
+    color: oklch(0.915 0.035 280.47)
+  - lightness: 200
+    color: oklch(0.831 0.075 279.61)
+  - lightness: 300
+    color: oklch(0.747 0.114 277.19)
+  - lightness: 400
+    color: oklch(0.664 0.155 274.03)
+  - lightness: 500
+    color: oklch(0.581 0.195 269.71)
+  - lightness: 600
+    color: oklch(0.497 0.204 266.23)
+  - lightness: 700
+    color: oklch(0.407 0.167 266.13)
+  - lightness: 800
+    color: oklch(0.318 0.132 266.17)
+  - lightness: 900
+    color: oklch(0.23 0.094 265.89)
+  - lightness: 950
+    color: oklch(0.181 0.075 266.31)

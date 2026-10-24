@@ -1,0 +1,24 @@
+name: Base
+palette:
+  - lightness: 50
+    color: oklch(0.973 0.003 84.4)
+  - lightness: 100
+    color: oklch(0.94 0.007 88.56)
+  - lightness: 200
+    color: oklch(0.886 0.014 88.65)
+  - lightness: 300
+    color: oklch(0.793 0.013 86.81)
+  - lightness: 400
+    color: oklch(0.699 0.012 89.72)
+  - lightness: 500
+    color: oklch(0.603 0.009 91.49)
+  - lightness: 600
+    color: oklch(0.507 0.008 88.65)
+  - lightness: 700
+    color: oklch(0.424 0.007 95.16)
+  - lightness: 800
+    color: oklch(0.329 0.005 91.5)
+  - lightness: 900
+    color: oklch(0.231 0.002 67.72)
+  - lightness: 950
+    color: oklch(0.177 0.004 106.75)

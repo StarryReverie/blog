@@ -108,6 +108,12 @@ Hugo 也不是没有缺点，Go Template 在表达能力上差强人意。Go Tem
 
 我选择了 primary、secondary、base 三个色相，用 [tints.dev](https://www.tints.dev) 生成了 `50` 到 `950` 的阶梯。随后是从这些阶梯中选择一些合适的，作为语义化的别名变量。
 
+{{< palette path="palette-primary.yaml" >}}
+
+{{< palette path="palette-secondary.yaml" >}}
+
+{{< palette path="palette-base.yaml" >}}
+
 对于我这个博客而言，secondary 几乎没有使用。我曾经尝试在一些地方使用这一系列颜色，不过感觉有些喧宾夺主，还是改为 base 系列了。
 
 最终的版本位于 [`color.css`](https://github.com/StarryReverie/blog/blob/965bc4399267ffb7639e54246e95717e40f2be4c/site/assets/css/colors.css)。
