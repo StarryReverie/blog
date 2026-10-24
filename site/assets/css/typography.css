@@ -266,6 +266,24 @@
   font-weight: 600;
 }
 
+.prose .highlight {
+  overflow-x: auto;
+  margin-block: 1.71429em;
+  border-radius: 0.375rem;
+  background-color: var(--tw-prose-pre-bg);
+}
+
+.prose .highlight > pre {
+  box-sizing: border-box;
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  padding: 0.857143em 1.14286em;
+  overflow: visible;
+  border-radius: 0;
+  background-color: transparent;
+}
+
 .prose pre {
   line-height: var(--line-height-code);
 }
