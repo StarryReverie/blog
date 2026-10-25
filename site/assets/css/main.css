@@ -14,7 +14,7 @@
 }
 
 @utility link {
-  @apply text-primary underline transition-colors duration-400 visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
+  @apply text-primary underline decoration-dashed underline-offset-[0.25em] transition-colors duration-400 visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
 }
 
 @utility inline-icon {
