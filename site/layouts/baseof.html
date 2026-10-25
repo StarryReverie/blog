@@ -22,6 +22,7 @@
     {{- partialCached "resources/js.html" "emptyContext" -}}
     {{- partial "resources/vendors/katex.html" $ -}}
 
+    {{- partial "meta/information.html" $ -}}
     {{- partial "schema.html" $ -}}
 
     {{- with $rss := $.OutputFormats.Get "rss" -}}

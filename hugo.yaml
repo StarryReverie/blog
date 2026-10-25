@@ -119,6 +119,10 @@ menu:
       weight: 7
 
 params:
+  meta:
+    author: Justin Chen, a.k.a. StarryReverie
+    description: Justin Chen's personal blog, a world where insightful idea sparks.
+
   home:
     title: Justin Chen's Blog
     subtitle: A world where insightful idea sparks

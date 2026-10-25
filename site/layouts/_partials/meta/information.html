@@ -1,0 +1,7 @@
+<meta name="author" content="{{ site.Params.meta.author }}" />
+
+{{- with $summary := or $.Description $.Summary | transform.Plainify | transform.HTMLUnescape -}}
+  <meta name="description" content="{{ strings.Trim $summary "\n\r\t" }}" />
+{{- else -}}
+  <meta name="description" content="{{ printf "%s - %s" $.Title site.Params.meta.description }}" />
+{{- end -}}
