@@ -11,11 +11,11 @@ math: false
 
 正如 Haskell 中经常用各种 Monad 来表达某种产生副作用的能力，进而构建 `IO` 之上的抽象，我觉得配置也可以这么做。首先高层次配置是按照 feature 划分的，每个 feature 高内聚，feature 之间则是松耦合，意味着和一个 feature 的含义的相关配置在一个地方实现且同时被启用，不同的 feature 的配置之间的联系尽可能少，相对独立，不容易出现开启一个而关闭另外一个会导致 eval 错误。
 
-那么和 Monad 或者说一个 context 有什么关系呢？假设给 feature context 一个类型 `Feature a`，那么它在被运行（run）时可以产生底层的副作用（使用 NixOS 配置 primitive 进行设置），同时可以获得某种结果 a。这个结果可以作为其他 feature 的输入，即 feature 之间的数据依赖关系。run 一个 feature 并拿到结果，然后提供给其他 feature，其实就是 `>>=`。所以我们可以把所有的 feature 都定义为 monadic function，`b -> Feature a`，表示接受其他 feature 产生的计算结果，然后推导出自己的结果和相应的副作用。
+那么和 Monad 或者说一个 context 有什么关系呢？假设给 feature context 一个类型 `Feature a`，那么它在被运行（run）时可以产生底层的副作用（使用 NixOS 配置 primitive 进行设置），同时可以获得某种结果 `a`。这个结果可以作为其他 feature 的输入，即 feature 之间的数据依赖关系。run 一个 feature 并拿到结果，然后提供给其他 feature，其实就是 `>>=`。所以我们可以把所有的 feature 都定义为 monadic function，`b -> Feature a`，表示接受其他 feature 产生的计算结果，然后推导出自己的结果和相应的副作用。
 
-举个实际例子，比如有 3 个 features：`helix`、`environment`、`shell`，`helix` 需要设置 `EDITOR=hx`、`alias vim=hx`、在 `.config/helix` `创建配置文件。environment` 接收其他 features 所有的环境变量配置、在 `.config/environment.d` 创建环境变量配置文件。shell 需要接受所有 features 的 alias 配置，并且需要在 profile 脚本中使用 systemd generator 从 environment.d 生成环境变量配置脚本并执行以导出环境变量。
+举个实际例子，比如有 3 个 features：`helix`、`environment`、`shell`，`helix` 需要设置 `EDITOR=hx`、`alias vim=hx`、在 `.config/helix` 创建配置文件。`environment` 接收其他 features 所有的环境变量配置、在 `.config/environment.d` 创建环境变量配置文件。`shell` 需要接受所有 features 的 alias 配置，并且需要在 profile 脚本中使用 `30-systemd-environment-d-generator` 从 `environment.d` 生成环境变量配置脚本并执行以导出环境变量。
 
-helix 的副作用是在 `.config/helix` 创建配置文件，其 run 结果是 `environment` 配置 `EDITOR=hx` 和 `alias vim=hx`，helix 不接收输入，所以可以表达为 `Feature (EnvConfig, AliasConfig)``。environment` 就可以接收输入，也就是来自任意其他 features 的环境变量配置，所以可以表达为 `EnvConfig -> Feature EnvFilePath``。shell` 则表达为 `(AliasConfig, EnvFilePath) -> Feature ()`，因为在这个例子里 `shell` 不需要给其他 feature 提供什么计算结果，所以就返回 `()`，但是它仍然会产生写入 rc 和 profile 的副作用。
+`helix` 的副作用是在 `.config/helix` 创建配置文件，其 run 结果是 `environment` 配置 `EDITOR=hx` 和 `alias vim=hx`，`helix` 不接收输入，所以可以表达为 `Feature (EnvConfig, AliasConfig)`。`environment` 就可以接收输入，也就是来自任意其他 features 的环境变量配置，所以可以表达为 `EnvConfig -> Feature EnvFilePath`。`shell` 则表达为 `(AliasConfig, EnvFilePath) -> Feature ()`，因为在这个例子里 `shell` 不需要给其他 feature 提供什么计算结果，所以就返回 `()`，但是它仍然会产生写入 rc 和 profile 的副作用。
 
 获得实际的底层配置的方法就是按照函数参数表达的 DAG 依赖关系，按拓扑序依次 run，所有的 features 都 run 后就会得到每个 feature 的副作用描述。其实在 NixOS 配置层面来看，这些副作用描述都是自己这一层的 API，换个说法就是获得了原始 NixOS module。
 
