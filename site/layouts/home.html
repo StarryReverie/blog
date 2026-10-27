@@ -1,58 +1,57 @@
 {{- define "hero" -}}
   <!-- The total height of this div and the navbar is approximately 100dvh. -->
+  <!-- Make this title component centered relative to the whole viewport. -->
   <div
-    style="--collapsed-navbar-height: calc(var(--fluid-type-emphasis) * var(--line-height-emphasis) + 2 * var(--space-component))"
-    class="relative mx-auto h-[calc(100dvh-var(--collapsed-navbar-height))] px-page"
+    style="
+      --collapsed-navbar-h: calc(var(--fluid-type-emphasis) * var(--line-height-emphasis) + 2 * var(--space-component));
+      --hero-h: calc(100dvh - var(--collapsed-navbar-h));
+      --hero-pb: calc(var(--space-page) + var(--collapsed-navbar-h));
+    "
+    class="mx-auto flex min-h-(--hero-h) flex-col items-center justify-center gap-stack pt-page pb-(--hero-pb) md:flex-row md:gap-inset"
   >
-    <!-- Make this title component centered relative to the whole viewport. -->
-    <header
-      style="--header-y-offset: calc(50% - var(--collapsed-navbar-height))"
-      class="absolute inset-x-0 top-[var(--header-y-offset)] flex -translate-y-1/2 flex-col items-center justify-center gap-stack md:flex-row md:gap-inset"
-    >
-      <img src="/avatar.jpg" alt="avatar" class="h-40 w-40 rounded-full object-cover outline-4 outline-subtle" />
+    <img src="/avatar.jpg" alt="avatar" class="h-40 w-40 rounded-full object-cover outline-4 outline-subtle" />
 
-      <div class="flex flex-col items-center gap-line md:items-start">
-        <!-- HACK: `md:mt` moves the title a bit to make it more visually aligned. -->
-        <h1
-          style="--button-height: calc(2 * var(--space-control) + var(--static-type-body) * var(--line-height-body))"
-          class="text-center text-fl-h1 font-bold text-primary md:mt-[var(--button-height)] md:text-left"
-        >
-          {{ site.Params.home.title }}
-        </h1>
+    <div class="flex flex-col items-center gap-line md:items-start">
+      <!-- HACK: `md:mt` moves the title a bit to make it more visually aligned. -->
+      <h1
+        style="--button-h: calc(2 * var(--space-control) + var(--static-type-body) * var(--line-height-body))"
+        class="text-center text-fl-h1 font-bold text-primary md:mt-(--button-h) md:text-left"
+      >
+        {{ site.Params.home.title }}
+      </h1>
 
-        <p class="text-center text-fl-emphasis font-bold text-heading md:text-left">
-          {{ site.Params.home.subtitle }}
-        </p>
+      <p class="text-center text-fl-emphasis font-bold text-heading md:text-left">
+        {{ site.Params.home.subtitle }}
+      </p>
 
-        <ul class="flex items-center justify-center gap-inline md:justify-start">
-          {{- range $entry := site.Params.social -}}
-            <li>
-              <a
-                href="{{ $entry.url }}"
-                title="{{ $entry.name }}"
-                {{ if $entry.isExternal }}rel="external noopener noreferrer" target="_blank"{{ end }}
-                class="text-fl-xl text-subtle transition-colors duration-400 hover:text-foreground"
-              >
-                {{- partialCached "components/content/icon.html" (dict "name" $entry.icon) $entry.icon -}}
-              </a>
-            </li>
-          {{- end -}}
-        </ul>
+      <ul class="flex items-center justify-center gap-inline md:justify-start">
+        {{- range $entry := site.Params.social -}}
+          <li>
+            <a
+              href="{{ $entry.url }}"
+              title="{{ $entry.name }}"
+              {{ if $entry.isExternal }}rel="external noopener noreferrer" target="_blank"{{ end }}
+              class="text-fl-xl text-subtle transition-colors duration-400 hover:text-foreground"
+            >
+              {{- partialCached "components/content/icon.html" (dict "name" $entry.icon) $entry.icon -}}
+            </a>
+          </li>
+        {{- end -}}
+      </ul>
 
-        <div class="flex justify-center gap-inline md:justify-start">
-          {{- partial "components/buttons/brand.html" (dict
-            "title" "Posts"
-            "link" (site.GetPage "posts").RelPermalink
-            "type" "primary")
-          -}}
+      <div class="flex justify-center gap-inline md:justify-start">
+        {{- partial "components/buttons/brand.html" (dict
+          "title" "Posts"
+          "link" (site.GetPage "posts").RelPermalink
+          "type" "primary")
+        -}}
 
-          {{- partial "components/buttons/brand.html" (dict
-            "title" "Journals"
-            "link" (site.GetPage "journals").RelPermalink
-            "type" "auxiliary")
-          -}}
-        </div>
+        {{- partial "components/buttons/brand.html" (dict
+          "title" "Journals"
+          "link" (site.GetPage "journals").RelPermalink
+          "type" "auxiliary")
+        -}}
       </div>
-    </header>
+    </div>
   </div>
 {{- end -}}

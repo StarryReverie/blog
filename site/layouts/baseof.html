@@ -30,16 +30,10 @@
     {{- end -}}
   </head>
 
-  <body
-    hx-boost:inherited="true"
-    hx-indicator:inherited="#global-loading-pbr"
-    class="flex min-h-dvh flex-col bg-background pb-page"
-  >
+  <body hx-boost:inherited="true" hx-indicator:inherited="#global-loading-pbr" class="min-h-dvh bg-background pb-page">
     {{- partialCached "components/loading-pbr.html" "emptyContext" -}}
-    <div>
-      {{- partial "components/header.html" $ -}}
-      <section>{{- block "hero" $ -}}{{- end -}}</section>
-    </div>
+    {{- partial "components/header.html" $ -}}
+    <div>{{- block "hero" $ -}}{{- end -}}</div>
     <main id="main" class="grow">{{- block "main" $ -}}{{- end -}}</main>
     {{- partialCached "components/footer.html" $ -}}
   </body>
