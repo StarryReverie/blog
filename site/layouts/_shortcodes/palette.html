@@ -16,7 +16,7 @@
         <div class="flex max-w-12 min-w-10 grow basis-1 flex-col items-stretch gap-line">
           <span
             {{ printf "style=%q" (printf "--color-local: %s" $entry.color) | safe.HTMLAttr }}
-            class="h-32 w-full rounded-sm bg-[var(--color-local)]"
+            class="h-32 w-full rounded-sm bg-(--color-local)"
           >
           </span>
 
