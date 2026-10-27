@@ -33,8 +33,10 @@
   <body hx-boost:inherited="true" hx-indicator:inherited="#global-loading-pbr" class="min-h-dvh bg-background pb-page">
     {{- partialCached "components/loading-pbr.html" "emptyContext" -}}
     {{- partial "components/header.html" $ -}}
-    <div>{{- block "hero" $ -}}{{- end -}}</div>
-    <main id="main" class="grow">{{- block "main" $ -}}{{- end -}}</main>
+    <main id="main" class="grow">
+      <div>{{- block "hero" $ -}}{{- end -}}</div>
+      <div>{{- block "main" $ -}}{{- end -}}</div>
+    </main>
     {{- partialCached "components/footer.html" $ -}}
   </body>
 </html>
