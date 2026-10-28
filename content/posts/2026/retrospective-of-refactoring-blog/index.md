@@ -183,14 +183,14 @@ Space scale 是我觉得更需要确定的一个部分。因为间距的情况�
   <body
     hx-boost:inherited="true"
     hx-indicator:inherited="#global-loading-pbr"
-    class="flex min-h-dvh flex-col bg-background pb-page"
+    class="min-h-dvh bg-background pb-page"
   >
     {{- partialCached "components/loading-pbr.html" "emptyContext" -}}
-    <div>
-      {{- partial "components/header.html" $ -}}
-      <section>{{- block "hero" $ -}}{{- end -}}</section>
-    </div>
-    <main id="main" class="grow">{{- block "main" $ -}}{{- end -}}</main>
+    {{- partial "components/header.html" $ -}}
+    <main id="main" class="grow">
+      <div>{{- block "hero" $ -}}{{- end -}}</div>
+      <div>{{- block "main" $ -}}{{- end -}}</div>
+    </main>
     {{- partialCached "components/footer.html" $ -}}
   </body>
 </html>
