@@ -9,10 +9,21 @@
 
 <script>
   (() => {
-    const t = localStorage.getItem("theme");
-    document.documentElement.classList.toggle(
-      "dark",
-      t === "dark" || (!t && matchMedia("(prefers-color-scheme: dark)").matches),
-    );
+    const maybeTheme = localStorage.getItem("theme");
+    const theme = maybeTheme !== null ? maybeTheme : "auto";
+    switch (theme) {
+      case "light":
+        document.documentElement.classList.toggle("light", true);
+        document.documentElement.classList.toggle("dark", false);
+        break;
+      case "dark":
+        document.documentElement.classList.toggle("light", false);
+        document.documentElement.classList.toggle("dark", true);
+        break;
+      default:
+        document.documentElement.classList.toggle("light", false);
+        document.documentElement.classList.toggle("dark", false);
+        break;
+    }
   })();
 </script>
