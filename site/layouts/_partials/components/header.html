@@ -1,7 +1,6 @@
 <header x-data="{ open: false }" class="w-full bg-card">
   <div class="mx-auto max-w-4xl px-page py-component">
-    {{- $menu := site.Menus.main -}}
-    <div class="flex items-center justify-between">
+    <div class="peer flex items-center justify-between">
       <a
         href="{{ site.Home.RelPermalink }}"
         class="text-fl-emphasis font-bold text-primary transition-colors duration-400 hover:text-primary-active"
@@ -10,18 +9,40 @@
 
       <div class="flex items-center">
         <nav aria-label="Main Menu" class="hidden md:block">
-          {{- partial "components/navbar/desktop-menu.html" (dict "page" $ "menu" $menu) -}}
+          {{- partial "components/navbar/desktop-menu.html" (dict "page" $ "menu" site.Menus.main) -}}
         </nav>
 
-        {{- partialCached "components/navbar/theme-button.html" "emptyContext" -}}
+        <button
+          type="button"
+          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
+          x-data="themeToggle"
+          @click="toggle()"
+          aria-label="Switch between light and dark theme"
+          title="Switch between light and dark theme"
+        >
+          <span class="inline dark:hidden">
+            {{- partialCached "components/content/icon.html" (dict "name" "sun") "sun" -}}
+          </span>
+          <span class="hidden dark:inline">
+            {{- partialCached "components/content/icon.html" (dict "name" "moon") "moon" -}}
+          </span>
+        </button>
+
         <div class="md:hidden">
-          {{- partial "components/navbar/menu-button.html" (dict "menuId" "menu-mobile") -}}
+          <input type="checkbox" id="mobile-menu" name="mobile-menu" class="hidden" />
+
+          <label
+            for="mobile-menu"
+            class="block rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
+          >
+            {{- partialCached "components/content/icon.html" (dict "name" "menu-2") "menu-2" -}}
+          </label>
         </div>
       </div>
     </div>
 
-    <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
-      {{- partial "components/navbar/mobile-menu.html" (dict "page" $ "menu" $menu) -}}
+    <nav class="max-h-0 overflow-hidden peer-has-checked:max-h-full peer-has-checked:md:max-h-0" aria-label="Main Menu">
+      {{- partial "components/navbar/mobile-menu.html" (dict "page" $ "menu" site.Menus.main) -}}
     </nav>
   </div>
 </header>
