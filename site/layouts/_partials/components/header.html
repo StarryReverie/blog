@@ -21,24 +21,7 @@
     </div>
 
     <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
-      <ul class="flex flex-col">
-        {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
-      </ul>
+      {{- partial "components/navbar/mobile-menu.html" (dict "page" $ "menu" $menu) -}}
     </nav>
   </div>
 </header>
-
-{{- define "_partials/components/header.html/menu-item.html" -}}
-  {{- range $entry := $.menu -}}
-    {{- $name := or (and $entry.Identifier (T $entry.Identifier)) $entry.Name -}}
-    {{- $isActive := or ($.page.IsMenuCurrent "main" $entry) ($.page.HasMenuCurrent "main" $entry) -}}
-    <li>
-      <a
-        href="{{ $entry.URL }}"
-        {{ if $isActive }}aria-current="page"{{ end }}
-        class="block rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
-        >{{ $name }}</a
-      >
-    </li>
-  {{- end -}}
-{{- end -}}
