@@ -1,8 +1,13 @@
 <div>
   <div>{{ $.Summary }}</div>
 
-  <details class="rounded-sm bg-background marker:text-subtle">
-    <summary class="p-component text-fl-body leading-none text-foreground">Table of Contents</summary>
+  <details class="group rounded-sm bg-background marker:text-subtle">
+    <summary class="flex gap-1 p-component text-fl-body leading-none text-foreground">
+      <div class="scale-y-100 transition-transform duration-200 group-open:-scale-y-100">
+        {{- partialCached "components/content/icon.html" (dict "name" "chevrons-down") "chevrons-down" -}}
+      </div>
+      <div>Table of Contents</div>
+    </summary>
 
     <div class="mx-control prose-toc border-t-1 border-subtle/50 py-control select-none">
       {{ $.TableOfContents }}
