@@ -96,27 +96,39 @@ markup:
 
 menu:
   main:
+    - name: Content
+      weight: 1
     - name: Posts
       pageRef: /posts
-      weight: 1
+      weight: 11
+      parent: Content
     - name: Journals
       pageRef: /journals
+      weight: 12
+      parent: Content
+
+    - name: Exploration
       weight: 2
     - name: Categories
       pageRef: /categories
-      weight: 3
+      weight: 21
+      parent: Exploration
     - name: Tags
       pageRef: /tags
-      weight: 4
+      weight: 22
+      parent: Exploration
     - name: Archives
       pageRef: /archives
-      weight: 5
+      weight: 23
+      parent: Exploration
+
     - name: Links
       pageRef: /links
-      weight: 6
+      weight: 3
+
     - name: About
       pageRef: /about
-      weight: 7
+      weight: 4
 
 params:
   meta:

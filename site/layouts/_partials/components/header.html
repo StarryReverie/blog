@@ -9,42 +9,18 @@
       >
 
       <div class="flex items-center">
-        <nav aria-label="Main Menu" class="hidden lg:block">
-          <ul class="flex items-center">
-            {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
-          </ul>
+        <nav aria-label="Main Menu" class="hidden md:block">
+          {{- partial "components/navbar/desktop-menu.html" (dict "page" $ "menu" $menu) -}}
         </nav>
 
-        <button
-          type="button"
-          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
-          x-data="themeToggle"
-          @click="toggle()"
-          aria-label="Switch between light and dark theme"
-          title="Switch between light and dark theme"
-        >
-          <span class="inline dark:hidden">
-            {{- partialCached "components/content/icon.html" (dict "name" "sun") "sun" -}}
-          </span>
-          <span class="hidden dark:inline">
-            {{- partialCached "components/content/icon.html" (dict "name" "moon") "moon" -}}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background lg:hidden"
-          @click="open = !open"
-          :aria-expanded="open"
-          aria-controls="menu-mobile"
-          aria-label="Main Menu"
-        >
-          {{- partialCached "components/content/icon.html" (dict "name" "menu-2") "menu-2" -}}
-        </button>
+        {{- partialCached "components/navbar/theme-button.html" "emptyContext" -}}
+        <div class="md:hidden">
+          {{- partial "components/navbar/menu-button.html" (dict "menuId" "menu-mobile") -}}
+        </div>
       </div>
     </div>
 
-    <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="lg:hidden" aria-label="Main Menu">
+    <nav id="menu-mobile" x-show="open" x-collapse x-cloak class="md:hidden" aria-label="Main Menu">
       <ul class="flex flex-col">
         {{- partial "components/header.html/menu-item.html" (dict "page" $ "menu" $menu) -}}
       </ul>
@@ -54,7 +30,7 @@
 
 {{- define "_partials/components/header.html/menu-item.html" -}}
   {{- range $entry := $.menu -}}
-    {{- $name := or (and .Identifier (T $entry.Identifier)) $entry.Name -}}
+    {{- $name := or (and $entry.Identifier (T $entry.Identifier)) $entry.Name -}}
     {{- $isActive := or ($.page.IsMenuCurrent "main" $entry) ($.page.HasMenuCurrent "main" $entry) -}}
     <li>
       <a

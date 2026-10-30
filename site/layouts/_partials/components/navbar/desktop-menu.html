@@ -1,0 +1,44 @@
+<ul class="flex items-center">
+  {{- range $entry := $.menu -}}
+    <li>
+      {{- $name := or (and $entry.Identifier (T $entry.Identifier)) $entry.Name -}}
+
+      {{- with $children := $entry.Children -}}
+        <details class="group relative" name="submenus">
+          <summary
+            class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+          >
+            <span class="scale-y-100 transition-transform duration-200 group-open:-scale-y-100">
+              {{- partialCached "components/content/icon.html" (dict "name" "chevrons-down") "chevrons-down" -}}
+            </span>
+            <span>{{ $name }}</span>
+          </summary>
+
+          <ul
+            style="--color-card-active: color-mix(in srgb, var(--card) 80%, light-dark(white, black))"
+            class="absolute left-1/2 z-20 -translate-x-1/2 rounded-sm bg-(--color-card-active) p-control"
+          >
+            {{- range $subEntry := $children -}}
+              <li>
+                {{- $subName := or (and $subEntry.Identifier (T $subEntry.Identifier)) $subEntry.Name -}}
+                <a
+                  href="{{ $subEntry.URL }}"
+                  class="block rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+                  >{{ $subName }}</a
+                >
+              </li>
+            {{- end -}}
+          </ul>
+        </details>
+      {{- else -}}
+        <a
+          href="{{ $entry.URL }}"
+          class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+        >
+          <span>{{- partialCached "components/content/icon.html" (dict "name" "link") "link" -}}</span>
+          <span>{{ $name }}</span>
+        </a>
+      {{- end -}}
+    </li>
+  {{- end -}}
+</ul>
