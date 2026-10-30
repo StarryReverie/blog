@@ -1,9 +1,5 @@
 import Alpine from "alpinejs";
 import collapse from "@alpinejs/collapse";
-import htmx from "htmx.org";
-import "htmx.org/dist/ext/hx-alpine-compat.js";
-import "htmx.org/dist/ext/hx-head.js";
-import "htmx.org/dist/ext/hx-history-cache.js";
 
 Alpine.plugin(collapse);
 
@@ -61,5 +57,3 @@ Alpine.data("themeToggle", () => ({
 window.Alpine = Alpine;
 
 Alpine.start();
-
-htmx.config.transitions = true;

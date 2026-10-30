@@ -1,7 +1,7 @@
 <div class="flex justify-center gap-stack">
   {{- if $.HasPrev -}}
     {{- partial "components/buttons/normal.html" (dict
-      "title" "Go Previous"
+      "title" "Go Prev"
       "link" $.Prev.URL
       "type" "neutral")
     -}}
@@ -10,15 +10,9 @@
   {{- if $.HasNext -}}
     <!-- prettier-ignore-start -->
     {{- partial "components/buttons/normal.html" (dict
-      "title" "Load More ..."
+      "title" "Go Next"
       "link" $.Next.URL
-      "type" "primary"
-      "extraAttrs" (dict
-        "hx-get" $.Next.URL
-        "hx-push-url" "true"
-        "hx-swap" "outerHTML"
-        "hx-select" "#entry-sections > *"
-        "hx-target" "#extra-wrapper"))
+      "type" "primary")
     -}}
     <!-- prettier-ignore-end -->
   {{- end -}}
