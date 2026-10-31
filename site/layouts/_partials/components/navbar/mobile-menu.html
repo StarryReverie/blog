@@ -4,31 +4,37 @@
       {{- $name := or (and $entry.Identifier (T $entry.Identifier)) $entry.Name -}}
 
       {{- with $children := $entry.Children -}}
-        <details class="group" name="submenus">
-          <summary
+        <div class="group">
+          {{- $checkboxId := printf "mobile-menu-%s" (strings.ReplaceRE ` \"\n\t` "-" $name) -}}
+          <input type="checkbox" id="{{ $checkboxId }}" name="{{ $checkboxId }}" class="peer hidden" />
+
+          <label
+            for="{{ $checkboxId }}"
             class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
           >
             <span class="scale-y-100 transition-transform duration-200 group-open:-scale-y-100">
               {{- partialCached "components/content/icon.html" (dict "name" "chevrons-down") "chevrons-down" -}}
             </span>
             <span class="select-none">{{ $name }}</span>
-          </summary>
+          </label>
 
-          <ul class="pl-component">
-            {{- range $subEntry := $children -}}
-              <li>
-                {{- $subName := or (and $subEntry.Identifier (T $subEntry.Identifier)) $subEntry.Name -}}
-                <a
-                  href="{{ $subEntry.URL }}"
-                  class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
-                >
-                  <span>{{- partialCached "components/content/icon.html" (dict "name" "link") "link" -}}</span>
-                  <span>{{ $subName }}</span>
-                </a>
-              </li>
-            {{- end -}}
-          </ul>
-        </details>
+          <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-200 peer-checked:grid-rows-[1fr]">
+            <ul class="overflow-hidden pl-component">
+              {{- range $subEntry := $children -}}
+                <li>
+                  {{- $subName := or (and $subEntry.Identifier (T $subEntry.Identifier)) $subEntry.Name -}}
+                  <a
+                    href="{{ $subEntry.URL }}"
+                    class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+                  >
+                    <span>{{- partialCached "components/content/icon.html" (dict "name" "link") "link" -}}</span>
+                    <span>{{ $subName }}</span>
+                  </a>
+                </li>
+              {{- end -}}
+            </ul>
+          </div>
+        </div>
       {{- else -}}
         <a
           href="{{ $entry.URL }}"

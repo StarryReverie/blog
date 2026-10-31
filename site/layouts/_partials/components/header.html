@@ -1,6 +1,6 @@
 <header x-data="{ open: false }" class="w-full bg-card">
   <div class="mx-auto max-w-4xl px-page py-component">
-    <div class="peer flex items-center justify-between">
+    <div class="flex items-center justify-between">
       <a
         href="{{ site.Home.RelPermalink }}"
         class="text-fl-emphasis font-bold text-primary transition-colors duration-400 hover:text-primary-active"
@@ -27,8 +27,6 @@
         </button>
 
         <div class="md:hidden">
-          <input type="checkbox" id="mobile-menu" name="mobile-menu" class="hidden" />
-
           <label
             for="mobile-menu"
             class="block rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
@@ -39,8 +37,15 @@
       </div>
     </div>
 
-    <nav class="max-h-0 overflow-hidden peer-has-checked:max-h-full peer-has-checked:md:max-h-0" aria-label="Main Menu">
-      {{- partial "components/navbar/mobile-menu.html" (dict "page" $ "menu" site.Menus.main) -}}
-    </nav>
+    <div>
+      <input type="checkbox" id="mobile-menu" name="mobile-menu" class="peer hidden" />
+      <div
+        class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-200 peer-checked:grid-rows-[1fr] peer-checked:md:hidden"
+      >
+        <nav class="overflow-hidden" aria-label="Main Menu">
+          {{- partial "components/navbar/mobile-menu.html" (dict "page" $ "menu" site.Menus.main) -}}
+        </nav>
+      </div>
+    </div>
   </div>
 </header>
