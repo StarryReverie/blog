@@ -30,12 +30,12 @@ math: false
   >
     {{- range $subEntry := $children -}}
       <li>
-{{- $subName := or (and $subEntry.Identifier (T $subEntry.Identifier)) $subEntry.Name -}}
-<a
-  href="{{ $subEntry.URL }}"
-  class="block rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
-  >{{ $subName }}</a
->
+        {{- $subName := or (and $subEntry.Identifier (T $subEntry.Identifier)) $subEntry.Name -}}
+        <a
+          href="{{ $subEntry.URL }}"
+          class="block rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+          >{{ $subName }}</a
+        >
       </li>
     {{- end -}}
   </ul>
