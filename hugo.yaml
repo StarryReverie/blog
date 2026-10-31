@@ -74,6 +74,10 @@ outputs:
   term:
     - html
 
+services:
+  rss:
+    limit: 20
+
 markup:
   highlight:
     noClasses: false
