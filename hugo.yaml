@@ -145,7 +145,7 @@ params:
       icon: brand-telegram
       isExternal: true
     - name: Matrix
-      url: https://matrix.to/#/@starryreverie:matrix.org
+      url: https://matrix.to/#/@starryreverie:unredacted.org
       icon: brand-matrix
       isExternal: true
     - name: Email
