@@ -4,12 +4,10 @@
   "description": "Justin Chen's personal blog",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@alpinejs/collapse": "^3.17.4",
     "@htnabe/prettier-plugin-go-template": "^0.0.5",
     "@tabler/icons": "^3.49.0",
     "@tailwindcss/cli": "^4.3.0",
     "@tailwindcss/typography": "^0.5.4",
-    "alpinejs": "^3.17.4",
     "katex": "^0.18.10",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
