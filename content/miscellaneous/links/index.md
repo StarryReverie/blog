@@ -1,6 +1,8 @@
 ---
 title: Links
 layout: links
+params:
+  links: ./links.yaml
 ---
 
 欢迎大家交换友链！请使用首页列出的社交媒体链接与我取得联系，并提供站点标题、站点 URL、头像、和描述。
