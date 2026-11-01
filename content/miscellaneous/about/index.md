@@ -1,6 +1,5 @@
 ---
 title: About
-type: miscellaneous
 ---
 
 我是 Justin Chen，BIT CS 专业在读学生。爱好编程、游戏、阅读、音乐。

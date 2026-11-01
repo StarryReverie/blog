@@ -103,35 +103,35 @@ menu:
     - name: Content
       weight: 1
     - name: Posts
-      pageRef: /posts
+      pageRef: posts
       weight: 11
       parent: Content
     - name: Journals
-      pageRef: /journals
+      pageRef: journals
       weight: 12
       parent: Content
 
     - name: Exploration
       weight: 2
     - name: Categories
-      pageRef: /categories
+      pageRef: categories
       weight: 21
       parent: Exploration
     - name: Tags
-      pageRef: /tags
+      pageRef: tags
       weight: 22
       parent: Exploration
     - name: Archives
-      pageRef: /archives
+      pageRef: archives
       weight: 23
       parent: Exploration
 
     - name: Links
-      pageRef: /links
+      pageRef: links
       weight: 3
 
     - name: About
-      pageRef: /about
+      pageRef: about
       weight: 4
 
 params:
