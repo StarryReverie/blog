@@ -1,6 +1,21 @@
 {{- $url := urls.Parse $.Destination -}}
+{{- $src := $url.String -}}
+{{- if not $url.IsAbs -}}
+  {{- $path := strings.TrimPrefix "./" $url.Path -}}
+  {{- with $resource := or ($.PageInner.Resources.Get $path) (resources.Get $path) -}}
+    {{- $src = $resource.RelPermalink -}}
+    {{- with $query := $url.RawQuery -}}
+      {{- $src = printf "%s?%s" $src $query -}}
+    {{- end -}}
+    {{- with $fragment := $url.Fragment -}}
+      {{- $src = printf "%s#%s" $src $fragment -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+
 <a
-  href="{{ $.Destination | safe.URL }}"
+  href="{{ $src }}"
   {{ with $title := $.Title }}title="{{ $title }}"{{ end }}
   {{ if $url.IsAbs }}rel="external noopener noreferrer" target="_blank"{{ end }}
   class="font-normal link"

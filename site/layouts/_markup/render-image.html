@@ -1,7 +1,22 @@
+{{- $url := urls.Parse $.Destination -}}
+{{- $src := $url.String -}}
+{{- if not $url.IsAbs -}}
+  {{- $path := strings.TrimPrefix "./" $url.Path -}}
+  {{- with $resource := or ($.PageInner.Resources.Get $path) (resources.Get $path) -}}
+    {{- $src = $resource.RelPermalink -}}
+    {{- with $query := $url.RawQuery -}}
+      {{- $src = printf "%s?%s" $src $query -}}
+    {{- end -}}
+    {{- with $fragment := $url.Fragment -}}
+      {{- $src = printf "%s#%s" $src $fragment -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
 {{- if $.IsBlock -}}
   <figure class="flex flex-col items-center">
     <img
-      src="{{ $.Destination | safe.URL }}"
+      src="{{ $src }}"
       {{ with $text := $.PlainText }}alt="{{ $text }}"{{ end }}
       class="h-auto max-w-full"
     />
@@ -11,7 +26,7 @@
   </figure>
 {{- else -}}
   <img
-    src="{{ $.Destination | safe.URL }}"
+    src="{{ $src }}"
     {{ with $text := $.PlainText }}alt="{{ $text }}"{{ end }}
     {{ with $title := $.Title }}title="{{ $title }}"{{ end }}
     class="h-auto max-w-full"
