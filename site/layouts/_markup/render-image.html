@@ -19,6 +19,7 @@
       src="{{ $src }}"
       {{ with $text := $.PlainText }}alt="{{ $text }}"{{ end }}
       class="h-auto max-w-full"
+      loading="lazy"
     />
     {{- with $title := $.Title -}}
       <figcaption>{{ $title }}</figcaption>
@@ -30,5 +31,6 @@
     {{ with $text := $.PlainText }}alt="{{ $text }}"{{ end }}
     {{ with $title := $.Title }}title="{{ $title }}"{{ end }}
     class="h-auto max-w-full"
+    loading="lazy"
   />
 {{- end -}}
