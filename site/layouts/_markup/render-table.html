@@ -1,0 +1,34 @@
+<div class="-mt-[2*var(--space-line)] -mb-[2*var(--space-line)] overflow-x-scroll">
+  <table>
+    <thead>
+      {{- range $headRow := $.THead -}}
+        <tr>
+          {{- range $headCell := $headRow -}}
+            <th
+              {{- with $alignment := $headCell.Alignment -}}
+                {{- printf " style=%q" (printf "text-align: %s" $alignment) | safe.HTMLAttr }}
+              {{- end -}}
+            >
+              {{ $headCell.Text }}
+            </th>
+          {{- end -}}
+        </tr>
+      {{- end -}}
+    </thead>
+    <tbody>
+      {{- range $bodyRow := $.TBody -}}
+        <tr>
+          {{- range $bodyCell := $bodyRow }}
+            <td
+              {{- with $alignment := $bodyCell.Alignment -}}
+                {{- printf " style=%q" (printf "text-align: %s" $alignment) | safe.HTMLAttr }}
+              {{- end -}}
+            >
+              {{- $bodyCell.Text -}}
+            </td>
+          {{- end }}
+        </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>
