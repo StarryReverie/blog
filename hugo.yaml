@@ -126,6 +126,10 @@ menu:
       pageRef: archives
       weight: 23
       parent: Exploration
+    - name: Search
+      pageRef: search
+      weight: 24
+      parent: Exploration
 
     - name: Links
       pageRef: links
