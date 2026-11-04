@@ -66,6 +66,7 @@ outputs:
   home:
     - html
     - rss
+    - json
   section:
     - html
     - rss
@@ -84,7 +85,7 @@ markup:
 
   tableOfContents:
     startLevel: 2
-    endLevel: 6
+    endLevel: 4
     ordered: false
 
   goldmark:

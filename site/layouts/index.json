@@ -1,0 +1,17 @@
+{{- $entries := slice -}}
+{{- $entries = $entries | append (where site.RegularPages "Section" "posts") -}}
+{{- $entries = $entries | append (where site.RegularPages "Section" "journals") -}}
+{{- $entries = sort $entries "Date" "desc" -}}
+
+{{- $output := slice -}}
+
+{{- range $entry := $entries -}}
+  {{- $output = $output | append (dict
+    "title" $entry.Title
+    "link" $entry.RelPermalink
+    "summary" ($entry.Summary | transform.Plainify | strings.Truncate 120)
+    "headings" (index $entry.Fragments.Headings 0).Headings)
+  -}}
+{{- end -}}
+
+{{- encoding.Jsonify (dict "noHTMLEscape" true) $output -}}
