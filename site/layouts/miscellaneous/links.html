@@ -19,7 +19,10 @@
   <div class="space-y-stack">
     <div class="-mx-inset">
       {{- with $linksData := transform.Unmarshal ($.Resources.Get $.Params.links) -}}
-        {{- partial "components/links/card-list.html" $linksData.links -}}
+        {{- partial "components/links/card-list.html" (dict
+          "links" $linksData.links
+          "page" $)
+        -}}
       {{- else -}}
         {{- errorf "Links page requires a parameter 'links' of path to links data file" -}}
       {{- end -}}

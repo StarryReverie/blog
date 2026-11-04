@@ -1,8 +1,7 @@
 <ul class="grid grid-cols-1 gap-stack">
-  {{- range $entry := $ -}}
+  {{- range $entry := $.links -}}
     <li>
-      {{- $avatarRef := printf "images/links/%s" $entry.avatar -}}
-      {{- with $avatar := resources.Get $avatarRef -}}
+      {{- with $avatar := or ($.page.Resources.Get $entry.avatar) (resources.Get $entry.avatar) -}}
         {{- partial "components/links/card.html" (dict
           "title" $entry.title
           "description" $entry.description
@@ -10,7 +9,7 @@
           "avatarUrl" $avatar.RelPermalink)
         -}}
       {{- else -}}
-        {{- errorf "Could not find avatar asset %q" $avatarRef -}}
+        {{- errorf "Could not find avatar asset %q" $entry.avatar -}}
       {{- end -}}
     </li>
   {{- end -}}
