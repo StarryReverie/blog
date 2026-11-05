@@ -1,3 +1,8 @@
+const searchKey = "q";
+
+const nodeSearchForm = document.getElementById("search-form");
+const nodeSearchInput = document.getElementById("search-input");
+const nodeSearchButton = document.getElementById("search-button");
 const nodeSearchNoResult = document.getElementById("search-no-result");
 const nodeSearchResults = document.getElementById("search-results");
 
@@ -5,12 +10,34 @@ const tmplSearchResultEntry = document.getElementById("template-search-result-en
 const tmplSearchHighlight = document.getElementById("template-search-highlight");
 
 async function main() {
+  nodeSearchInput.focus();
+
   const searchData = await fetch("/index.json").then((response) => response.json());
-  const res = runSearch("a", searchData);
-  applySearchResults(res);
+
+  nodeSearchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    runSearch(searchData);
+  });
+
+  nodeSearchButton.addEventListener("click", () => {
+    runSearch(searchData);
+  });
+
+  const currentInput = new URLSearchParams(location.search).get(searchKey) || "";
+  if (currentInput !== "") {
+    nodeSearchInput.value = currentInput;
+    runSearch(searchData);
+  }
 }
 
-function runSearch(input, data) {
+function runSearch(searchData) {
+  const input = nodeSearchInput.value;
+  const res = input !== "" ? searchInput(input, searchData) : [];
+  applySearchResults(res);
+  syncUrlQuery(input);
+}
+
+function searchInput(input, data) {
   return data.flatMap((entry) => {
     const searchEntries = matchEntry(input, entry);
     return searchEntries.map((searchEntry) => buildSearchResultEntryNode(searchEntry));
@@ -119,6 +146,16 @@ function applySearchResults(results) {
     nodeSearchNoResult.classList.toggle("hidden", true);
     nodeSearchResults.classList.toggle("hidden", false);
   }
+}
+
+function syncUrlQuery(input) {
+  const url = new URL(location.href);
+  if (input.trim()) {
+    url.searchParams.set(searchKey, input);
+  } else {
+    url.searchParams.delete(searchKey);
+  }
+  history.replaceState(null, "", url);
 }
 
 main();
