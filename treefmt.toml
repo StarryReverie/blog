@@ -5,4 +5,4 @@ includes = [ "*.nix" ]
 [formatter.frontend]
 command = "npx"
 options = [ "prettier", "--write" ]
-includes = [ "site/layouts/*", "site/assets/css/*" ]
+includes = [ "site/layouts/*.html", "site/assets/css/*.css", "site/assets/js/*.js" ]

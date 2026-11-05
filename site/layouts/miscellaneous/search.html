@@ -1,0 +1,108 @@
+{{- define "main" -}}
+  {{- partial "views/main.html" (dict
+    "headerTitle" "Search"
+    "headerContent" (partial "_/miscellaneous/search.html/headerContent.html" "emptyContext")
+    "content" (partial "_/miscellaneous/search.html/content.html" $))
+  -}}
+
+  {{- partial "_/miscellaneous/search.html/templates.html" "emptyContext" -}}
+
+  {{- $rawJsResource := resources.Get "js/search.js" -}}
+  {{- $opts := dict "minify" (not hugo.IsDevelopment) "format" "iife" "target" "es2022" -}}
+  {{- partial "resources/loaders/js.html" ($rawJsResource | js.Build $opts) -}}
+{{- end -}}
+
+{{- define "_partials/_/miscellaneous/search.html/headerContent.html" -}}
+  <div>
+    <p class="flex gap-1 text-fl-body text-foreground">
+      <span>{{- partialCached "components/content/icon.html" (dict "name" "list-search") "list-search" -}}</span>
+      <span>Explore {{ len site.RegularPages }} articles and more</span>
+    </p>
+
+    <p class="flex gap-1 text-fl-body text-foreground">
+      <span>{{- partialCached "components/content/icon.html" (dict "name" "filter") "filter" -}}</span>
+      <span>Filter entries by matching titles, headings, or summaries</span>
+    </p>
+  </div>
+{{- end -}}
+
+{{- define "_partials/_/miscellaneous/search.html/content.html" -}}
+  <div class="space-y-section">
+    <div class="-mx-component space-y-line">
+      <form id="search-form" class="flex justify-center" role="search">
+        <input
+          type="search"
+          id="search-input"
+          name="q"
+          class="min-w-0 grow rounded-l-lg bg-card px-[calc(2*var(--space-control))] py-control text-fl-body outline-1 outline-input transition-colors duration-400 focus:outline-focus"
+          placeholder="Type your query"
+          aria-label="Search through site content"
+        />
+
+        <button
+          id="search-button"
+          class="rounded-r-lg bg-primary px-[calc(2*var(--space-control))] py-control text-fl-body font-bold text-primary-foreground outline-1 outline-primary transition-colors duration-400 hover:bg-primary-active hover:outline-primary-active focus:outline-focus"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+
+    <div
+      id="search-no-result"
+      class="-mx-inset flex flex-col items-center justify-center gap-line rounded-sm bg-card p-inset"
+    >
+      <span class="text-fl-h2 leading-none text-subtle">
+        {{- partialCached "components/content/icon.html" (dict "name" "alert-circle") "alert-circle" -}}
+      </span>
+      <span class="text-fl-body leading-none text-subtle">No results</span>
+    </div>
+
+    <div
+      id="search-error"
+      class="-mx-inset flex flex-col items-center justify-center gap-line rounded-sm bg-card p-inset"
+      hidden
+    >
+      <span class="text-fl-h2 leading-none text-subtle">
+        {{- partialCached "components/content/icon.html" (dict "name" "circle-x") "circle-x" -}}
+      </span>
+      <span class="text-fl-body leading-none text-subtle">Failed to search, please try again</span>
+    </div>
+
+    <div id="search-results" class="-mx-inset rounded-sm bg-card px-inset py-line" hidden>
+      <!-- <template-search-result-entry>... -->
+    </div>
+  </div>
+{{- end -}}
+
+{{- define "_partials/_/miscellaneous/search.html/templates.html" -}}
+  <template id="template-search-result-entry">
+    <section class="flex flex-col gap-line py-component not-last:border-b-1 not-last:border-b-subtle/25">
+      <h2>
+        <a id="search-result-entry-link" class="group text-fl-body">
+          <span
+            id="search-result-entry-title"
+            class="font-bold text-heading transition-colors duration-400 group-hover:text-primary"
+          >
+            <!-- (.|<template-search-highlight>)...-->
+          </span>
+
+          <span
+            id="search-result-entry-headings"
+            class="text-subtle transition-colors duration-400 group-hover:text-primary"
+          >
+            <!-- (.|<template-search-highlight>)...-->
+          </span>
+        </a>
+      </h2>
+
+      <p id="search-result-entry-summary" class="text-fl-note text-subtle">
+        <!-- (.|<template-search-highlight>)...-->
+      </p>
+    </section>
+  </template>
+
+  <template id="template-search-highlight">
+    <span id="search-highlight-content" class="rounded-sm bg-muted"></span>
+  </template>
+{{- end -}}

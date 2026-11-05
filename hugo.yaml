@@ -66,6 +66,7 @@ outputs:
   home:
     - html
     - rss
+    - json
   section:
     - html
     - rss
@@ -84,7 +85,7 @@ markup:
 
   tableOfContents:
     startLevel: 2
-    endLevel: 6
+    endLevel: 4
     ordered: false
 
   goldmark:
@@ -124,6 +125,10 @@ menu:
     - name: Archives
       pageRef: archives
       weight: 23
+      parent: Exploration
+    - name: Search
+      pageRef: search
+      weight: 24
       parent: Exploration
 
     - name: Links
