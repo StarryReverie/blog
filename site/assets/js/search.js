@@ -4,30 +4,61 @@ const nodeSearchForm = document.getElementById("search-form");
 const nodeSearchInput = document.getElementById("search-input");
 const nodeSearchButton = document.getElementById("search-button");
 const nodeSearchNoResult = document.getElementById("search-no-result");
+const nodeSearchError = document.getElementById("search-error");
 const nodeSearchResults = document.getElementById("search-results");
 
 const tmplSearchResultEntry = document.getElementById("template-search-result-entry");
 const tmplSearchHighlight = document.getElementById("template-search-highlight");
 
+let searchDataPromise = requestSearchData();
+
 async function main() {
   nodeSearchInput.focus();
 
-  const searchData = await fetch("/index.json").then((response) => response.json());
-
-  nodeSearchForm.addEventListener("submit", (event) => {
+  nodeSearchForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    runSearch(searchData);
+    await onSearch();
   });
 
-  nodeSearchButton.addEventListener("click", () => {
-    runSearch(searchData);
+  nodeSearchButton.addEventListener("click", async () => {
+    await onSearch();
   });
 
   const currentInput = new URLSearchParams(location.search).get(searchKey) || "";
   if (currentInput !== "") {
     nodeSearchInput.value = currentInput;
-    runSearch(searchData);
+    await onSearch();
   }
+}
+
+async function onSearch() {
+  const searchData = await tryLoadSearchData();
+  if (searchData !== null) {
+    runSearch(searchData);
+  } else {
+    nodeSearchNoResult.setAttribute("hidden", null);
+    nodeSearchError.removeAttribute("hidden");
+    nodeSearchResults.setAttribute("hidden", null);
+  }
+}
+
+async function tryLoadSearchData() {
+  if (searchDataPromise === null) {
+    searchDataPromise = requestSearchData();
+  }
+
+  try {
+    const searchData = await searchDataPromise;
+    return searchData;
+  } catch (exception) {
+    console.error("Failed to request /index.json: ", exception);
+    searchDataPromise = null;
+    return null;
+  }
+}
+
+async function requestSearchData() {
+  return await fetch("/index.json").then((response) => response.json());
 }
 
 function runSearch(searchData) {
@@ -86,7 +117,7 @@ function collectHeadingMatchedEntry(input, baseSearchEntry, headingPath, current
 function highlightContent(unescapedPattern, content) {
   const node = document.importNode(tmplSearchHighlight.content, true);
   const contentNode = node.getElementById("search-highlight-content");
-  contentNode.attributes.removeNamedItem("id");
+  contentNode.removeAttribute("id");
 
   contentNode.textContent = unescapedPattern;
   const pattern = contentNode.innerHTML;
@@ -112,22 +143,22 @@ function buildSearchResultEntryNode(searchEntry) {
   const node = document.importNode(tmplSearchResultEntry.content, true);
 
   const linkNode = node.getElementById("search-result-entry-link");
-  linkNode.attributes.removeNamedItem("id");
+  linkNode.removeAttribute("id");
   linkNode.setAttribute("href", searchEntry.link);
 
   const titleNode = node.getElementById("search-result-entry-title");
-  titleNode.attributes.removeNamedItem("id");
+  titleNode.removeAttribute("id");
   titleNode.innerHTML = searchEntry.title;
 
   const headingsNode = node.getElementById("search-result-entry-headings");
-  headingsNode.attributes.removeNamedItem("id");
+  headingsNode.removeAttribute("id");
   headingsNode.innerHTML = searchEntry.headings.reduce((acc, h) => `${acc} &gt; ${h}`, "");
 
   const summaryNode = node.getElementById("search-result-entry-summary");
   if (searchEntry.summary !== "") {
     summaryNode.innerHTML = searchEntry.summary;
   } else {
-    summaryNode.classList.toggle("hidden", true);
+    summaryNode.setAttribute("hidden", null);
   }
 
   return node;
@@ -135,16 +166,18 @@ function buildSearchResultEntryNode(searchEntry) {
 
 function applySearchResults(results) {
   if (results.length === 0) {
-    nodeSearchNoResult.classList.toggle("hidden", false);
-    nodeSearchResults.classList.toggle("hidden", true);
+    nodeSearchNoResult.removeAttribute("hidden");
+    nodeSearchError.setAttribute("hidden", null);
+    nodeSearchResults.setAttribute("hidden", null);
   } else {
     nodeSearchResults.innerHTML = "";
     results.forEach((result) => {
       nodeSearchResults.appendChild(result);
     });
 
-    nodeSearchNoResult.classList.toggle("hidden", true);
-    nodeSearchResults.classList.toggle("hidden", false);
+    nodeSearchNoResult.setAttribute("hidden", null);
+    nodeSearchError.setAttribute("hidden", null);
+    nodeSearchResults.removeAttribute("hidden");
   }
 }
 

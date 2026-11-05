@@ -50,15 +50,26 @@
 
     <div
       id="search-no-result"
-      class="-mx-inset flex flex-wrap items-center justify-center gap-line rounded-sm bg-card p-inset"
+      class="-mx-inset flex flex-col items-center justify-center gap-line rounded-sm bg-card p-inset"
     >
       <span class="text-fl-h2 leading-none text-subtle">
         {{- partialCached "components/content/icon.html" (dict "name" "alert-circle") "alert-circle" -}}
       </span>
-      <span class="text-fl-body leading-none text-subtle">No Results</span>
+      <span class="text-fl-body leading-none text-subtle">No results</span>
     </div>
 
-    <div id="search-results" class="-mx-inset hidden rounded-sm bg-card px-inset py-line">
+    <div
+      id="search-error"
+      class="-mx-inset flex flex-col items-center justify-center gap-line rounded-sm bg-card p-inset"
+      hidden
+    >
+      <span class="text-fl-h2 leading-none text-subtle">
+        {{- partialCached "components/content/icon.html" (dict "name" "circle-x") "circle-x" -}}
+      </span>
+      <span class="text-fl-body leading-none text-subtle">Failed to search, please try again</span>
+    </div>
+
+    <div id="search-results" class="-mx-inset rounded-sm bg-card px-inset py-line" hidden>
       <!-- <template-search-result-entry>... -->
     </div>
   </div>
