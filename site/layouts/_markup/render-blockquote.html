@@ -1,0 +1,29 @@
+{{- if eq $.Type "alert" -}}
+  <div
+    style="
+    {{ if eq $.AlertType "caution" }}
+      --color-alert: #d83b1f;
+    {{ else if eq $.AlertType "warning" }}
+      --color-alert: #ebbf21;
+    {{ else if eq $.AlertType "note" }}
+      --color-alert: #2178eb;
+    {{ else }}
+      {{ errorf "Unsupported alert type %q" $.AlertType }}
+    {{ end }}
+      --color-bg-alert: color-mix(in oklch, var(--color-alert) 10%, transparent);
+    "
+    class="border-l-4 border-l-(--color-alert) bg-(--color-bg-alert) px-4 py-component font-medium text-subtle"
+  >
+    <p class="mt-0 -mb-4 text-fl-emphasis font-bold text-(--color-alert)">
+      {{ or $.AlertTitle (strings.Title $.AlertType) }}
+    </p>
+
+    <div class="-mb-4">
+      {{ $.Text }}
+    </div>
+  </div>
+{{- else -}}
+  <blockquote>
+    {{ $.Text }}
+  </blockquote>
+{{- end -}}
