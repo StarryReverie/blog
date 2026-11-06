@@ -1,5 +1,6 @@
 <div>
-  <div>{{ $.Summary }}</div>
+  <!-- Remove extra top margin set by `prose` from tailwindcss/typography -->
+  <div class="-mt-6">{{ $.Summary }}</div>
 
   <details class="group rounded-sm bg-background marker:text-subtle">
     <summary class="flex gap-1 p-component text-fl-body leading-none text-foreground">
@@ -14,5 +15,6 @@
     </div>
   </details>
 
-  <div>{{ $.ContentWithoutSummary }}</div>
+  <!-- Remove extra bottom margin set by `prose` from tailwindcss/typography -->
+  <div class="-mb-6">{{ $.ContentWithoutSummary }}</div>
 </div>
