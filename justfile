@@ -20,4 +20,5 @@ build:
 
 check:
   markdownlint-cli2 'README.md' 'content/**/*.md'
+  typos
   treefmt --ci

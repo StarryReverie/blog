@@ -169,7 +169,7 @@ makeFieldLabelsNoPrefix ''WalkState
 然后是遍历算法的主体，`walk` 接收起始的 `DerivingPath` 和 Output Name `Text`，从这里开始遍历。`walk` 只初始化状态和从终止状态中提取结果，实际的遍历由 `walkImpl` 完成。
 
 ```haskell
--- | Traverse the Nix store from a derivation's output, which coresponds to a
+-- | Traverse the Nix store from a derivation's output, which corresponds to a
 -- store object path uniquely. Returns the dependency graph and the store object
 -- path of the given @(DerivingPath, Text)@ pair.
 walk
@@ -401,7 +401,7 @@ runStepDrv storeDir drvPath = do
 最后是状态合并和调度部分：
 
 ```haskell
--- | Traverse the Nix store from a derivation's output, which coresponds to a
+-- | Traverse the Nix store from a derivation's output, which corresponds to a
 -- store object path uniquely. Returns the dependency graph and the store object
 -- path of the given @(DerivingPath, Text)@ pair.
 walk

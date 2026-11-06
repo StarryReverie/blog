@@ -62,7 +62,7 @@ let
         newPackage;
     };
 
-  finalPackageAwaredCallPackage =
+  finalPackageAwareCallPackage =
     callPackage: func: finalPackageName: attrs:
     let
       called = callPackage func (attrs // { ${finalPackageName} = finalPackage; });
@@ -70,7 +70,7 @@ let
     in
     finalPackage;
 
-  p = finalPackageAwaredCallPackage pkgs.callPackage ./package.nix "testFinalPackage" { };
+  p = finalPackageAwareCallPackage pkgs.callPackage ./package.nix "testFinalPackage" { };
 in
 {
   inherit pkgs lib;

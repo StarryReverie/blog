@@ -13,6 +13,7 @@
           pkgsDev.markdownlint-cli2
           pkgsDev.nixfmt
           pkgsDev.treefmt
+          pkgsDev.typos
         ];
       };
     };

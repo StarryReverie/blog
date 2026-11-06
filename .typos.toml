@@ -12,6 +12,10 @@ extend-ignore-re = [
   # Disable spell checker for one block
   "(?s)(#|//)\\s*spellchecker:disable-begin.*?\\n\\s*(#|//)\\s*spellchecker:disable-end", # `# spellchecker:disable-begin`, `# spellchecker:disable-end`
   "(?s)<!--\\s*spellchecker:disable-begin\\s*-->.*?\\n\\s*<!--\\s*spellchecker:disable-end\\s*-->", # `<!-- spellchecker:disable-begin -->`, `<!-- spellchecker:disable-end -->`
+
   # Custom Vacabulary
+  "BY-NC-ND", # Creative Commons license
   "MIS", # Multiple Importance Sampling
+  "TeX Gyre Heros", # Font
+  "TeXGyreHeros", # Font
 ]
