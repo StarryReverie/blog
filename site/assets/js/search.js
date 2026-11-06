@@ -27,6 +27,7 @@ async function main() {
   const currentInput = new URLSearchParams(location.search).get(searchKey) || "";
   if (currentInput !== "") {
     nodeSearchInput.value = currentInput;
+    nodeSearchInput.select();
     await onSearch();
   }
 }
