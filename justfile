@@ -17,3 +17,7 @@ serve:
 
 build:
   hugo --minify
+
+check:
+  markdownlint-cli2 'README.md' 'content/**/*.md'
+  treefmt --ci

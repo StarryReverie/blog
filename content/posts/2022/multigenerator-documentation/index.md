@@ -96,7 +96,7 @@ int main() {
 
 绝大多数的 `Linux` 发行版预装的 `GCC` 版本都比较低，仅能支持 `C++ 11`，建议使用包管理器进行安装更新版本的 `GCC`，至少为 `GCC 8`，建议 `GCC 11`，这里仅列举部分安装方法，具体请查阅发行版的包管理器文档。
 
-**Debian/Ubuntu/Deepin**
+Debian/Ubuntu/Deepin:
 
 ```sh
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test
@@ -104,13 +104,13 @@ sudo apt-get update
 sudo apt install gcc g++
 ```
 
-**Arch Linux/Manjaro**
+Arch Linux/Manjaro:
 
 ```sh
 sudo pacman -S gcc
 ```
 
-**CentOS/RHEL**
+CentOS/RHEL:
 
 ```sh
 sudo yum -y install centos-release-scl
