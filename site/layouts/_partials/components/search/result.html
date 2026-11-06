@@ -1,0 +1,53 @@
+<div>
+  <div id="search-no-result" class="flex flex-col items-center justify-center gap-line rounded-sm p-inset">
+    <span class="text-fl-h2 leading-none text-subtle">
+      {{- partialCached "components/content/icon.html" (dict "name" "alert-circle") "alert-circle" -}}
+    </span>
+    <span class="text-fl-body leading-none text-subtle">No results</span>
+  </div>
+
+  <div id="search-error" class="flex flex-col items-center justify-center gap-line rounded-sm p-inset" hidden>
+    <span class="text-fl-h2 leading-none text-subtle">
+      {{- partialCached "components/content/icon.html" (dict "name" "circle-x") "circle-x" -}}
+    </span>
+    <span class="text-fl-body leading-none text-subtle">Failed to search, please try again</span>
+  </div>
+
+  <div id="search-results" class="rounded-sm bg-card px-inset py-line" hidden>
+    <!-- <template-search-result-entry>... -->
+  </div>
+
+  {{- partialCached "components/search/result.html/templates.html" "emptyContext" -}}
+</div>
+
+{{- define "_partials/components/search/result.html/templates.html" -}}
+  <template id="template-search-result-entry">
+    <section class="flex flex-col gap-line py-component not-last:border-b-1 not-last:border-b-subtle/25">
+      <h2>
+        <a id="search-result-entry-link" class="group text-fl-body">
+          <span
+            id="search-result-entry-title"
+            class="font-bold text-heading transition-colors duration-400 group-hover:text-primary"
+          >
+            <!-- (.|<template-search-highlight>)...-->
+          </span>
+
+          <span
+            id="search-result-entry-headings"
+            class="text-subtle transition-colors duration-400 group-hover:text-primary"
+          >
+            <!-- (.|<template-search-highlight>)...-->
+          </span>
+        </a>
+      </h2>
+
+      <p id="search-result-entry-summary" class="text-fl-note text-subtle">
+        <!-- (.|<template-search-highlight>)...-->
+      </p>
+    </section>
+  </template>
+
+  <template id="template-search-highlight">
+    <span id="search-highlight-content" class="rounded-sm bg-muted"></span>
+  </template>
+{{- end -}}
