@@ -118,7 +118,7 @@ Hugo 也不是没有缺点，Go Template 在表达能力上差强人意。Go Tem
 
 对于我这个博客而言，secondary 几乎没有使用。我曾经尝试在一些地方使用这一系列颜色，不过感觉有些喧宾夺主，还是改为 base 系列了。
 
-最终的版本位于 [`color.css`](https://github.com/StarryReverie/blog/blob/965bc4399267ffb7639e54246e95717e40f2be4c/site/assets/css/colors.css)。
+最终的版本位于 [`color.css`](https://github.com/StarryReverie/blog/blob/28a89ee31e6272dc6ffb7232b7a9b6c5976ab483/site/assets/css/colors.css)。
 
 当然后续我完成大部分重构后，和群友讨论设计相关的问题，[Cuskiy](https://ity.moe/) 教我可以使用 `color-mix` 混合前景色和透明色来定义边框或背景色，比如 `color-mix(in oklch, var(--text) 10%, transparent)`。我后续倒是用这种做法来调比较次要的按钮的配色。
 
