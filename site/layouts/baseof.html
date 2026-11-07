@@ -30,13 +30,9 @@
     {{- end -}}
   </head>
 
-  <body class="bg-background pb-page">
+  <body class="flex min-h-dvh flex-col bg-background pb-page">
     {{- partial "components/header.html" $ -}}
-    <main
-      id="main"
-      style="--collapsed-navbar-h: calc(var(--fluid-type-emphasis) * var(--line-height-emphasis) + 2 * var(--space-component))"
-      class="min-h-[calc(100dvh-var(--collapsed-navbar-h))]"
-    >
+    <main id="main" class="grow">
       <div>{{- block "hero" $ -}}{{- end -}}</div>
       <div>{{- block "main" $ -}}{{- end -}}</div>
     </main>
