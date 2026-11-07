@@ -1,5 +1,5 @@
 {{- define "main" -}}
-  {{- partial "views/main.html" (dict
+  {{- partial "views/main-content.html" (dict
     "headerTitle" "Search"
     "headerContent" (partial "_/miscellaneous/search.html/headerContent.html" "emptyContext")
     "content" (partial "_/miscellaneous/search.html/content.html" $))
@@ -18,13 +18,8 @@
 {{- end -}}
 
 {{- define "_partials/_/miscellaneous/search.html/content.html" -}}
-  <div class="space-y-section">
-    <div class="-mx-component">
-      {{- partial "components/search/input.html" "emptyContext" -}}
-    </div>
-
-    <div class="-mx-inset">
-      {{- partial "components/search/result.html" "emptyContext" -}}
-    </div>
+  <div class="space-y-gutter">
+    {{- partial "components/search/input.html" "emptyContext" -}}
+    {{- partial "components/search/result.html" "emptyContext" -}}
   </div>
 {{- end -}}

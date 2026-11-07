@@ -1,19 +1,19 @@
 <div>
-  <div id="search-no-result" class="flex flex-col items-center justify-center gap-line rounded-sm p-inset">
+  <div id="search-no-result" class="flex flex-col items-center justify-center gap-line">
     <span class="text-fl-h2 leading-none text-subtle">
       {{- partialCached "components/content/icon.html" (dict "name" "alert-circle") "alert-circle" -}}
     </span>
     <span class="text-fl-body leading-none text-subtle">No results</span>
   </div>
 
-  <div id="search-error" class="flex flex-col items-center justify-center gap-line rounded-sm p-inset" hidden>
+  <div id="search-error" class="flex flex-col items-center justify-center gap-line" hidden>
     <span class="text-fl-h2 leading-none text-subtle">
       {{- partialCached "components/content/icon.html" (dict "name" "circle-x") "circle-x" -}}
     </span>
     <span class="text-fl-body leading-none text-subtle">Failed to search, please try again</span>
   </div>
 
-  <div id="search-results" class="rounded-sm bg-card px-inset py-line" hidden>
+  <div id="search-results" hidden>
     <!-- <template-search-result-entry>... -->
   </div>
 
@@ -22,7 +22,9 @@
 
 {{- define "_partials/components/search/result.html/templates.html" -}}
   <template id="template-search-result-entry">
-    <section class="flex flex-col gap-line py-component not-last:border-b-1 not-last:border-b-subtle/25">
+    <section
+      class="flex flex-col gap-line not-first:pt-component not-last:border-b-1 not-last:border-b-subtle/25 not-last:pb-component"
+    >
       <h2>
         <a id="search-result-entry-link" class="group text-fl-body">
           <span
