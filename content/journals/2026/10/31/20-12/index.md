@@ -16,7 +16,7 @@ math: false
 ```html
 <details class="group relative" name="submenus">
   <summary
-    class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+    class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-200 hover:bg-background"
   >
     <span class="scale-y-100 transition-transform duration-200 group-open:-scale-y-100">
       {{- partialCached "components/content/icon.html" (dict "name" "chevrons-down") "chevrons-down" -}}
@@ -33,7 +33,7 @@ math: false
         {{- $subName := or (and $subEntry.Identifier (T $subEntry.Identifier)) $subEntry.Name -}}
         <a
           href="{{ $subEntry.URL }}"
-          class="block rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+          class="block rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-200 hover:bg-background"
           >{{ $subName }}</a
         >
       </li>
@@ -57,7 +57,7 @@ math: false
 
   <label
     for="{{ $checkboxId }}"
-    class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+    class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-200 hover:bg-background"
   >
     <span class="scale-y-100 transition-transform duration-200 group-has-checked:-scale-y-100">
       {{- partialCached "components/content/icon.html" (dict "name" "chevrons-down") "chevrons-down" -}}
@@ -72,7 +72,7 @@ math: false
           {{- $subName := or (and $subEntry.Identifier (T $subEntry.Identifier)) $subEntry.Name -}}
           <a
             href="{{ $subEntry.URL }}"
-            class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-400 hover:bg-background"
+            class="flex gap-1 rounded-sm p-control text-fl-body leading-none font-bold text-foreground transition-colors duration-200 hover:bg-background"
           >
             <span>{{- partialCached "components/content/icon.html" (dict "name" "link") "link" -}}</span>
             <span>{{ $subName }}</span>

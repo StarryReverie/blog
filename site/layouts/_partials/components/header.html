@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between">
       <a
         href="{{ site.Home.RelPermalink }}"
-        class="text-fl-emphasis font-bold text-primary transition-colors duration-400 hover:text-primary-active"
+        class="text-fl-emphasis font-bold text-primary transition-colors duration-200 hover:text-primary-active"
         >{{ site.Title }}</a
       >
 
@@ -15,7 +15,7 @@
         <button
           type="button"
           id="mobile-menu-button"
-          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
+          class="rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-200 hover:bg-background"
           title="Switch between light and dark theme"
         >
           <span class="inline dark:hidden">
@@ -29,7 +29,7 @@
         <div class="md:hidden">
           <label
             for="mobile-menu"
-            class="block rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-400 hover:bg-background"
+            class="block rounded-sm p-control text-fl-emphasis leading-none text-foreground transition-colors duration-200 hover:bg-background"
           >
             {{- partialCached "components/content/icon.html" (dict "name" "menu-2") "menu-2" -}}
           </label>

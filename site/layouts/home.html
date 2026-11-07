@@ -31,7 +31,7 @@
               href="{{ $entry.url }}"
               title="{{ $entry.name }}"
               {{ if $entry.isExternal }}rel="external noopener noreferrer" target="_blank"{{ end }}
-              class="text-fl-xl text-subtle transition-colors duration-400 hover:text-foreground"
+              class="text-fl-xl text-subtle transition-colors duration-200 hover:text-foreground"
             >
               {{- partialCached "components/content/icon.html" (dict "name" $entry.icon) $entry.icon -}}
             </a>

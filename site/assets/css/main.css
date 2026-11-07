@@ -13,7 +13,7 @@
 }
 
 @utility link {
-  @apply text-primary underline decoration-dashed underline-offset-[0.25em] transition-colors duration-400 visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
+  @apply text-primary underline decoration-dashed underline-offset-[0.25em] transition-colors duration-200 visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
 }
 
 @utility inline-icon {
@@ -42,7 +42,7 @@
       @apply leading-none;
     }
     & a {
-      @apply text-fl-body leading-none font-normal text-foreground no-underline transition-colors duration-400 hover:text-primary;
+      @apply text-fl-body leading-none font-normal text-foreground no-underline transition-colors duration-200 hover:text-primary;
     }
   }
 }

@@ -235,7 +235,7 @@ Utility class 的卖点之一就是可组合性，那么怎么做到可组合呢
 
 ```css
 @utility link {
-  @apply text-primary underline transition-colors duration-400
+  @apply text-primary underline transition-colors duration-200
     visited:text-secondary hover:text-primary-active hover:visited:text-secondary-active;
 }
 ```
@@ -305,7 +305,7 @@ Utility class 的卖点之一就是可组合性，那么怎么做到可组合呢
     <h2>
       <a
         href="{{ $.RelPermalink }}"
-        class="text-fl-h3 font-bold text-heading transition-colors duration-400 hover:text-primary"
+        class="text-fl-h3 font-bold text-heading transition-colors duration-200 hover:text-primary"
         >{{ $.LinkTitle | default $.Title }}</a
       >
     </h2>
@@ -323,7 +323,7 @@ Utility class 的卖点之一就是可组合性，那么怎么做到可组合呢
   <div class="flex justify-end">
     <a
       href="{{ $.RelPermalink }}"
-      class="text-fl-note text-subtle transition-colors duration-400 hover:text-foreground"
+      class="text-fl-note text-subtle transition-colors duration-200 hover:text-foreground"
     >
       Read More ...
     </a>
