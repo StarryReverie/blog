@@ -1,7 +1,7 @@
 { config, inputs, ... }:
 {
   perSystem =
-    { system, pkgsDev, ... }:
+    { config, pkgsDev, ... }:
     {
       devShells.default = pkgsDev.mkShellNoCC {
         packages = [
@@ -14,7 +14,10 @@
           pkgsDev.nixfmt
           pkgsDev.treefmt
           pkgsDev.typos
-        ];
+        ]
+        ++ config.checks.pre-commit.enabledPackages;
+
+        inherit (config.checks.pre-commit) shellHook;
       };
     };
 }

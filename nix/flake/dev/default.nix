@@ -1,6 +1,7 @@
 { config, inputs, ... }:
 {
   imports = [
+    ./checks.nix
     ./devshells.nix
   ];
 

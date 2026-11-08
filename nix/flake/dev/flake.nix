@@ -23,5 +23,15 @@
     flake = false;
   };
 
+  inputs.git-hooks = {
+    url = "github:cachix/git-hooks.nix/master";
+    inputs.flake-compat = {
+      follows = "flake-compat";
+    };
+    inputs.nixpkgs = {
+      follows = "nixpkgs";
+    };
+  };
+
   outputs = _inputs: { };
 }

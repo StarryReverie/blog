@@ -6,3 +6,5 @@ result
 hugo_stats.json
 
 node_modules/
+
+.pre-commit-config.yaml
