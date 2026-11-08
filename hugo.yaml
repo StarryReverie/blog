@@ -54,6 +54,11 @@ security:
      - ^postcss$
      - ^tailwindcss$
 
+  node:
+    permissions:
+      allowRead:
+        - '*'
+
 taxonomies:
   category: categories
   tag: tags
