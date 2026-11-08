@@ -1,19 +1,19 @@
 {
   description = "Blog";
 
-  inputs = {
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts/main";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
+  inputs.flake-parts = {
+    url = "github:hercules-ci/flake-parts/main";
+    inputs.nixpkgs-lib = {
+      follows = "nixpkgs";
     };
+  };
 
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-unstable";
-    };
+  inputs.nixpkgs = {
+    url = "github:NixOS/nixpkgs/nixos-unstable";
+  };
 
-    systems = {
-      url = "github:nix-systems/default/main";
-    };
+  inputs.systems = {
+    url = "github:nix-systems/default/main";
   };
 
   outputs =
