@@ -1,0 +1,20 @@
+<div>
+  {{- range $term := $.Alphabetical -}}
+    <section
+      class="flex flex-col gap-line not-first:pt-component not-last:border-b-1 not-last:border-b-subtle/25 not-last:pb-component"
+    >
+      <h2>
+        <a
+          href="{{ $term.Page.RelPermalink }}"
+          class="text-fl-emphasis font-bold text-heading transition-colors duration-200 hover:text-primary"
+        >
+          {{ $term.Page.LinkTitle }} <sup class="font-bold text-subtle">{{ $term.Count }}</sup>
+        </a>
+      </h2>
+
+      <div class="text-fl-body text-subtle">
+        {{ (site.GetPage $term.Page.Path).Content }}
+      </div>
+    </section>
+  {{- end -}}
+</div>
