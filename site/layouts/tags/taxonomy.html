@@ -5,9 +5,7 @@
     "headerContent" (partial "components/taxonomy/term-statistics.html" (dict
       "name" "tags"
       "terms" $.Data.Terms))
-    "content" (partial "components/taxonomy/cloud.html" (dict
-      "terms" $.Data.Terms
-      "icon" "tag")))
+    "content" (partial "components/taxonomy/cloud.html" $.Data.Terms))
   -}}
   <!-- prettier-ignore-end -->
 {{- end -}}

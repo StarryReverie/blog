@@ -1,13 +1,24 @@
-<ul class="flex flex-wrap gap-2">
-  {{- range $term := $.terms.Alphabetical -}}
-    <li class="flex">
+<ul class="flex flex-wrap items-center justify-center gap-2">
+  {{- range $term := $.Alphabetical -}}
+    <li>
       <a
         href="{{ $term.Page.RelPermalink }}"
-        class="flex gap-1 rounded-full bg-muted px-[calc(1.5*var(--space-control))] py-control text-fl-body leading-none text-foreground transition-colors duration-200 hover:bg-background"
+        class="{{ partial "components/taxonomy/cloud.html/term-classes.html" $term }} transition-colors duration-200 hover:text-primary"
       >
-        <span>{{- partialCached "components/content/icon.html" (dict "name" $.icon) $.icon -}}</span>
-        <span>{{ $term.Page.LinkTitle }} <sup class="font-bold text-subtle">{{ $term.Count }}</sup></span>
+        {{ $term.Page.LinkTitle }} <sup class="font-bold text-subtle">{{ $term.Count }}</sup>
       </a>
     </li>
   {{- end -}}
 </ul>
+
+{{- define "_partials/components/taxonomy/cloud.html/term-classes.html" -}}
+  {{- if le $.Count 1 -}}
+    {{- return "text-fl-sm text-foreground/70" -}}
+  {{- else if le $.Count 3 -}}
+    {{- return "text-fl-base text-foreground/85" -}}
+  {{- else if le $.Count 7 -}}
+    {{- return "text-fl-lg" -}}
+  {{- else -}}
+    {{- return "text-fl-xl font-bold" -}}
+  {{- end -}}
+{{- end -}}
