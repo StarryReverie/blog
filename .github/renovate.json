@@ -25,10 +25,16 @@
     },
 
     {
-      "description": "Nix Flake inputs",
       "matchManagers": ["nix"],
+      "description": "Nix Flake inputs",
       "commitMessageAction": "update",
       "commitMessageTopic": "Nix Flake inputs"
+    },
+    {
+      "matchManagers": ["npm"],
+      "lockFileMaintenance": {
+        "enabled": false
+      }
     }
   ],
   "nix": {
