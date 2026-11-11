@@ -1,17 +1,21 @@
 links:
-  - title: "@rikkaneko's Blog"
-    description: I hope one day all mankind will stop fighting against each others, and start working together to explore the vast universe.
-    avatar: avatars/blog.nekoid.cc.jpg
-    url: https://blog.nekoid.cc/
-  - title: 苏斯基的博客
-    description: 星空辽阔，何处是乡
-    avatar: avatars/blog.ity.moe.svg
-    url: https://blog.ity.moe/
-  - title: Chen Pan
-    description: 选择一个难到几乎无人看好的项目，带着那种“我偏要证明给他们看”的冲劲去完成。
-    avatar: avatars/blog.chenpan.me.avif
-    url: https://blog.chenpan.me/
   - title: "@ShadowRZ's Bitfield"
     description: The NOexistenceN of something?
     avatar: avatars/shadowrz.github.io.webp
     url: https://shadowrz.github.io/
+  - title: "@rikkaneko's Blog"
+    description: I hope one day all mankind will stop fighting against each others, and start working together to explore the vast universe.
+    avatar: avatars/blog.nekoid.cc.jpg
+    url: https://blog.nekoid.cc/
+  - title: Chen Pan
+    description: 选择一个难到几乎无人看好的项目，带着那种“我偏要证明给他们看”的冲劲去完成。
+    avatar: avatars/blog.chenpan.me.avif
+    url: https://blog.chenpan.me/
+  - title: pluie.me
+    description: Unassorted creative \\ 🏳️‍⚧️🏳️‍🌈🎨🎵💻🌏✍️💜
+    avatar: avatars/pluie.me.avif
+    url: https://pluie.me/
+  - title: 苏斯基的博客
+    description: 星空辽阔，何处是乡
+    avatar: avatars/blog.ity.moe.svg
+    url: https://blog.ity.moe/
