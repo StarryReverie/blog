@@ -12,7 +12,7 @@
     {{ end }}
       --color-bg-alert: color-mix(in oklch, var(--color-alert) 10%, transparent);
     "
-    class="border-l-4 border-l-(--color-alert) bg-(--color-bg-alert) px-4 py-component font-medium text-subtle"
+    class="border-l-4 border-l-(--color-alert) bg-(--color-bg-alert) px-4 py-component text-subtle"
   >
     <p class="mt-0 -mb-4 text-fl-emphasis font-bold text-(--color-alert)">
       {{ or $.AlertTitle (strings.Title $.AlertType) }}
