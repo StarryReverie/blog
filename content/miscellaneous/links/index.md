@@ -16,7 +16,7 @@ params:
 | :- | :- |
 | **站点标题** | StarryReverie 星缀夜空 |
 | **站点 URL** | <https://blog.starryreverie.cc/> |
-| **头像 URL** | [avatar.jpg](/avatar.jpg) |
+| **头像 URL** | [avatar.avif](/avatar.avif) |
 | **描述** | A world where insightful idea sparks. |
 
 推荐您 vendor 我的头像，以避免未来更换图片格式导致的链接失效。
