@@ -1,10 +1,10 @@
 {{- define "hero" -}}
-  <!-- The total height of this div and the navbar is approximately 100dvh. -->
+  <!-- The total height of this div and the navbar is approximately 100svh. -->
   <!-- Make this title component centered relative to the whole viewport. -->
   <div
     style="
       --collapsed-navbar-h: calc(var(--fluid-type-emphasis) * var(--line-height-emphasis) + 2 * var(--space-component));
-      --hero-h: calc(100dvh - var(--collapsed-navbar-h));
+      --hero-h: calc(100svh - var(--collapsed-navbar-h));
       --hero-pb: calc(var(--space-page) + var(--collapsed-navbar-h));
     "
     class="mx-auto flex min-h-(--hero-h) flex-col items-center justify-center gap-stack pt-page pb-(--hero-pb) md:flex-row md:gap-inset"
