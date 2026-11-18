@@ -1,0 +1,18 @@
+@theme {
+  --animate-star-trails: star-trails 300s steps(7200, end) infinite;
+
+  @keyframes star-trails {
+    from {
+      stroke-dashoffset: calc(var(--star-offset) - 360px);
+    }
+    to {
+      stroke-dashoffset: var(--star-offset);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-star-trails {
+    animation: none;
+  }
+}

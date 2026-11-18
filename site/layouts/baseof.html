@@ -31,11 +31,13 @@
   </head>
 
   <body class="flex min-h-svh flex-col bg-background pb-page">
-    {{- partial "components/header.html" $ -}}
-    <main id="main" class="grow">
-      <div>{{- block "hero" $ -}}{{- end -}}</div>
-      <div>{{- block "main" $ -}}{{- end -}}</div>
-    </main>
-    {{- partialCached "components/footer.html" $ -}}
+    <div class="z-0">
+      {{- partial "components/header.html" $ -}}
+      <main id="main" class="grow">
+        <div>{{- block "hero" $ -}}{{- end -}}</div>
+        <div>{{- block "main" $ -}}{{- end -}}</div>
+      </main>
+      {{- partialCached "components/footer.html" $ -}}
+    </div>
   </body>
 </html>

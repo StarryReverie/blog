@@ -7,51 +7,97 @@
       --hero-h: calc(100svh - var(--collapsed-navbar-h));
       --hero-pb: calc(var(--space-page) + var(--collapsed-navbar-h));
     "
-    class="mx-auto flex min-h-(--hero-h) flex-col items-center justify-center gap-stack pt-page pb-(--hero-pb) md:flex-row md:gap-inset"
+    class="group mx-auto flex min-h-(--hero-h) items-center justify-center pt-page pb-(--hero-pb)"
   >
-    <img src="/avatar.avif" alt="avatar" class="h-40 w-40 rounded-full object-cover outline-4 outline-subtle" />
+    <div class="flex flex-col items-center justify-center gap-stack md:flex-row md:gap-inset">
+      <label for="play-star-trail-animation">
+        <img src="/avatar.avif" alt="avatar" class="h-40 w-40 rounded-full object-cover outline-4 outline-subtle" />
+      </label>
 
-    <div class="flex flex-col items-center gap-line md:items-start">
-      <!-- HACK: `md:mt` moves the title a bit to make it more visually aligned. -->
-      <h1
-        style="--button-h: calc(2 * var(--space-control) + var(--static-type-body) * var(--line-height-body))"
-        class="text-center text-fl-h1 font-bold text-primary md:mt-(--button-h) md:text-left"
-      >
-        {{ site.Params.home.title }}
-      </h1>
+      <div class="flex flex-col items-center gap-line md:items-start">
+        <!-- HACK: `md:mt` moves the title a bit to make it more visually aligned. -->
+        <h1
+          style="--button-h: calc(2 * var(--space-control) + var(--static-type-body) * var(--line-height-body))"
+          class="text-center text-fl-h1 font-bold text-primary md:mt-(--button-h) md:text-left"
+        >
+          {{ site.Params.home.title }}
+        </h1>
 
-      <p class="text-center text-fl-emphasis font-bold text-heading md:text-left">
-        {{ site.Params.home.subtitle }}
-      </p>
+        <p class="text-center text-fl-emphasis font-bold text-heading md:text-left">
+          {{ site.Params.home.subtitle }}
+        </p>
 
-      <ul class="flex items-center justify-center gap-inline md:justify-start">
-        {{- range $entry := site.Params.social -}}
-          <li>
-            <a
-              href="{{ $entry.url }}"
-              title="{{ $entry.name }}"
-              {{ if $entry.isExternal }}rel="external noopener noreferrer" target="_blank"{{ end }}
-              class="text-fl-xl text-subtle transition-colors duration-200 hover:text-foreground"
-            >
-              {{- partialCached "components/content/icon.html" (dict "name" $entry.icon) $entry.icon -}}
-            </a>
-          </li>
-        {{- end -}}
-      </ul>
+        <ul class="flex items-center justify-center gap-inline md:justify-start">
+          {{- range $entry := site.Params.social -}}
+            <li>
+              <a
+                href="{{ $entry.url }}"
+                title="{{ $entry.name }}"
+                {{ if $entry.isExternal }}rel="external noopener noreferrer" target="_blank"{{ end }}
+                class="text-fl-xl text-subtle transition-colors duration-200 hover:text-foreground"
+              >
+                {{- partialCached "components/content/icon.html" (dict "name" $entry.icon) $entry.icon -}}
+              </a>
+            </li>
+          {{- end -}}
+        </ul>
 
-      <div class="flex justify-center gap-inline md:justify-start">
-        {{- partial "components/buttons/brand.html" (dict
-          "title" "Posts"
-          "link" (site.GetPage "posts").RelPermalink
-          "type" "primary")
-        -}}
+        <div class="flex justify-center gap-inline md:justify-start">
+          {{- partial "components/buttons/brand.html" (dict
+            "title" "Posts"
+            "link" (site.GetPage "posts").RelPermalink
+            "type" "primary")
+          -}}
 
-        {{- partial "components/buttons/brand.html" (dict
-          "title" "Journals"
-          "link" (site.GetPage "journals").RelPermalink
-          "type" "auxiliary")
-        -}}
+          {{- partial "components/buttons/brand.html" (dict
+            "title" "Journals"
+            "link" (site.GetPage "journals").RelPermalink
+            "type" "auxiliary")
+          -}}
+        </div>
       </div>
     </div>
+
+    <input type="checkbox" id="play-star-trail-animation" name="play-star-trail-animation" class="peer hidden" />
+
+    <svg class="fixed top-0 left-0 -z-10 hidden h-dvh w-dvw peer-checked:block" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="color-mix(in srgb, var(--subtle) 20%, transparent)" stroke-linecap="round" stroke-width="2">
+        {{- range $param := slice
+          (dict "radius" 10 "count" 3 "length" 0.38 "offset" 47.2)
+          (dict "radius" 15 "count" 2 "length" 0.44 "offset" 191.6)
+          (dict "radius" 20 "count" 5 "length" 0.3 "offset" 313.7)
+          (dict "radius" 25 "count" 4 "length" 0.51 "offset" 86.4)
+          (dict "radius" 30 "count" 6 "length" 0.27 "offset" 229.8)
+          (dict "radius" 35 "count" 4 "length" 0.43 "offset" 12.9)
+          (dict "radius" 40 "count" 8 "length" 0.31 "offset" 154.3)
+          (dict "radius" 45 "count" 6 "length" 0.46 "offset" 270.6)
+          (dict "radius" 50 "count" 7 "length" 0.24 "offset" 68.8)
+          (dict "radius" 55 "count" 9 "length" 0.39 "offset" 205.6)
+          (dict "radius" 60 "count" 8 "length" 0.33 "offset" 176.8)
+          (dict "radius" 65 "count" 11 "length" 0.28 "offset" 27.4)
+          (dict "radius" 70 "count" 9 "length" 0.42 "offset" 235.6)
+          (dict "radius" 75 "count" 10 "length" 0.35 "offset" 260.9)
+          (dict "radius" 80 "count" 12 "length" 0.29 "offset" 71.3)
+          (dict "radius" 85 "count" 10 "length" 0.45 "offset" 286.1)
+          (dict "radius" 90 "count" 11 "length" 0.32 "offset" 43.4)
+          (dict "radius" 95 "count" 13 "length" 0.37 "offset" 139.8)
+        -}}
+          {{- $totalLength := div 360 $param.count -}}
+          {{- $strokeLength := mul $totalLength $param.length -}}
+          {{- $blankLength := sub $totalLength $strokeLength -}}
+          <circle
+            style="--star-offset: {{ $param.offset }}px"
+            class="animate-star-trails"
+            cx="100%"
+            cy="100%"
+            r="{{ mul 1.25 $param.radius }}%"
+            pathLength="360"
+            stroke-dasharray="{{ $strokeLength }} {{ $blankLength }}"
+            stroke-dashoffset="{{ $param.offset }}"
+            fill="transparent"
+          />
+        {{- end -}}
+      </g>
+    </svg>
   </div>
 {{- end -}}
